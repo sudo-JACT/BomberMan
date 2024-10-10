@@ -1,7 +1,9 @@
+from libs.g2d import *
+
 class Enemy():
     
     def __init__(self) -> None:
         
-        pass
+        self._speed = 0
     
     
