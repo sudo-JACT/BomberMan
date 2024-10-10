@@ -6,4 +6,8 @@ from player import BomberMan
 
 if __name__ == "__main__":
     
-    pass
+    W, H = 500, 500
+    
+    init_canvas((W, H))
+    
+    main_loop()
