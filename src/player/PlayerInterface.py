@@ -1,7 +1,8 @@
 from libs.g2d import *
+from libs.actor import Actor
 from abc import abstractmethod
 
-class PlayerInterface():
+class PlayerInterface(Actor):
     
     def __init__(self) -> None:
         
