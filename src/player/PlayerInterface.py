@@ -1,7 +1,7 @@
 from libs.g2d import *
 from abc import abstractmethod
 
-class Enemy():
+class PlayerInterface():
     
     def __init__(self) -> None:
         
@@ -50,8 +50,6 @@ class Enemy():
         
         
     @abstractmethod
-    def move(self):
+    def move(self) -> None:
         
         pass
-    
-    
