@@ -1,3 +1,7 @@
+import sys
+sys.path.append('../')
+
+
 from libs.g2d import *
 from libs.actor import *
 
@@ -14,11 +18,11 @@ class Brick(Actor):
         
         return self._x, self._y
     
-    def size(self):
+    def size(self) -> tuple[int, int]:
         
-        return (16, 16)
+        return (self._w, self._h)
     
-    def move(self, arena: Arena):
+    def move(self, arena: Arena) -> None:
         
         pass
      

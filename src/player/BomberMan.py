@@ -1,6 +1,10 @@
+import sys
+sys.path.append('../')
+
+
 from libs.g2d import *
 from libs.actor import *
-from tools import Bomb
+from tools.Bomb import *
 from time import sleep
 from npc.Balloon import *
 
@@ -12,6 +16,8 @@ class BomberMan(Actor):
         self._w, self._h = 16, 16
         self._speed = 2
         self._sprite = sprite_src
+        
+        self._keys = keys
         
         self._up = 0
         self._down = 0
@@ -78,7 +84,7 @@ class BomberMan(Actor):
         
         for other in arena.collisions():
             
-            if isinstance(other, Wall) or isinstance(other, Brick):
+            if isinstance(other, Wall) or isinstance(other, Brick) or isinstance(other, Bomb):
                 # wall can also be adjacent, w/o intersection
                 ox, oy, ow, oh = other.pos() + other.size()
                 
@@ -96,14 +102,14 @@ class BomberMan(Actor):
                         path_d = False
                         
         
-        if keys[0] in keys and self._x % 16 == 0 and path_u:
+        if self._keys[0] in keys and self._x % 16 == 0 and path_u:
             
             self._y -= self._speed 
             self._current_sprite = self._back_animations[(self._up % 3)]
             self._up += 1
             
             
-        elif keys[1] in keys and self._x % 16 == 0 and path_d:
+        elif self._keys[1] in keys and self._x % 16 == 0 and path_d:
             
             self._y += self._speed
             self._current_sprite = self._front_animations[(self._down % 3)]
@@ -111,18 +117,22 @@ class BomberMan(Actor):
             
                 
             
-        elif keys[2] in keys and self._y % 16 == 0 and path_l:
+        elif self._keys[2] in keys and self._y % 16 == 0 and path_l:
             
             self._x -= self._speed
     
             self._current_sprite = self._left_animations[(self._left % 3)]
             self._left += 1
             
-        elif keys[3] in keys and self._y % 16 == 0 and path_r:
+        elif self._keys[3] in keys and self._y % 16 == 0 and path_r:
             
             self._x += self._speed
             self._current_sprite = self._right_animations[(self._right % 3)]
             self._right += 1
+            
+        elif self._keys[4] in keys:
+            
+            arena.spawn(Bomb((self._x, self._y), self._sprite))
 
         aw, ah = arena.size()
         self._x = min(max(self._x, 0), aw - self._w) 

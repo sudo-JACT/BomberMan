@@ -1,3 +1,7 @@
+import sys
+sys.path.append('../')
+
+
 from libs.actor import *
 from libs.g2d import *
 
@@ -10,7 +14,8 @@ class Wall(Actor):
         self._spritepos = (48, 48)
         self._x, self._y = pos
         
-    def move(self, arena: Arena):
+        
+    def move(self, arena: Arena) -> None:
         
         return
     
@@ -18,10 +23,10 @@ class Wall(Actor):
         
         return self._x, self._y
     
-    def size(self):
+    def size(self) -> tuple[int, int]:
         
         return (16, 16)
     
-    def draw(self):
+    def draw(self) -> None:
         
         draw_image(self._sprite, (self._x, self._y), self._spritepos, (self._w, self._h))

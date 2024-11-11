@@ -1,12 +1,17 @@
+import sys
+sys.path.append('../')
+
+
 from libs.g2d import *
 from libs.actor import *
 from background.Wall import *
 from background.Brick import *
 from random import choice
+from tools.Bomb import *
 
 class Balloon(Actor):
     
-    def __init__(self, x0: int, y0: int, sprite_src: str) -> None:
+    def __init__(self, x0: int, y0: int, sprite_src: str, arena: Arena) -> None:
         self._x = x0 
         self._y = y0
         self._speed = 2
@@ -20,7 +25,7 @@ class Balloon(Actor):
         
         for other in arena.collisions():
             
-            if isinstance(other, Wall) or isinstance(other, Brick):
+            if isinstance(other, Wall) or isinstance(other, Brick) or isinstance(other, Bomb):
                 # wall can also be adjacent, w/o intersection
                 ox, oy, ow, oh = other.pos() + other.size()
                 
@@ -77,13 +82,13 @@ class Balloon(Actor):
             
     }
 
-    def move(self, arena: Arena):
+    def move(self, arena: Arena) -> None:
         
         path_l = path_r = path_u = path_d = True
         
         for other in arena.collisions():
             
-            if isinstance(other, Wall) or isinstance(other, Brick):
+            if isinstance(other, Wall) or isinstance(other, Brick) or isinstance(other, Bomb):
                 # wall can also be adjacent, w/o intersection
                 ox, oy, ow, oh = other.pos() + other.size()
                 
@@ -157,9 +162,9 @@ class Balloon(Actor):
         
         return self._x, self._y
     
-    def size(self):
+    def size(self) -> tuple[int, int]:
         
-        return (16, 16)
+        return (self._w, self._h)
 
     def draw(self) -> None:
         
