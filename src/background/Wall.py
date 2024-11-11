@@ -1,8 +1,7 @@
-from libs.g2d import *
 from libs.actor import *
+from libs.g2d import *
 
-class Bomb(Actor):
-    
+class Wall(Actor):
     
     def __init__(self, pos: Point, spr) -> None:
         
@@ -10,11 +9,8 @@ class Bomb(Actor):
         self._w, self._h = 16, 16
         self._spritepos = (48, 48)
         self._x, self._y = pos
-        self._clock = 0
         
     def move(self, arena: Arena):
-        
-        self._clock += 1
         
         return
     
