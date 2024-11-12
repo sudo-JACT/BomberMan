@@ -11,8 +11,6 @@ from player.BomberMan import *
 from npc.Balloon import *
 from tools.Bomb import *
 
-from tools.Bomb import *
-
 class Fire(Actor):
     
     def __init__(self, pos: Point, sprt: str) -> None:

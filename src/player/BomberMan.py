@@ -6,7 +6,10 @@ from libs.g2d import *
 from libs.actor import *
 from tools.Bomb import *
 from time import sleep
-from npc.Balloon import Balloon
+from npc.Balloon import *
+from tools.Fire import *
+from background.Wall import *
+from background.Brick import *
 
 
 
@@ -135,7 +138,7 @@ class BomberMan(Actor):
         elif self._keys[4] in keys:
             
             arena.spawn(Bomb((self._x, self._y), self._sprite, arena))
-
+        
         aw, ah = arena.size()
         self._x = min(max(self._x, 0), aw - self._w) 
         self._y = min(max(self._y, 0), ah - self._h) 
