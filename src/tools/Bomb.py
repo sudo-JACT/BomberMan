@@ -4,16 +4,16 @@ sys.path.append('../')
 
 from libs.g2d import *
 from libs.actor import *
-from tools.Fire import *
 from player.BomberMan import *
 from npc.Balloon import *
 from background.Wall import *
 from background.Brick import *
+from tools.Fire import *
 
 class Bomb(Actor):
     
     
-    def __init__(self, pos: Point, spr, arena: Arena) -> None:
+    def __init__(self, pos: Point, spr: str, arena: Arena) -> None:
         
         self._sprite = spr
         self._w, self._h = 16, 16

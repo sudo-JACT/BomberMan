@@ -7,13 +7,15 @@ from libs.g2d import *
 from libs.actor import *
 from background.Wall import *
 from background.Brick import *
-from tools.Bomb import *
 from player.BomberMan import *
 from npc.Balloon import *
+from tools.Bomb import *
+
+from tools.Bomb import *
 
 class Fire(Actor):
     
-    def __init__(self, pos: Point, sprt) -> None:
+    def __init__(self, pos: Point, sprt: str) -> None:
         
         self._sprite = sprt
         self._x, self._y = pos

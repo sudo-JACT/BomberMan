@@ -6,7 +6,9 @@ from libs.g2d import *
 from libs.actor import *
 from tools.Bomb import *
 from time import sleep
-from npc.Balloon import *
+from npc.Balloon import Balloon
+
+
 
 class BomberMan(Actor):
     
