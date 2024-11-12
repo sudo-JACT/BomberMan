@@ -169,5 +169,9 @@ class Balloon(Actor):
     def draw(self) -> None:
         
         draw_image(self._sprite, (self._x, self._y), self._current_sprite, (self._w, self._h))
+        
+    def hit(self, arena: Arena) -> None:
+        
+        arena.kill(self)
     
 

@@ -30,4 +30,8 @@ class Brick(Actor):
     
         draw_image(self._sprite, (self._x, self._y), self._spritepos, (self._w, self._h))
         
+    def hit(self, arena: Arena) -> None:
+        
+        arena.kill(self)
+        
         

@@ -132,7 +132,7 @@ class BomberMan(Actor):
             
         elif self._keys[4] in keys:
             
-            arena.spawn(Bomb((self._x, self._y), self._sprite))
+            arena.spawn(Bomb((self._x, self._y), self._sprite, arena))
 
         aw, ah = arena.size()
         self._x = min(max(self._x, 0), aw - self._w) 
