@@ -71,3 +71,12 @@ class Bomb(Actor):
     def draw(self) -> None:
         
         draw_image(self._sprite, (self._x, self._y), self._currentsprite, (self._w, self._h))
+        
+    def get_current_clock(self) -> int:
+        
+        return self._current_clock
+    
+    def get_end_clock(self) -> int:
+        
+        return self._end_clock
+    

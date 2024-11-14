@@ -30,7 +30,7 @@ def Normal(w: int, h: int, arena: Arena, imgsrc: str):
     
     AW, AH = w, h
     
-    arena.spawn(BomberMan((240, 240), img_src, ["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight", "b"]))
+    arena.spawn(BomberMan((240, 240), img_src, ["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight", "b"], arena))
 
     arena.spawn(Balloon(16, 16, img_src, arena))
     
@@ -95,7 +95,7 @@ if __name__ == "__main__":
     
     
     
-    init_canvas(arena.size())
+    init_canvas(arena.size(),2)
     
     change_canvas_color(60, 123, 1)
     

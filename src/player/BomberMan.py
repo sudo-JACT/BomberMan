@@ -17,13 +17,16 @@ from background.Brick import *
 
 class BomberMan(Actor):
     
-    def __init__(self, pos: Point, sprite_src: str, keys: list[str]) -> None:
+    def __init__(self, pos: Point, sprite_src: str, keys: list[str], arena: Arena) -> None:
         self._x, self._y = pos
         self._dx = self._dy = 0
         self._w, self._h = 16, 16
         self._speed = 2
         self._sprite = sprite_src
         self._isdead = False
+        self._dead_clock = 0
+        self._end_clock = 0
+        self._co = 0
         
         self._keys = keys
         
@@ -80,91 +83,113 @@ class BomberMan(Actor):
 
     def move(self, arena: Arena):
         
-        path_l = path_r = path_u = path_d = True
+        if not(self._isdead):
         
-        for other in arena.collisions():
+            path_l = path_r = path_u = path_d = True
             
-            if isinstance(other, npc.Balloon.Balloon):
+            for other in arena.collisions():
                 
-                self.hit(arena)
+                if isinstance(other, npc.Balloon.Balloon):
+                    
+                    self.hit(arena)
 
-        keys = arena.current_keys()
-        
-        for other in arena.collisions():
+            keys = arena.current_keys()
             
-            if isinstance(other, Wall) or isinstance(other, Brick) or isinstance(other, tools.Bomb.Bomb):
-                # wall can also be adjacent, w/o intersection
-                ox, oy, ow, oh = other.pos() + other.size()
+            for other in arena.collisions():
                 
-                if oy < self._y + self._h and self._y < oy + oh:
-                    # ↕ overlap, ↔ movement is obstacled
-                    if self._x > ox:
-                        path_l = False
-                    else:
-                        path_r = False
-                if ox < self._x + self._w and self._x < ox + ow:
-                    # ↔ overlap, ↕ movement is obstacled
-                    if self._y > oy:
-                        path_u = False
-                    else:
-                        path_d = False
+                if isinstance(other, Wall) or isinstance(other, Brick) or isinstance(other, tools.Bomb.Bomb):
+                    
+                    if not(isinstance(other, tools.Bomb.Bomb) and other.get_current_clock() <= (other.get_end_clock() - 85)):    
+                            
+                        ox, oy, ow, oh = other.pos() + other.size()
                         
-        
-        if self._keys[0] in keys and self._x % 16 == 0 and path_u and not(self._isdead):
+                        if oy < self._y + self._h and self._y < oy + oh:
+                            # ↕ overlap, ↔ movement is obstacled
+                            if self._x > ox:
+                                path_l = False
+                            else:
+                                path_r = False
+                        if ox < self._x + self._w and self._x < ox + ow:
+                            # ↔ overlap, ↕ movement is obstacled
+                            if self._y > oy:
+                                path_u = False
+                            else:
+                                path_d = False
+                    
+                        
             
-            self._y -= self._speed 
-            self._current_sprite = self._back_animations[(self._up % 3)]
-            self._up += 1
-            
-            
-        elif self._keys[1] in keys and self._x % 16 == 0 and path_d and not(self._isdead):
-            
-            self._y += self._speed
-            self._current_sprite = self._front_animations[(self._down % 3)]
-            self._down +=1
-            
+            if self._keys[0] in keys and path_u and not(self._isdead):
                 
-            
-        elif self._keys[2] in keys and self._y % 16 == 0 and path_l and not(self._isdead):
-            
-            self._x -= self._speed
-    
-            self._current_sprite = self._left_animations[(self._left % 3)]
-            self._left += 1
-            
-        elif self._keys[3] in keys and self._y % 16 == 0 and path_r and not(self._isdead):
-            
-            self._x += self._speed
-            self._current_sprite = self._right_animations[(self._right % 3)]
-            self._right += 1
-            
-        elif self._keys[4] in keys:
-            
-            arena.spawn(tools.Bomb.Bomb((self._x, self._y), self._sprite, arena))
+                self._y -= self._speed 
+                self._current_sprite = self._back_animations[(self._up % 3)]
+                self._up += 1
+                
+                
+            elif self._keys[1] in keys and path_d and not(self._isdead):
+                
+                self._y += self._speed
+                self._current_sprite = self._front_animations[(self._down % 3)]
+                self._down +=1
+                
+                    
+                
+            elif self._keys[2] in keys and path_l and not(self._isdead):
+                
+                self._x -= self._speed
         
-        aw, ah = arena.size()
-        self._x = min(max(self._x, 0), aw - self._w) 
-        self._y = min(max(self._y, 0), ah - self._h) 
-        
-        if (self._dx < 0 and not path_l or self._dx > 0 and not path_r or self._dy < 0 and not path_u or self._dy > 0 and not path_d):
+                self._current_sprite = self._left_animations[(self._left % 3)]
+                self._left += 1
+                
+            elif self._keys[3] in keys and path_r and not(self._isdead):
+                
+                self._x += self._speed
+                self._current_sprite = self._right_animations[(self._right % 3)]
+                self._right += 1
+                
+            elif self._keys[4] in keys:
+                
+                arena.spawn(tools.Bomb.Bomb((self._x, self._y), self._sprite, arena))
             
-            self._dx, self._dy = 0, 0
+            aw, ah = arena.size()
+            self._x = min(max(self._x, 0), aw - self._w) 
+            self._y = min(max(self._y, 0), ah - self._h) 
+            
+            if (self._dx < 0 and not path_l or self._dx > 0 and not path_r or self._dy < 0 and not path_u or self._dy > 0 and not path_d):
+                
+                self._dx, self._dy = 0, 0
+                
+        else:
+            
+            while self._dead_clock <= self._end_clock:
+                
+                if (self._end_clock - self._dead_clock) % 14 == 0:
+                    
+                    print(self._death_animations)
+                    print(self._co)
+                    print(self._dead_clock)
+                    print(self._end_clock)
+                
+                    self._current_sprite = self._death_animations[self._co % 7]
+                    self._co += 1
+                    
+                self._dead_clock += 1
+                
+            if self._dead_clock >= self._end_clock:
+                print("cazzp")
+                arena.kill(self)
+
 
     def hit(self, arena: Arena):
         
+        self._dead_clock = arena.count()
+        self._end_clock = self._dead_clock + 98
         self._isdead = True
-        
-        now = arena.count()
-        
-        dead = now + 100
-        
-        for i in range(len(self._death_animations)):
             
-            self._current_sprite = self._death_animations[i]
             
-            sleep(1/60)
+                    
         
-        arena.kill(self)
+        
+        
         
         
     def pos(self) -> Point:
