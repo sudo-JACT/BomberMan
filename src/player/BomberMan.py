@@ -160,19 +160,20 @@ class BomberMan(Actor):
                 
         else:
             
-            while self._dead_clock <= self._end_clock:
+            self._dead_clock += 1
                 
-                if (self._end_clock - self._dead_clock) % 14 == 0:
-                    
-                    print(self._death_animations)
-                    print(self._co)
-                    print(self._dead_clock)
-                    print(self._end_clock)
                 
-                    self._current_sprite = self._death_animations[self._co % 7]
-                    self._co += 1
+            if ((self._end_clock - self._dead_clock) % 7 == 0):
                     
-                self._dead_clock += 1
+                print(self._death_animations)
+                print(self._co)
+                print(self._dead_clock)
+                print(self._end_clock)
+            
+                self._current_sprite = self._death_animations[self._co]
+                self._co += 1
+                    
+                
                 
             if self._dead_clock >= self._end_clock:
                 print("cazzp")
@@ -182,7 +183,7 @@ class BomberMan(Actor):
     def hit(self, arena: Arena):
         
         self._dead_clock = arena.count()
-        self._end_clock = self._dead_clock + 98
+        self._end_clock = self._dead_clock + 49
         self._isdead = True
             
             
