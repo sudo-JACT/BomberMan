@@ -1,6 +1,7 @@
 import sys
 
 import tools.Bomb
+import tools.Fire
 sys.path.append('../')
 
 
@@ -89,7 +90,7 @@ class BomberMan(Actor):
             
             for other in arena.collisions():
                 
-                if isinstance(other, npc.Balloon.Balloon):
+                if isinstance(other, npc.Balloon.Balloon) or isinstance(other, tools.Fire.Fire):
                     
                     self.hit(arena)
 
@@ -118,35 +119,47 @@ class BomberMan(Actor):
                     
                         
             
-            if self._keys[0] in keys and path_u and not(self._isdead):
+            if self._keys[0] in keys and not(self._isdead):
                 
-                self._y -= self._speed 
                 self._current_sprite = self._back_animations[(self._up % 3)]
                 self._up += 1
                 
+                if path_u:
+                    
+                    self._y -= self._speed 
+                    
                 
-            elif self._keys[1] in keys and path_d and not(self._isdead):
                 
-                self._y += self._speed
+            elif self._keys[1] in keys  and not(self._isdead):
+                
                 self._current_sprite = self._front_animations[(self._down % 3)]
                 self._down +=1
                 
+                if path_d:
+                    
+                    self._y += self._speed
+                
                     
                 
-            elif self._keys[2] in keys and path_l and not(self._isdead):
-                
-                self._x -= self._speed
+            elif self._keys[2] in keys and not(self._isdead):
         
                 self._current_sprite = self._left_animations[(self._left % 3)]
                 self._left += 1
                 
-            elif self._keys[3] in keys and path_r and not(self._isdead):
+                if path_l:
+                    
+                    self._x -= self._speed
                 
-                self._x += self._speed
+            elif self._keys[3] in keys and not(self._isdead):
+                
                 self._current_sprite = self._right_animations[(self._right % 3)]
                 self._right += 1
                 
-            elif self._keys[4] in keys:
+                if path_r:
+                    
+                    self._x += self._speed
+                
+            elif self._keys[4] in keys and (self._x % 16 == 0 and (self._y + 24) % 16 == 0):
                 
                 arena.spawn(tools.Bomb.Bomb((self._x, self._y), self._sprite, arena))
             
@@ -165,10 +178,10 @@ class BomberMan(Actor):
                 
             if ((self._end_clock - self._dead_clock) % 7 == 0):
                     
-                print(self._death_animations)
-                print(self._co)
-                print(self._dead_clock)
-                print(self._end_clock)
+                #print(self._death_animations)
+                #print(self._co)
+                #print(self._dead_clock)
+                #print(self._end_clock)
             
                 self._current_sprite = self._death_animations[self._co]
                 self._co += 1
@@ -176,7 +189,7 @@ class BomberMan(Actor):
                 
                 
             if self._dead_clock >= self._end_clock:
-                print("cazzp")
+                
                 arena.kill(self)
 
 
@@ -185,11 +198,6 @@ class BomberMan(Actor):
         self._dead_clock = arena.count()
         self._end_clock = self._dead_clock + 49
         self._isdead = True
-            
-            
-                    
-        
-        
         
         
         

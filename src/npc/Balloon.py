@@ -114,7 +114,7 @@ class Balloon(Actor):
         if not 0 <= self._y + self._dy <= ah - self._h:
             self._dy = -self._dy
             
-        if self._x % 16 == 0 and self._y % 16 == 0:
+        if self._x % 16 == 0 and (self._y + 24) % 16 == 0:
             
             d = choice([1, 2, 3, 4])
             

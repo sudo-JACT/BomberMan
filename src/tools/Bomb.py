@@ -32,7 +32,7 @@ class Bomb(Actor):
             
         }
         
-        self._currentsprite = self._sprites[0]
+        self._currentsprite = self._sprites[1]
         
     def move(self, arena: Arena) -> None:
         
@@ -40,11 +40,11 @@ class Bomb(Actor):
         
         if (self._current_clock == (self._end_clock - 90)) or (self._current_clock == (self._end_clock - 50)) or (self._current_clock == (self._end_clock - 10)):
             
-            self._currentsprite = self._sprites[0]
+            self._currentsprite = self._sprites[1]
         
         elif (self._current_clock == (self._end_clock - 80)) or (self._current_clock == (self._end_clock - 60)) or (self._current_clock == self._end_clock ):
             
-            self._currentsprite = self._sprites[1]
+            self._currentsprite = self._sprites[0]
         
         elif (self._current_clock == (self._end_clock - 70)) or (self._current_clock == (self._end_clock - 30)):
             
@@ -56,7 +56,7 @@ class Bomb(Actor):
             
             arena.kill(self)
             
-            arena.spawn(tools.Fire.Fire((self._x, self._y), self._sprite, arena))
+            arena.spawn(tools.Fire.Fire((self._x, self._y), self._sprite, arena, 0))
         
         return
     

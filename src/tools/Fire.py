@@ -16,7 +16,7 @@ import tools
 
 class Fire(Actor):
     
-    def __init__(self, pos: Point, sprt: str, arena: Arena) -> None:
+    def __init__(self, pos: Point, sprt: str, arena: Arena, t: int) -> None:
         
         self._sprite = sprt
         self._x, self._y = pos
@@ -24,53 +24,206 @@ class Fire(Actor):
         self._current_clock = arena.count()
         self._end_clock = self._current_clock + 32
         
+        self._ty = t
+        
+        self._ls = []
         
         
-        
-        self._sprites = {
+        self._sprites_0_0 = {
             
             0: (32, 96),
             1: (112, 96),
-            2: (32, 112),
-            3: (112, 96),
+            2: (176, 112),
+            3: (112, 176),
             
         }
         
-        self._currentsprite = (self._sprites[0])
+        
+        self._sprites_x_1 = {
+            
+            0: (48, 96),
+            1: (128, 96),
+            2: (192, 112),
+            3: (128, 176),
+            
+        }
+        
+        self._sprites_x_2 = {
+            
+            0: (64, 96),
+            1: (144, 96),
+            2: (208, 112),
+            3: (144, 176),
+            
+        }
+        
+        self._sprites_y_1 = {
+            
+            0: (32,112),
+            1: (112, 112),
+            2: (176, 128),
+            3: (112, 192),
+            
+        }
+        
+        self._sprites_y_2 = {
+            
+            0: (32,128),
+            1: (112, 128),
+            2: (176, 144),
+            3: (112, 208),
+            
+        }
+        
+        self._sprites_mx_1 = {
+            
+            0: (16, 96),
+            1: (96, 96),
+            2: (160, 112),
+            3: (96, 176),
+            
+        }
+        
+        self._sprites_mx_2 = {
+            
+            0: (0, 96),
+            1: (80, 96),
+            2: (144, 112),
+            3: (80, 176),
+            
+            
+        }
+        
+        self._sprites_my_1 = {
+            
+            0: (32, 80),
+            1: (112, 80),
+            2: (176, 96),
+            3: (112, 160),
+        }
+        
+        self._sprites_my_2 = {
+            
+            0: (32, 64),
+            1: (112, 64),
+            2: (176, 80),
+            3: (112, 144),
+            
+        }
+        
+        if self._ty == 0:
+            
+            up = down = left = right = True
+            
+            for other in arena.collisions():
+                
+                if isinstance(other, Wall) and other.pos()[0] == self._x and other.pos()[1] == (self._y-16):
+                    
+                    up = False
+                    
+                elif isinstance(other, Wall) and other.pos()[0] == self._x and other.pos()[1] == (self._y+16):
+                    
+                    down = False
+                    
+                elif isinstance(other, Wall) and other.pos()[0] == (self._x-16) and other.pos()[1] == self._y:
+                    
+                    left = False
+                    
+                elif isinstance(other, Wall) and other.pos()[0] == (self._x+16) and other.pos()[1] == self._y:
+                    
+                    right = False
+                    
+            if up:
+                
+                arena.spawn(Fire((pos[0], pos[1]-16), sprt, arena, 1))
+                
+            if down:
+                
+                arena.spawn(Fire((pos[0], pos[1]+16), sprt, arena, 2))
+            
+            if left:
+                
+                arena.spawn(Fire((pos[0]-16, pos[1]), sprt, arena, 3))
+            
+            if right:
+                
+                arena.spawn(Fire((pos[0]+16, pos[1]), sprt, arena, 4))
+            
+            
+            
+            for x in self._sprites_0_0:
+                
+                self._ls.append(self._sprites_0_0[x])
+        
+            self._currentsprite = self._ls[0]
+            
+        elif self._ty == 1:
+            
+            for x in self._sprites_my_2:
+                
+                self._ls.append(self._sprites_my_2[x])
+        
+            self._currentsprite = self._ls[0]
+            
+        elif self._ty == 2:
+            
+            for x in self._sprites_y_2:
+                
+                self._ls.append(self._sprites_y_2[x])
+        
+            self._currentsprite = self._ls[0]
+            
+        elif self._ty == 3:
+            
+            for x in self._sprites_mx_2:
+                
+                self._ls.append(self._sprites_mx_2[x])
+        
+            self._currentsprite = self._ls[0]
+            
+        elif self._ty == 4:
+            
+            for x in self._sprites_x_2:
+                
+                self._ls.append(self._sprites_x_2[x])
+        
+            self._currentsprite = self._ls[0]
         
         
     def move(self, arena: Arena) -> None:
         
-        self._current_clock += 1
-        
-        if (self._current_clock == (self._end_clock - 28)) or (self._current_clock == (self._end_clock - 4)) or (self._current_clock == self._end_clock):
-            
-            self._currentsprite = self._sprites[0]
-        
-        elif (self._current_clock == (self._end_clock - 24)) or (self._current_clock == (self._end_clock - 8)):
-            
-            self._currentsprite = self._sprites[1]
-        
-        elif (self._current_clock == (self._end_clock - 20)) or (self._current_clock == (self._end_clock - 12)):
-            
-            self._currentsprite = self._sprites[2]
-            
-        elif (self._current_clock == (self._end_clock - 16)):
-            
-            self._currentsprite = self._sprites[3]
-        
-        
         for other in arena.collisions():
-        
-            if isinstance(other, npc.Balloon.Balloon) or isinstance(other, Brick) or isinstance(other, player.BomberMan.BomberMan):
+                
+            if (isinstance(other, npc.Balloon.Balloon) or isinstance(other, Brick) and (other.pos()[0] == self._x and other.pos()[1] == self._y)):
                     
                 other.hit(arena)
                 
+        
+        self._current_clock += 1 
+        
+           
+        
+        if (self._current_clock == (self._end_clock - 28)) or (self._current_clock == (self._end_clock - 4)) or (self._current_clock == self._end_clock):
+                
+            self._currentsprite = self._ls[0]
+            
+        elif (self._current_clock == (self._end_clock - 24)) or (self._current_clock == (self._end_clock - 8)):
+                
+            self._currentsprite = self._ls[1]
+            
+        elif (self._current_clock == (self._end_clock - 20)) or (self._current_clock == (self._end_clock - 12)):
+                
+            self._currentsprite = self._ls[2]
+                
+        elif (self._current_clock == (self._end_clock - 16)):
+                
+            self._currentsprite = self._ls[3]
             
         
-            if self._current_clock == self._end_clock:
+        
+        if self._current_clock == self._end_clock:
                 
-                arena.kill(self)
+            arena.kill(self)
                     
                     
     def pos(self) -> tuple[int, int]:
