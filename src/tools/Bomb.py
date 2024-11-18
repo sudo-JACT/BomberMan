@@ -1,9 +1,7 @@
 import sys
-
-import tools.Fire
 sys.path.append('../')
 
-
+import player 
 from libs.g2d import *
 from libs.actor import *
 from player.BomberMan import *
@@ -15,7 +13,7 @@ import tools
 class Bomb(Actor):
     
     
-    def __init__(self, pos: Point, spr: str, arena: Arena) -> None:
+    def __init__(self, pos: Point, spr: str, arena: Arena, bomber: player.BomberMan.BomberMan) -> None:
         
         self._sprite = spr
         self._w, self._h = 16, 16
@@ -23,6 +21,8 @@ class Bomb(Actor):
         self._x, self._y = pos
         self._current_clock = arena.count()
         self._end_clock = self._current_clock + 100
+        
+        self._b = bomber
         
         self._sprites = {
             
@@ -56,7 +56,7 @@ class Bomb(Actor):
             
             arena.kill(self)
             
-            arena.spawn(tools.Fire.Fire((self._x, self._y), self._sprite, arena, 0))
+            arena.spawn(tools.Fire.Fire((self._x, self._y), self._sprite, arena, 0, self._b))
         
         return
     
@@ -70,7 +70,7 @@ class Bomb(Actor):
     
     def draw(self) -> None:
         
-        draw_image(self._sprite, (self._x, self._y), self._currentsprite, (self._w, self._h))
+        draw_image(self._sprite, (self._x + self._b.getOffset(), self._y), self._currentsprite, (self._w, self._h))
         
     def get_current_clock(self) -> int:
         

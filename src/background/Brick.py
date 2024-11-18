@@ -4,15 +4,18 @@ sys.path.append('../')
 
 from libs.g2d import *
 from libs.actor import *
+from player import *
 
 
 class Brick(Actor):
     
-    def __init__(self, pos: Point, spr) -> None:
+    def __init__(self, pos: Point, spr, bomber) -> None:
         self._sprite = spr
         self._w, self._h = 16, 16
         self._spritepos = (64, 48)
         self._x, self._y = pos
+        
+        self._b = bomber
      
     def pos(self) -> tuple[int, int]:
         
@@ -28,7 +31,7 @@ class Brick(Actor):
      
     def draw(self) -> None:
     
-        draw_image(self._sprite, (self._x, self._y), self._spritepos, (self._w, self._h))
+        draw_image(self._sprite, (self._x + self._b.getOffset(), self._y), self._spritepos, (self._w, self._h))
         
     def hit(self, arena: Arena) -> None:
         

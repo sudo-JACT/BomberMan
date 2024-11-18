@@ -1,18 +1,22 @@
 import sys
+
+import player.BomberMan
 sys.path.append('../')
 
 
 from libs.actor import *
 from libs.g2d import *
+import player
 
 class Wall(Actor):
     
-    def __init__(self, pos: Point, spr) -> None:
+    def __init__(self, pos: Point, spr, bomber: player.BomberMan.BomberMan) -> None:
         
         self._sprite = spr
         self._w, self._h = 16, 16
         self._spritepos = (48, 48)
         self._x, self._y = pos
+        self._b = bomber
         
         
     def move(self, arena: Arena) -> None:
@@ -29,4 +33,4 @@ class Wall(Actor):
     
     def draw(self) -> None:
         
-        draw_image(self._sprite, (self._x, self._y), self._spritepos, (self._w, self._h))
+        draw_image(self._sprite, (self._x + self._b.getOffset(), self._y), self._spritepos, (self._w, self._h))

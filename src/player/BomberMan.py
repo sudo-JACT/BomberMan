@@ -1,24 +1,22 @@
 import sys
-
-import tools.Bomb
-import tools.Fire
 sys.path.append('../')
 
 
+import background.Brick
+import background.Wall
 from libs.g2d import *
 from libs.actor import *
 import tools
 from time import sleep
 import npc
 from tools.Fire import *
-from background.Wall import *
-from background.Brick import *
+import background
 
 
 
 class BomberMan(Actor):
     
-    def __init__(self, pos: Point, sprite_src: str, keys: list[str], arena: Arena) -> None:
+    def __init__(self, pos: Point, sprite_src: str, keys: list[str], canvas_size: Point, arena: Arena) -> None:
         self._x, self._y = pos
         self._dx = self._dy = 0
         self._w, self._h = 16, 16
@@ -28,6 +26,9 @@ class BomberMan(Actor):
         self._dead_clock = 0
         self._end_clock = 0
         self._co = 0
+        
+        self._c = canvas_size
+        self._a = arena
         
         self._keys = keys
         
@@ -98,7 +99,7 @@ class BomberMan(Actor):
             
             for other in arena.collisions():
                 
-                if isinstance(other, Wall) or isinstance(other, Brick) or isinstance(other, tools.Bomb.Bomb):
+                if isinstance(other, background.Wall.Wall) or isinstance(other, background.Brick.Brick) or isinstance(other, tools.Bomb.Bomb):
                     
                     if not(isinstance(other, tools.Bomb.Bomb) and other.get_current_clock() <= (other.get_end_clock() - 85)):    
                             
@@ -161,7 +162,7 @@ class BomberMan(Actor):
                 
             elif self._keys[4] in keys and (self._x % 16 == 0 and (self._y + 24) % 16 == 0):
                 
-                arena.spawn(tools.Bomb.Bomb((self._x, self._y), self._sprite, arena))
+                arena.spawn(tools.Bomb.Bomb((self._x, self._y), self._sprite, arena, self))
             
             aw, ah = arena.size()
             self._x = min(max(self._x, 0), aw - self._w) 
@@ -214,3 +215,14 @@ class BomberMan(Actor):
     def draw(self) -> None:
         
         draw_image(self._sprite, (self._x, self._y), self._current_sprite, (self._w, self._h))
+        
+    def getOffset(self) -> int:
+        
+        if self._x > (self._c[0] / 2) and self._x < self._a.size()[0] - (self._c[0] / 2):
+            
+           return 0 #self._x - self._a.size()[0
+            
+            
+        else:
+            
+            return 0

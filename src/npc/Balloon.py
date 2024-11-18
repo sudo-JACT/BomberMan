@@ -1,17 +1,16 @@
 import sys
 sys.path.append('../')
-
-
 from libs.g2d import *
 from libs.actor import *
 from background.Wall import *
 from background.Brick import *
 from random import choice
 from tools.Bomb import *
+from player.BomberMan import *
 
 class Balloon(Actor):
     
-    def __init__(self, x0: int, y0: int, sprite_src: str, arena: Arena) -> None:
+    def __init__(self, x0: int, y0: int, sprite_src: str, arena: Arena, bomber: BomberMan) -> None:
         self._x = x0 
         self._y = y0
         self._speed = 2
@@ -20,6 +19,8 @@ class Balloon(Actor):
         self._sprite = sprite_src
         self._current_sprite = (0, 240)
         d = choice([1, 2, 3, 4])
+        
+        self._b = bomber
         
         path_l = path_r = path_u = path_d = True
         
@@ -168,10 +169,8 @@ class Balloon(Actor):
 
     def draw(self) -> None:
         
-        draw_image(self._sprite, (self._x, self._y), self._current_sprite, (self._w, self._h))
+        draw_image(self._sprite, ((self._x + self._b.getOffset()), self._y)), self._current_sprite, (self._w, self._h)
         
     def hit(self, arena: Arena) -> None:
         
         arena.kill(self)
-    
-

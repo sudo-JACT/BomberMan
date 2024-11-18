@@ -1,28 +1,26 @@
 import sys
-
-import npc.Balloon
-import player.BomberMan
 sys.path.append('../')
-
 
 from libs.actor import Arena
 from libs.g2d import *
 from libs.actor import *
-from background.Wall import *
-from background.Brick import *
-import player
-import npc
+import background
 import tools
+import npc
+from player.BomberMan import *
+
 
 class Fire(Actor):
     
-    def __init__(self, pos: Point, sprt: str, arena: Arena, t: int) -> None:
+    def __init__(self, pos: Point, sprt: str, arena: Arena, t: int, bomber: BomberMan) -> None:
         
         self._sprite = sprt
         self._x, self._y = pos
         self._w, self._h = 16, 16
         self._current_clock = arena.count()
         self._end_clock = self._current_clock + 32
+        
+        self._b = bomber
         
         self._ty = t
         
@@ -117,37 +115,37 @@ class Fire(Actor):
             
             for other in arena.collisions():
                 
-                if isinstance(other, Wall) and other.pos()[0] == self._x and other.pos()[1] == (self._y-16):
+                if isinstance(other, background.Wall.Wall) and other.pos()[0] == self._x and other.pos()[1] == (self._y-16):
                     
                     up = False
                     
-                elif isinstance(other, Wall) and other.pos()[0] == self._x and other.pos()[1] == (self._y+16):
+                elif isinstance(other, background.Wall.Wall) and other.pos()[0] == self._x and other.pos()[1] == (self._y+16):
                     
                     down = False
                     
-                elif isinstance(other, Wall) and other.pos()[0] == (self._x-16) and other.pos()[1] == self._y:
+                elif isinstance(other, background.Wall.Wall) and other.pos()[0] == (self._x-16) and other.pos()[1] == self._y:
                     
                     left = False
                     
-                elif isinstance(other, Wall) and other.pos()[0] == (self._x+16) and other.pos()[1] == self._y:
+                elif isinstance(other, background.Wall.Wall) and other.pos()[0] == (self._x+16) and other.pos()[1] == self._y:
                     
                     right = False
                     
             if up:
                 
-                arena.spawn(Fire((pos[0], pos[1]-16), sprt, arena, 1))
+                arena.spawn(Fire((pos[0], pos[1]-16), sprt, arena, 1, self._b))
                 
             if down:
                 
-                arena.spawn(Fire((pos[0], pos[1]+16), sprt, arena, 2))
+                arena.spawn(Fire((pos[0], pos[1]+16), sprt, arena, 2, self._b))
             
             if left:
                 
-                arena.spawn(Fire((pos[0]-16, pos[1]), sprt, arena, 3))
+                arena.spawn(Fire((pos[0]-16, pos[1]), sprt, arena, 3, self._b))
             
             if right:
                 
-                arena.spawn(Fire((pos[0]+16, pos[1]), sprt, arena, 4))
+                arena.spawn(Fire((pos[0]+16, pos[1]), sprt, arena, 4, self._b))
             
             
             
@@ -194,7 +192,7 @@ class Fire(Actor):
         
         for other in arena.collisions():
                 
-            if (isinstance(other, npc.Balloon.Balloon) or isinstance(other, Brick) and (other.pos()[0] == self._x and other.pos()[1] == self._y)):
+            if (isinstance(other, npc.Balloon.Balloon) or isinstance(other, background.Brick.Brick) and (other.pos()[0] == self._x and other.pos()[1] == self._y)):
                     
                 other.hit(arena)
                 
@@ -236,4 +234,4 @@ class Fire(Actor):
     
     def draw(self) -> None:
         
-        draw_image(self._sprite, (self._x, self._y), self._currentsprite, (self._w, self._h))
+        draw_image(self._sprite, (self._x + self._b.getOffset(), self._y), self._currentsprite, (self._w, self._h))
