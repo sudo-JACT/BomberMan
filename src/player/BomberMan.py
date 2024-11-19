@@ -1,5 +1,13 @@
+import os
 import sys
-sys.path.append('../')
+
+if os.name != "nt":
+
+    sys.path.append('../')
+    
+else:
+    
+    sys.path.append('..\\')
 
 
 import background.Brick
@@ -93,7 +101,15 @@ class BomberMan(Actor):
                 
                 if isinstance(other, npc.Balloon.Balloon) or isinstance(other, tools.Fire.Fire):
                     
-                    self.hit(arena)
+                    if isinstance(other, Fire):
+                        
+                        if (self._x + 16) != other.pos()[0] and (self._y + 16) != other.pos()[1]:
+                            
+                            self.hit(arena)
+                        
+                    else:
+                    
+                        self.hit(arena)
 
             keys = arena.current_keys()
             
@@ -214,15 +230,19 @@ class BomberMan(Actor):
 
     def draw(self) -> None:
         
-        draw_image(self._sprite, (self._x, self._y), self._current_sprite, (self._w, self._h))
+        draw_image(self._sprite, ((self._x + self.getOffset()), self._y), self._current_sprite, (self._w, self._h))
         
     def getOffset(self) -> int:
         
-        if self._x > (self._c[0] / 2) and self._x < self._a.size()[0] - (self._c[0] / 2):
+        if self._x > (self._c[0] / 2) and self._x <= self._a.size()[0] - (self._c[0] / 2):
             
-           return 0 #self._x - self._a.size()[0
+           return -1 * (self._x - (self._c[0] / 2))
             
+        
+        elif self._x >= (self._a.size()[0] - (self._c[0] / 2)):
             
-        else:
+            return -1 * (self._a.size()[0] - self._c[0])
+        
+        else: 
             
             return 0

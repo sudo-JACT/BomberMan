@@ -1,7 +1,13 @@
+import os
 import sys
 
-import player.BomberMan
-sys.path.append('../')
+if os.name != "nt":
+    
+    sys.path.append('../')
+    
+else:
+    
+    sys.path.append('..\\')
 
 
 from libs.actor import *

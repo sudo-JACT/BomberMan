@@ -1,16 +1,25 @@
+import os
 import sys
-sys.path.append('../')
+
+if os.name != "nt":
+    
+    sys.path.append('../')
+    
+else:
+    
+    sys.path.append('..\\')
+
 from libs.g2d import *
 from libs.actor import *
 from background.Wall import *
 from background.Brick import *
 from random import choice
 from tools.Bomb import *
-from player.BomberMan import *
+import player
 
 class Balloon(Actor):
     
-    def __init__(self, x0: int, y0: int, sprite_src: str, arena: Arena, bomber: BomberMan) -> None:
+    def __init__(self, x0: int, y0: int, sprite_src: str, arena: Arena, bomber: player.BomberMan.BomberMan) -> None:
         self._x = x0 
         self._y = y0
         self._speed = 2
@@ -115,9 +124,20 @@ class Balloon(Actor):
         if not 0 <= self._y + self._dy <= ah - self._h:
             self._dy = -self._dy
             
-        if self._x % 16 == 0 and (self._y + 24) % 16 == 0:
+        if self._x % 16 == 0 and (self._y - 24) % 16 == 0:
             
             d = choice([1, 2, 3, 4])
+            
+            
+            for other in arena.collisions():
+                
+                if isinstance(other, tools.Fire.Fire):
+                        
+                    if (self._x + 16) != other.pos()[0] and (self._y + 16) != other.pos()[1]:
+                            
+                            self.hit(arena)
+                        
+            
             
             match d:
                 
@@ -169,7 +189,7 @@ class Balloon(Actor):
 
     def draw(self) -> None:
         
-        draw_image(self._sprite, ((self._x + self._b.getOffset()), self._y)), self._current_sprite, (self._w, self._h)
+        draw_image(self._sprite, ((self._x + self._b.getOffset()), self._y), self._current_sprite, (self._w, self._h))
         
     def hit(self, arena: Arena) -> None:
         

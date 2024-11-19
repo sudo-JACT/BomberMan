@@ -1,5 +1,13 @@
+import os
 import sys
-sys.path.append('../')
+
+if os.name != "nt":
+    
+    sys.path.append('../')
+    
+else:
+    
+    sys.path.append('..\\')
 
 import player 
 from libs.g2d import *

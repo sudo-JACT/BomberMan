@@ -1,5 +1,13 @@
+import os
 import sys
-sys.path.append('../')
+
+if os.name != "nt":
+    
+    sys.path.append('../')
+    
+else:
+    
+    sys.path.append('..\\')
 
 from libs.actor import Arena
 from libs.g2d import *
@@ -7,12 +15,12 @@ from libs.actor import *
 import background
 import tools
 import npc
-from player.BomberMan import *
+import player
 
 
 class Fire(Actor):
     
-    def __init__(self, pos: Point, sprt: str, arena: Arena, t: int, bomber: BomberMan) -> None:
+    def __init__(self, pos: Point, sprt: str, arena: Arena, t: int, bomber: player) -> None:
         
         self._sprite = sprt
         self._x, self._y = pos
@@ -192,7 +200,7 @@ class Fire(Actor):
         
         for other in arena.collisions():
                 
-            if (isinstance(other, npc.Balloon.Balloon) or isinstance(other, background.Brick.Brick) and (other.pos()[0] == self._x and other.pos()[1] == self._y)):
+            if isinstance(other, background.Brick.Brick) and (other.pos()[0] == self._x and other.pos()[1] == self._y):
                     
                 other.hit(arena)
                 
