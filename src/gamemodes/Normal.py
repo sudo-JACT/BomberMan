@@ -12,9 +12,11 @@ else:
 from libs.g2d import *
 from libs.actor import *
 from npc.Balloon import *
+from npc.Face import *
 from player.BomberMan import *
 from background.Wall import *
 from background.Brick import *
+from tools.PowerUps import *
 
 
 def tick():
@@ -43,8 +45,16 @@ def Normal(w: int, h: int, arena: Arena, imgsrc: str, wc: int, hc: int):
     b = BomberMan((16, 40), img_src, ["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight", "b"], (wc, hc), arena)
     
     arena.spawn(b)
+    
+    arena.spawn(WallPass((16, 72), img_src, 3, arena, b))
+    arena.spawn(BombUp((16, 88), img_src, 0, arena, b))
+    arena.spawn(BombPass((16, 104), img_src, 5, arena, b))
+    arena.spawn(SpeedUp((16, 120), img_src, 2, arena, b))
 
     arena.spawn(Balloon(128, 168, img_src, arena, b))
+    arena.spawn(Face(144, 184, img_src, arena, b))
+
+    
     
     for i in range(int(AH / 16)):
         

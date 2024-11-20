@@ -26,7 +26,7 @@ class Fire(Actor):
         self._x, self._y = pos
         self._w, self._h = 16, 16
         self._current_clock = arena.count()
-        self._end_clock = self._current_clock + 32
+        self._end_clock = self._current_clock + 16
         
         self._b = bomber
         
@@ -197,13 +197,6 @@ class Fire(Actor):
         
         
     def move(self, arena: Arena) -> None:
-        
-        for other in arena.collisions():
-                
-            if isinstance(other, background.Brick.Brick) and (other.pos()[0] == self._x and other.pos()[1] == self._y):
-                    
-                other.hit(arena)
-                
         
         self._current_clock += 1 
         

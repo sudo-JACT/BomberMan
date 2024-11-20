@@ -12,7 +12,7 @@ else:
 import player 
 from libs.g2d import *
 from libs.actor import *
-from player.BomberMan import *
+import player
 from npc.Balloon import *
 from background.Wall import *
 from background.Brick import *
@@ -21,7 +21,7 @@ import tools
 class Bomb(Actor):
     
     
-    def __init__(self, pos: Point, spr: str, arena: Arena, bomber: player.BomberMan.BomberMan) -> None:
+    def __init__(self, pos: Point, spr: str, arena: Arena, bomber: player) -> None:
         
         self._sprite = spr
         self._w, self._h = 16, 16
@@ -61,6 +61,8 @@ class Bomb(Actor):
         
         
         if self._current_clock == self._end_clock:
+            
+            self._b.detonated()
             
             arena.kill(self)
             

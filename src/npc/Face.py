@@ -16,9 +16,8 @@ from background.Brick import *
 from random import choice
 from tools.Bomb import *
 import player
-from npc.Enemy import Enemy
 
-class Balloon(Actor, Enemy):
+class Face(Actor):
     
     def __init__(self, x0: int, y0: int, sprite_src: str, arena: Arena, bomber: player.BomberMan.BomberMan) -> None:
         self._x = x0 
@@ -52,23 +51,23 @@ class Balloon(Actor, Enemy):
         
         self._left_animations = {
             
-            0: (48, 240),
-            1: (64, 240),
-            2: (80, 240),
+            0: (48, 288),
+            1: (64, 288),
+            2: (80, 288),
             
         }
         
         self._right_animations = {
             
-            0: (0, 240),
-            1: (16, 240),
-            2: (32, 240),
+            0: (0, 288),
+            1: (16, 288),
+            2: (32, 288),
             
         }
         
         self._death_animations = {
             
-            0: (96, 240),
+            0: (96, 288),
             1: (112, 240),
             2: (128, 240),
             3: (144, 240),

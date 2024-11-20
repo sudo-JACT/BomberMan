@@ -1,6 +1,8 @@
 import os
 import sys
 
+import npc.Enemy
+
 if os.name != "nt":
 
     sys.path.append('../')
@@ -35,15 +37,19 @@ class BomberMan(Actor):
         self._end_clock = 0
         self._co = 0
         
+        self._max_bomb_spawnrate = 1
+        self._spawned_all_the_bombs = False
+        self._bomb_at_the_moment = 0
+        
+        self._wallpass = False
+        self._bombpass = False
+        
         self._c = canvas_size
         self._a = arena
         
         self._keys = keys
         
-        self._up = 0
-        self._down = 0
-        self._left = 0
-        self._right = 0
+        self._up = self._down = self._left = self._right = 0
         
         self._front_animations = {
             
@@ -99,7 +105,7 @@ class BomberMan(Actor):
             
             for other in arena.collisions():
                 
-                if isinstance(other, npc.Balloon.Balloon) or isinstance(other, tools.Fire.Fire):
+                if isinstance(other, npc.Enemy.Enemy) or isinstance(other, tools.Fire.Fire):
                     
                     if isinstance(other, Fire):
                         
@@ -115,7 +121,7 @@ class BomberMan(Actor):
             
             for other in arena.collisions():
                 
-                if isinstance(other, background.Wall.Wall) or isinstance(other, background.Brick.Brick) or isinstance(other, tools.Bomb.Bomb):
+                if isinstance(other, background.Wall.Wall) or (isinstance(other, background.Brick.Brick) and not(self._wallpass)) or (isinstance(other, tools.Bomb.Bomb) and not(self._bombpass)):
                     
                     if not(isinstance(other, tools.Bomb.Bomb) and other.get_current_clock() <= (other.get_end_clock() - 85)):    
                             
@@ -151,6 +157,7 @@ class BomberMan(Actor):
                 
                 self._current_sprite = self._front_animations[(self._down % 3)]
                 self._down +=1
+                play_audio("../sounds/Bomberman SFX (1).wav", False)
                 
                 if path_d:
                     
@@ -178,7 +185,11 @@ class BomberMan(Actor):
                 
             elif self._keys[4] in keys and (self._x % 16 == 0 and (self._y + 24) % 16 == 0):
                 
-                arena.spawn(tools.Bomb.Bomb((self._x, self._y), self._sprite, arena, self))
+                if self._bomb_at_the_moment <= self._max_bomb_spawnrate:
+                
+                    arena.spawn(tools.Bomb.Bomb((self._x, self._y), self._sprite, arena, self))
+                    
+                    self._bomb_at_the_moment += 1
             
             aw, ah = arena.size()
             self._x = min(max(self._x, 0), aw - self._w) 
@@ -246,3 +257,26 @@ class BomberMan(Actor):
         else: 
             
             return 0
+        
+    def setWallPass(self):
+        
+        self._wallpass = True
+        
+    def detonated(self):
+        
+        self._bomb_at_the_moment -= 1
+        
+    def setMaxBomb(self):
+        
+        if self._max_bomb_spawnrate < 10:
+            
+            self._max_bomb_spawnrate += 1
+            
+    def setBombPass(self):
+        
+        self._bombpass = True
+        
+    def setSpeed(self):
+        
+        self._speed += 2
+        

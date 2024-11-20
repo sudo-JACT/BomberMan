@@ -16,9 +16,8 @@ from background.Brick import *
 from random import choice
 from tools.Bomb import *
 import player
-from npc.Enemy import Enemy
 
-class Balloon(Actor, Enemy):
+class Balloon(Actor):
     
     def __init__(self, x0: int, y0: int, sprite_src: str, arena: Arena, bomber: player.BomberMan.BomberMan) -> None:
         self._x = x0 
