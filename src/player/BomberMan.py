@@ -159,7 +159,7 @@ class BomberMan(Actor):
                 
                 self._current_sprite = self._front_animations[(self._down % 3)]
                 self._down +=1
-                play_audio("../sounds/Bomberman SFX (1).wav", False)
+                play_audio("./sounds/Bomberman SFX (1).wav", False)
                 
                 if path_d:
                     

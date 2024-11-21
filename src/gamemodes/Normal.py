@@ -1,13 +1,13 @@
 import os
 import sys
 
-if os.name != "nt":
+#if os.name != "nt":
     
-    sys.path.append('../')
+#    sys.path.append('../')
     
-else:
+#else:
     
-    sys.path.append('..\\')
+#    sys.path.append('..\\')
 
 from libs.g2d import *
 from libs.actor import *
@@ -17,6 +17,9 @@ from player.BomberMan import *
 from background.Wall import *
 from background.Brick import *
 from tools.PowerUps import *
+
+global aaaa
+aaaa = False
 
 
 def tick():
@@ -28,17 +31,17 @@ def tick():
     draw_rect((0, 0), (496, 32))
     
     set_color((0, 0, 0))
-    draw_text("test:100", (51, 17), 8, "../fonts/nintendo-nes-font/nintendo-nes-font.ttf")
+    draw_text(f"Time {32}      {55}       Left {83}", (51, 17), 8, "./fonts/nintendo-nes-font/nintendo-nes-font.ttf")
     set_color((255, 255, 255))
-    draw_text("test:100", (50, 16), 8, "../fonts/nintendo-nes-font/nintendo-nes-font.ttf")
+    draw_text(f"Time {32}      {55}       Left {83}", (50, 16), 8, "./fonts/nintendo-nes-font/nintendo-nes-font.ttf")
     
-    for a in arena.actors():
+    for a in aa.actors():
         if a != None:
             #draw_image("./bomberman.png", a.pos(), (a.sprite()), a.size())
             a.draw()
         
 
-    arena.tick(current_keys())  # Game logic
+    aa.tick(current_keys())  # Game logic
 
 
 def Normal(w: int, h: int, arena: Arena, imgsrc: str, wc: int, hc: int):
@@ -109,7 +112,28 @@ def Normal(w: int, h: int, arena: Arena, imgsrc: str, wc: int, hc: int):
                     if (s == 1 or s == -1) and y*16 != 0 and y*16 != arena.size()[1]:# and ((x != 1 and y != 1) or ((x != 1 and y != 2) or (x != 2 and y != 1))):
                         
                         arena.spawn(Brick((x*16, (y * 16)+24), img_src, b))"""
-                
+            
+
+def lol(w: int, h: int, wc: int, hc: int, arena: Arena):
+
+    global aaaa, aa
+    
+    img = "./imgs/bomberman.png"
+    
+    w, h = w, h
+    
+    wc, hc = wc, hc
+
+    
+    if not(aaaa):
+    
+        aa = arena
+    
+        Normal(w, h, aa, img, wc, hc)
+        
+        aaaa = True
+    
+    tick()
 
 if __name__ == "__main__":
     
