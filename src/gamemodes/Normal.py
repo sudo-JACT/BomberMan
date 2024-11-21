@@ -27,6 +27,11 @@ def tick():
     set_color((189, 190, 189))
     draw_rect((0, 0), (496, 32))
     
+    set_color((0, 0, 0))
+    draw_text("test:100", (51, 17), 8, "../fonts/nintendo-nes-font/nintendo-nes-font.ttf")
+    set_color((255, 255, 255))
+    draw_text("test:100", (50, 16), 8, "../fonts/nintendo-nes-font/nintendo-nes-font.ttf")
+    
     for a in arena.actors():
         if a != None:
             #draw_image("./bomberman.png", a.pos(), (a.sprite()), a.size())
@@ -53,7 +58,7 @@ def Normal(w: int, h: int, arena: Arena, imgsrc: str, wc: int, hc: int):
 
     arena.spawn(Balloon(128, 168, img_src, arena, b))
     arena.spawn(Face(144, 184, img_src, arena, b))
-
+    
     
     
     for i in range(int(AH / 16)):

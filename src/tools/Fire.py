@@ -1,6 +1,10 @@
 import os
 import sys
 
+import background.Wall
+import npc.Balloon
+import player.BomberMan
+
 if os.name != "nt":
     
     sys.path.append('../')
@@ -9,6 +13,7 @@ else:
     
     sys.path.append('..\\')
 
+import background.Brick
 from libs.actor import Arena
 from libs.g2d import *
 from libs.actor import *
@@ -121,39 +126,137 @@ class Fire(Actor):
             
             up = down = left = right = True
             
+            maxu = maxd = maxl = maxr = 0
+            
+            r = True
+            
             for other in arena.collisions():
                 
-                if isinstance(other, background.Wall.Wall) and other.pos()[0] == self._x and other.pos()[1] == (self._y-16):
+                if (isinstance(other, background.Wall.Wall) or isinstance(other, background.Brick.Brick)) and (other.pos()[0] == self._x and other.pos()[1] == (self._y-16)):
                     
-                    up = False
+                    if isinstance(other, background.Brick.Brick):
+                        
+                        for x in range(self._b.getMaxFire()):
+                            
+                        
+                            if isinstance(other, background.Brick.Brick) and (other.pos()[0] == self._x and other.pos()[1] == (self._y-(16*(x+1)))):
+                            
+                                maxu = False
+                        
+                    else:
                     
-                elif isinstance(other, background.Wall.Wall) and other.pos()[0] == self._x and other.pos()[1] == (self._y+16):
+                        up = False
                     
-                    down = False
+                elif (isinstance(other, background.Wall.Wall) or isinstance(other, background.Brick.Brick)) and (other.pos()[0] == self._x and other.pos()[1] == (self._y+16)):
                     
-                elif isinstance(other, background.Wall.Wall) and other.pos()[0] == (self._x-16) and other.pos()[1] == self._y:
+                    if isinstance(other, background.Brick.Brick):
+                        
+                        maxd = False
+                        
+                    else:
                     
-                    left = False
+                        down = False
                     
-                elif isinstance(other, background.Wall.Wall) and other.pos()[0] == (self._x+16) and other.pos()[1] == self._y:
+                elif (isinstance(other, background.Wall.Wall) or isinstance(other, background.Brick.Brick)) and (other.pos()[0] == (self._x-16) and other.pos()[1] == self._y):
+                    
+                    if isinstance(other, background.Brick.Brick):
+                        
+                        maxl = False
+                        
+                    else:
+                    
+                        left = False
+                    
+                if isinstance(other, background.Wall.Wall) and (other.pos()[0] == (self._x+16) and other.pos()[1] == self._y): 
                     
                     right = False
+                        
+                else:
+                    
+                    print(maxr)
+                    print(r)
+                    print(self._b.getMaxFire())
+                    
+                    print(arena.collisions())
+                    
+                    while (maxr < self._b.getMaxFire()) and (r):
+                        print(self._x)
+                        print(self._y)
+                        print(other.pos()[0])
+                        print(other.pos()[1])
+                        if ((other.pos()[0]+(16*(maxr))) == (self._x+(16*(maxr+1))) and other.pos()[1] == (self._y)) and (isinstance(other, background.Brick.Brick) or isinstance(other, background.Wall.Wall)):
+                            
+                            r = False
+                                
+                            print(r)
+                            print(maxr)
+                                
+                        else:
+                                
+                            maxr += 1
+                        
                     
             if up:
                 
-                arena.spawn(Fire((pos[0], pos[1]-16), sprt, arena, 1, self._b))
+                iu = 0
+                
+                if maxu:
+                
+                    for x in range(self._b.getMaxFire()):
+                    
+                        arena.spawn(Fire((pos[0], pos[1]-(16*(iu+1))), sprt, arena, 5, self._b))
+                        
+                        iu += 1
+                
+                arena.spawn(Fire((pos[0], pos[1]-(16*(iu+1))), sprt, arena, 1, self._b))
                 
             if down:
                 
-                arena.spawn(Fire((pos[0], pos[1]+16), sprt, arena, 2, self._b))
+                id = 0
+                
+                if maxd:
+                
+                    for x in range(self._b.getMaxFire()):
+                    
+                        arena.spawn(Fire((pos[0], pos[1]+(16*(id+1))), sprt, arena, 6, self._b))
+                        
+                        id += 1
+                
+                arena.spawn(Fire((pos[0], pos[1]+(16*(id+1))), sprt, arena, 2, self._b))
             
             if left:
                 
-                arena.spawn(Fire((pos[0]-16, pos[1]), sprt, arena, 3, self._b))
+                il = 0
+                
+                if maxl:
+                
+                    for x in range(self._b.getMaxFire()):
+                    
+                        arena.spawn(Fire((pos[0]-(16*(il+1)), pos[1]), sprt, arena, 7, self._b))
+                        
+                        il += 1
+                
+                arena.spawn(Fire((pos[0]-(16*(il+1)), pos[1]), sprt, arena, 3, self._b))
             
             if right:
                 
-                arena.spawn(Fire((pos[0]+16, pos[1]), sprt, arena, 4, self._b))
+                ir = 0
+
+                if r:
+                
+                    for x in range(self._b.getMaxFire()):
+                    
+                        arena.spawn(Fire((pos[0]+(16*(ir+1)), pos[1]), sprt, arena, 8, self._b))
+                        ir += 1
+                        
+                else:
+                    
+                    for x in range(maxr):
+                        
+                        arena.spawn(Fire((pos[0]+(16*(ir+1)), pos[1]), sprt, arena, 8, self._b))
+                        ir += 1
+                
+                arena.spawn(Fire((pos[0]+(16*(ir+1)), pos[1]), sprt, arena, 4, self._b))
             
             
             
@@ -194,11 +297,50 @@ class Fire(Actor):
                 self._ls.append(self._sprites_x_2[x])
         
             self._currentsprite = self._ls[0]
+            
+        elif self._ty == 5:
+            
+            for x in self._sprites_my_1:
+                
+                self._ls.append(self._sprites_my_1[x])
+        
+            self._currentsprite = self._ls[0]
+            
+        elif self._ty == 6:
+            
+            for x in self._sprites_y_1:
+                
+                self._ls.append(self._sprites_y_1[x])
+        
+            self._currentsprite = self._ls[0]
+            
+        elif self._ty == 7:
+            
+            for x in self._sprites_mx_1:
+                
+                self._ls.append(self._sprites_mx_1[x])
+        
+            self._currentsprite = self._ls[0]
+            
+        elif self._ty == 8:
+            
+            for x in self._sprites_x_1:
+                
+                self._ls.append(self._sprites_x_1[x])
+        
+            self._currentsprite = self._ls[0]
+            
         
         
     def move(self, arena: Arena) -> None:
         
         self._current_clock += 1 
+        
+        for other in arena.collisions():
+                
+                if isinstance(other, background.Brick.Brick) and (other.pos()[0] == self._x and other.pos()[1] == (self._y)):
+                    
+                    arena.kill(self)
         
            
         

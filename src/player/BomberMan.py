@@ -37,6 +37,8 @@ class BomberMan(Actor):
         self._end_clock = 0
         self._co = 0
         
+        self._max_fire = 3
+        
         self._max_bomb_spawnrate = 1
         self._spawned_all_the_bombs = False
         self._bomb_at_the_moment = 0
@@ -258,25 +260,33 @@ class BomberMan(Actor):
             
             return 0
         
-    def setWallPass(self):
+    def setWallPass(self) -> None:
         
         self._wallpass = True
         
-    def detonated(self):
+    def detonated(self) -> None:
         
         self._bomb_at_the_moment -= 1
         
-    def setMaxBomb(self):
+    def setMaxBomb(self) -> None:
         
         if self._max_bomb_spawnrate < 10:
             
             self._max_bomb_spawnrate += 1
             
-    def setBombPass(self):
+    def setBombPass(self) -> None:
         
         self._bombpass = True
         
-    def setSpeed(self):
+    def setSpeed(self) -> None:
         
         self._speed += 2
+        
+    def getMaxFire(self) -> int:
+        
+        return self._max_fire
+    
+    def setMaxFire(self) -> None:
+        
+        self._max_fire += 1
         
