@@ -4,6 +4,7 @@ from player.BomberMan import BomberMan
 from gamemodes import *"""
 from libs.actor import *
 from gamemodes.Normal import start
+from player.BomberMan import BomberMan
 
 global n, w, h, wc, hc, select, c
 n = False
@@ -52,11 +53,16 @@ def t() -> None:
     
         }
         
-        if c < 256:
+        if c < 256 and n:
         
             games[0]
             
             c += 1
+            
+        else:
+            
+            n = False
+            c = 256
     
     else:
         
@@ -95,7 +101,9 @@ if __name__ == "__main__":
     
     wc, hc = 256, 224
     
-    global arena
+    global arena, b
+    
+    b = BomberMan((16, 40), img_src, ["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight", "b"], (wc, hc), arena, 3)  # to do passare bomberman a normal per avere accesso alle vite in main
     
     arena = Arena((w, h))
     
