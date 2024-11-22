@@ -50,7 +50,7 @@ def Normal(w: int, h: int, arena: Arena, imgsrc: str, wc: int, hc: int):
     
     AW, AH = w, h-16
     
-    b = BomberMan((16, 40), img_src, ["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight", "b"], (wc, hc), arena)
+    b = BomberMan((16, 40), img_src, ["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight", "b"], (wc, hc), arena, 3)
     
     arena.spawn(b)
     
@@ -114,7 +114,7 @@ def Normal(w: int, h: int, arena: Arena, imgsrc: str, wc: int, hc: int):
                         arena.spawn(Brick((x*16, (y * 16)+24), img_src, b))"""
             
 
-def lol(w: int, h: int, wc: int, hc: int, arena: Arena):
+def start(w: int, h: int, wc: int, hc: int, arena: Arena):
 
     global aaaa, aa
     

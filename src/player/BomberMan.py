@@ -26,7 +26,7 @@ import background
 
 class BomberMan(Actor):
     
-    def __init__(self, pos: Point, sprite_src: str, keys: list[str], canvas_size: Point, arena: Arena) -> None:
+    def __init__(self, pos: Point, sprite_src: str, keys: list[str], canvas_size: Point, arena: Arena, lives: int) -> None:
         self._x, self._y = pos
         self._dx = self._dy = 0
         self._w, self._h = 16, 16
@@ -36,12 +36,16 @@ class BomberMan(Actor):
         self._dead_clock = 0
         self._end_clock = 0
         self._co = 0
+    
+        self._lives = lives
         
         self._max_fire = 3
         
         self._max_bomb_spawnrate = 1
         self._spawned_all_the_bombs = False
         self._bomb_at_the_moment = 0
+        
+        self._immortal = False
         
         self._wallpass = False
         self._bombpass = False
@@ -220,14 +224,22 @@ class BomberMan(Actor):
                 
             if self._dead_clock >= self._end_clock:
                 
+                
+                
                 arena.kill(self)
 
 
     def hit(self, arena: Arena):
         
-        self._dead_clock = arena.count()
-        self._end_clock = self._dead_clock + 49
-        self._isdead = True
+        if not(self._immortal):
+                
+            self._lives -= 1
+        
+            self._dead_clock = arena.count()
+            self._end_clock = self._dead_clock + 49
+            self._isdead = True
+            
+            
         
         
         
@@ -289,4 +301,16 @@ class BomberMan(Actor):
     def setMaxFire(self) -> None:
         
         self._max_fire += 1
+        
+    def getLives(self) -> int:
+        
+        return self._lives
+    
+    def moreLives(self) -> None:
+        
+        self._lives += 1
+        
+    def setLives(self, l) -> None:
+        
+        self._lives = l
         
