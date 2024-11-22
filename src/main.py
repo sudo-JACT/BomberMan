@@ -53,16 +53,7 @@ def t() -> None:
     
         }
         
-        if c < 256 and n:
-        
-            games[0]
-            
-            c += 1
-            
-        else:
-            
-            n = False
-            c = 256
+        games[0]
     
     else:
         
@@ -101,9 +92,10 @@ if __name__ == "__main__":
     
     wc, hc = 256, 224
     
-    global arena, b
+    #global arena, b
+    global arena
     
-    b = BomberMan((16, 40), img_src, ["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight", "b"], (wc, hc), arena, 3)  # to do passare bomberman a normal per avere accesso alle vite in main
+    #b = BomberMan((16, 40), img_src, ["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight", "b"], (wc, hc), arena, 3)  # to do passare bomberman a normal per avere accesso alle vite in main
     
     arena = Arena((w, h))
     
