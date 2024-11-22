@@ -17,6 +17,7 @@ from player.BomberMan import *
 from background.Wall import *
 from background.Brick import *
 from tools.PowerUps import *
+from libs.datahandler import *
 
 global aaaa
 aaaa = False
@@ -31,9 +32,9 @@ def tick():
     draw_rect((0, 0), (496, 32))
     
     set_color((0, 0, 0))
-    draw_text(f"Time {32}      {55}       Left {83}", (51, 17), 8, "./fonts/nintendo-nes-font/nintendo-nes-font.ttf")
+    draw_text(f"Time {32}      {55}       Left {b.getLives()}", (51, 17), 8, "./fonts/nintendo-nes-font/nintendo-nes-font.ttf")
     set_color((255, 255, 255))
-    draw_text(f"Time {32}      {55}       Left {83}", (50, 16), 8, "./fonts/nintendo-nes-font/nintendo-nes-font.ttf")
+    draw_text(f"Time {32}      {55}       Left {b.getLives()}", (50, 16), 8, "./fonts/nintendo-nes-font/nintendo-nes-font.ttf")
     
     for a in aa.actors():
         if a != None:
@@ -50,7 +51,11 @@ def Normal(w: int, h: int, arena: Arena, imgsrc: str, wc: int, hc: int):
     
     AW, AH = w, h-16
     
+    global b
+    
     b = BomberMan((16, 40), img_src, ["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight", "b"], (wc, hc), arena, 3)
+    
+    saveState(b)
     
     arena.spawn(b)
     

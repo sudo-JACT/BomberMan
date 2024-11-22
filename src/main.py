@@ -9,8 +9,6 @@ global n, w, h, wc, hc, select
 n = False
 select = 0
 
-
-
 def t() -> None:
     
     global n, select
@@ -38,9 +36,9 @@ def t() -> None:
         
         select += 1
         
-        if select > 3:
+        if select > 1:
             
-            select = 3
+            select = 1
         
         
     
@@ -50,27 +48,34 @@ def t() -> None:
     
             0: start(w, h, wc, hc, arena),
             #1: continue(),
-            #2: battle(),
-            #3: credits(),
     
         }
         
         games[0]
     
     else:
+        
+        positions = {
+            
+            0: (64, 152),
+            1: (128, 152),
+            
+        }
     
         change_canvas_color(0, 0, 0)   
 
-        set_color((245, 190, 49))
-        draw_rect((16, 16), (224, 120)) 
-
-        set_color((168, 0, 16))   
-        draw_rect((17, 17), (222, 118)) 
-
-        set_color((240, 188, 60))
-        draw_text("LOL", (56, 34), 25, "./fonts/nintendo-nes-font/nintendo-nes-font.ttf")
+        draw_image("./imgs/NES_-_Bomberman_-_Title_Screen__Text.png", (0, 0))
         
-        draw_image("./imgs/NES_-_Bomberman_-_Title_Screen__Text.png", (112, 112 + (16*(select))), (80, 264), (7, 7))
+        draw_image("./imgs/NES_-_Bomberman_-_Title_Screen__Text.png", positions[0], (64, 163), (8, 8))
+        draw_image("./imgs/NES_-_Bomberman_-_Title_Screen__Text.png", positions[1], (64, 163), (8, 8))
+        
+        draw_image("./imgs/NES_-_Bomberman_-_Title_Screen__Text.png", positions[select], (80, 248), (8, 8))
+
+        set_color((99, 99, 99))
+        draw_text("2024  SHIBA & JKT", (161, 189), 8, "./fonts/nintendo-nes-font/nintendo-nes-font.ttf")
+        set_color((255, 255, 255))
+        draw_text("2024  SHIBA & JKT", (160, 188), 8, "./fonts/nintendo-nes-font/nintendo-nes-font.ttf")
+    
         
     arena.tick(current_keys())
 

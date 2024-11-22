@@ -26,7 +26,7 @@ import background
 
 class BomberMan(Actor):
     
-    def __init__(self, pos: Point, sprite_src: str, keys: list[str], canvas_size: Point, arena: Arena, lives: int) -> None:
+    def __init__(self, pos: Point, sprite_src: str, keys: list[str], canvas_size: Point, arena: Arena, lives: int, powerups: list[int]=[0, 0, 0, 0, 0, 0, 0, 0]) -> None:
         self._x, self._y = pos
         self._dx = self._dy = 0
         self._w, self._h = 16, 16
@@ -36,10 +36,37 @@ class BomberMan(Actor):
         self._dead_clock = 0
         self._end_clock = 0
         self._co = 0
+        
+        self._max_fire = 3
+        
+        self._powerups = powerups
+        
+        self._p = {
+            
+            0: self.bombUp(powerups[0]),
+            1: self.setMaxFire(powerups[1]),
+            2: self.setSpeed(),
+            3: self.remoteDetonator(),
+            4: self.setWallPass(),
+            5: self.setBombPass(),
+            6: self.setfirePass(),
+            7: self.setInvincible(),
+            
+        }
+        
+        for x in powerups:
+            
+            if powerups[x] != 0:
+                
+                self._p[x]
+        
+        
+        
+        self._points = 0
     
         self._lives = lives
         
-        self._max_fire = 3
+        
         
         self._max_bomb_spawnrate = 1
         self._spawned_all_the_bombs = False
@@ -224,9 +251,11 @@ class BomberMan(Actor):
                 
             if self._dead_clock >= self._end_clock:
                 
-                
-                
                 arena.kill(self)
+                
+                if self._lives >= 0:
+                    
+                    self.reSpwan()
 
 
     def hit(self, arena: Arena):
@@ -238,6 +267,8 @@ class BomberMan(Actor):
             self._dead_clock = arena.count()
             self._end_clock = self._dead_clock + 49
             self._isdead = True
+            
+            
             
             
         
@@ -272,7 +303,29 @@ class BomberMan(Actor):
             
             return 0
         
+    def setInvincible(self) -> None:
+        
+        pass
+        
+    def setfirePass(self) -> None:
+        
+        pass
+        
+    def setBombPass(self) -> None:
+        
+        pass
+        
+    def remoteDetonator(self) -> None:
+        
+        pass
+        
+    def bombUp(self, bomb: int=1):
+        
+        pass
+        
     def setWallPass(self) -> None:
+        
+        self._powerups[4] = 1
         
         self._wallpass = True
         
@@ -280,13 +333,15 @@ class BomberMan(Actor):
         
         self._bomb_at_the_moment -= 1
         
-    def setMaxBomb(self) -> None:
+    def setMaxBomb(self, fire: int=1) -> None:
         
         if self._max_bomb_spawnrate < 10:
             
             self._max_bomb_spawnrate += 1
             
     def setBombPass(self) -> None:
+        
+        self._powerups[5] = 1
         
         self._bombpass = True
         
@@ -298,9 +353,13 @@ class BomberMan(Actor):
         
         return self._max_fire
     
-    def setMaxFire(self) -> None:
+    def setMaxFire(self, max: int=1) -> None:
         
-        self._max_fire += 1
+        if self._max_fire < 10:
+        
+            self._powerups[1] += 1
+            
+            self._max_fire += max
         
     def getLives(self) -> int:
         
@@ -313,4 +372,27 @@ class BomberMan(Actor):
     def setLives(self, l) -> None:
         
         self._lives = l
+        
+    def reSpwan(self) -> None:
+        
+        self._x, self._y = 16, 40
+        self._isdead = False
+        self._current_sprite = self._front_animations[1]
+        self._dead_clock = 0
+        self._end_clock = 0
+        self._co = 0
+        
+        self._a.spawn(self)
+        
+    def addPoints(self, p: int) -> None:
+        
+        self._points += p
+        
+    def getPoints(self) -> int:
+        
+        return self._points
+    
+    def getPowerUp(self) -> list[int]:
+        
+        return self._powerups
         
