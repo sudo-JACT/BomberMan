@@ -19,11 +19,36 @@ from background.Brick import *
 from tools.PowerUps import *
 from libs.datahandler import *
 
-global aaaa
+global aaaa, c
 aaaa = False
+c = 256
 
+
+def start(w: int, h: int, wc: int, hc: int, arena: Arena):
+    
+    global aaaa, aa
+    
+    img = "./imgs/bomberman.png"
+    
+    w, h = w, h
+    
+    wc, hc = wc, hc
+
+    
+    if not(aaaa):
+        
+        aa = arena
+    
+        Normal(w, h, aa, img, wc, hc)
+        
+        aaaa = True
+    
+    tick()
+ 
 
 def tick():
+    
+    global c
     
     clear_canvas()
     change_canvas_color(60, 123, 1)
@@ -32,9 +57,9 @@ def tick():
     draw_rect((0, 0), (496, 32))
     
     set_color((0, 0, 0))
-    draw_text(f"Time {32}      {55}       Left {b.getLives()}", (51, 17), 8, "./fonts/nintendo-nes-font/nintendo-nes-font.ttf")
+    draw_text(f"Time {c}      {b.getPoints()}       Left {b.getLives()}", (121, 17), 8, "./fonts/nintendo-nes-font/nintendo-nes-font.ttf")
     set_color((255, 255, 255))
-    draw_text(f"Time {32}      {55}       Left {b.getLives()}", (50, 16), 8, "./fonts/nintendo-nes-font/nintendo-nes-font.ttf")
+    draw_text(f"Time {c}      {b.getPoints()}       Left {b.getLives()}", (120, 16), 8, "./fonts/nintendo-nes-font/nintendo-nes-font.ttf")
     
     for a in aa.actors():
         if a != None:
@@ -43,6 +68,9 @@ def tick():
         
 
     aa.tick(current_keys())  # Game logic
+    
+    c -= 1
+
 
 
 def Normal(w: int, h: int, arena: Arena, imgsrc: str, wc: int, hc: int):
@@ -119,27 +147,6 @@ def Normal(w: int, h: int, arena: Arena, imgsrc: str, wc: int, hc: int):
                         arena.spawn(Brick((x*16, (y * 16)+24), img_src, b))"""
             
 
-def start(w: int, h: int, wc: int, hc: int, arena: Arena):
-
-    global aaaa, aa
-    
-    img = "./imgs/bomberman.png"
-    
-    w, h = w, h
-    
-    wc, hc = wc, hc
-
-    
-    if not(aaaa):
-    
-        aa = arena
-    
-        Normal(w, h, aa, img, wc, hc)
-        
-        aaaa = True
-    
-    tick()
-
 if __name__ == "__main__":
     
     img = "../imgs/bomberman.png"
@@ -147,7 +154,7 @@ if __name__ == "__main__":
     w, h = 496, 224
     
     wc, hc = 256, 224
-    
+
     global arena
     
     arena = Arena((w, h))

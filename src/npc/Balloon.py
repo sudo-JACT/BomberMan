@@ -256,6 +256,8 @@ class Balloon(Actor, Enemy):
                 
             if self._dead_clock >= self._end_clock:
                 
+                self._b.addPoints(self.getPoints())
+                
                 arena.kill(self)
         
 
