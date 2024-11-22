@@ -5,13 +5,14 @@ from gamemodes import *"""
 from libs.actor import *
 from gamemodes.Normal import start
 
-global n, w, h, wc, hc, select
+global n, w, h, wc, hc, select, c
 n = False
 select = 0
+c = 0
 
 def t() -> None:
     
-    global n, select
+    global n, select, c
     
     print(n)
     
@@ -51,7 +52,11 @@ def t() -> None:
     
         }
         
-        games[0]
+        if c < 256:
+        
+            games[0]
+            
+            c += 1
     
     else:
         
