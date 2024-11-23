@@ -167,7 +167,7 @@ def Normal(w: int, h: int, arena: Arena, imgsrc: str, wc: int, hc: int, bomber: 
                         arena.spawn(Brick((x*16, (y * 16)+24), img_src, b))"""
             
 
-if __name__ == "__main__":
+"""if __name__ == "__main__":
     
     img = "../imgs/bomberman.png"
     
@@ -187,4 +187,4 @@ if __name__ == "__main__":
     
     change_canvas_color(60, 123, 1)
     
-    main_loop(tick)
+    main_loop(tick)"""

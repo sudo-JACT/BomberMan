@@ -1,18 +1,5 @@
 import os
 import sys
-
-import background.Wall
-import npc.Balloon
-import player.BomberMan
-
-if os.name != "nt":
-    
-    sys.path.append('../')
-    
-else:
-    
-    sys.path.append('..\\')
-
 import background.Brick
 from libs.actor import Arena
 from libs.g2d import *

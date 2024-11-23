@@ -3,13 +3,13 @@ import sys
 
 import npc.Enemy
 
-if os.name != "nt":
+#if os.name != "nt":
 
-    sys.path.append('../')
+#    sys.path.append('../')
     
-else:
+#else:
     
-    sys.path.append('..\\')
+#    sys.path.append('..\\')
 
 import background.Brick
 import background.Wall

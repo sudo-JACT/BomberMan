@@ -1,13 +1,13 @@
 import os
 import sys
 
-if os.name != "nt":
+#if os.name != "nt":
     
-    sys.path.append('../')
+#    sys.path.append('../')
     
-else:
+#else:
     
-    sys.path.append('..\\')
+ #   sys.path.append('..\\')
 
 from libs.g2d import *
 from libs.actor import *
