@@ -11,7 +11,6 @@ else:
     
     sys.path.append('..\\')
 
-
 import background.Brick
 import background.Wall
 from libs.g2d import *
@@ -21,7 +20,6 @@ from time import sleep
 import npc
 from tools.Fire import *
 import background
-
 
 
 class BomberMan(Actor):
@@ -88,45 +86,45 @@ class BomberMan(Actor):
         
         self._front_animations = {
             
-            0: (50, 0),
-            1: (66, 0),
-            2: (82, 0),
+            0: (48, 0),
+            1: (64, 0),
+            2: (80, 0),
 
         }
         
         self._back_animations = {
             
-            0: (50, 16),
-            1: (66, 16),
-            2: (82, 16),
+            0: (48, 16),
+            1: (64, 16),
+            2: (80, 16),
             
         }
         
         self._left_animations = {
             
-            0: (2, 0),
-            1: (18, 0),
-            2: (34, 0),
+            0: (0, 0),
+            1: (16, 0),
+            2: (32, 0),
             
         }
         
         self._right_animations = {
             
-            0: (2, 16),
-            1: (18, 16),
-            2: (34, 16),
+            0: (0, 16),
+            1: (16, 16),
+            2: (32, 16),
             
         }
         
         self._death_animations = {
             
-            0: (2, 32),
-            1: (18, 32),
-            2: (33, 32),
-            3: (50, 32),
-            4: (65, 32),
+            0: (0, 32),
+            1: (16, 32),
+            2: (32, 32),
+            3: (48, 32),
+            4: (64, 32),
             5: (80, 33),
-            6: (98, 33),
+            6: (96, 33),
             
         }
         
@@ -179,8 +177,11 @@ class BomberMan(Actor):
             
             if self._keys[0] in keys and not(self._isdead):
                 
-                self._current_sprite = self._back_animations[(self._up % 3)]
-                self._up += 1
+                self._current_sprite = self._back_animations[int(self._up % 3)]
+                self._up += 0.2
+                if (self._up>3):
+                    self._up =0
+                    play_audio("./sounds/Bomberman SFX (step1).wav")
                 
                 if path_u:
                     
@@ -190,20 +191,24 @@ class BomberMan(Actor):
                 
             elif self._keys[1] in keys  and not(self._isdead):
                 
-                self._current_sprite = self._front_animations[(self._down % 3)]
-                self._down +=1
-                play_audio("./sounds/Bomberman SFX (1).wav", False)
+                self._current_sprite = self._front_animations[int(self._down % 3)]
+                self._down +=0.2
+                if (self._down>3):
+                    self._down =0
+                    play_audio("./sounds/Bomberman SFX (step1).wav")
                 
                 if path_d:
                     
                     self._y += self._speed
                 
-                    
                 
             elif self._keys[2] in keys and not(self._isdead):
         
-                self._current_sprite = self._left_animations[(self._left % 3)]
-                self._left += 1
+                self._current_sprite = self._left_animations[int(self._left % 3)]
+                self._left += 0.3
+                if (self._left>3):
+                    self._left =0
+                    play_audio("./sounds/Bomberman SFX (step2).wav")
                 
                 if path_l:
                     
@@ -211,9 +216,11 @@ class BomberMan(Actor):
                 
             elif self._keys[3] in keys and not(self._isdead):
                 
-                self._current_sprite = self._right_animations[(self._right % 3)]
-                self._right += 1
-                
+                self._current_sprite = self._right_animations[int(self._right % 3)]
+                self._right += 0.3
+                if (self._right>3):
+                    self._right =0
+                    play_audio("./sounds/Bomberman SFX (step2).wav")
                 if path_r:
                     
                     self._x += self._speed

@@ -13,13 +13,13 @@ c = 0
 lol = True
 aud = True
 
-def t() -> None:
+def main_menu() -> None:
     
     global n, select, c, lol, b, aud
     
     if aud:
-        
-        play_audio("./sounds/American-Psycho-Why-is-not-it-possible.mp3", True)
+
+        play_audio("./sounds/1 - Track 1.mp3", True)
         aud = False
     
     print(n)
@@ -66,7 +66,7 @@ def t() -> None:
         
             games[0]
             
-            pause_audio("./sounds/American-Psycho-Why-is-not-it-possible.mp3")
+            pause_audio("./sounds/1 - Track 1.mp3")
             aud = True
             
             lol = False
@@ -116,16 +116,14 @@ if __name__ == "__main__":
     img = "./imgs/bomberman.png"
     
     w, h = 496, 224
-    
     wc, hc = 256, 224
-    
     #global arena, b
     global arena
-    
+
     arena = Arena((w, h))
-    
+
     b = BomberMan((16, 40), img, ["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight", "b"], (wc, hc), arena, 3)  # to do passare bomberman a normal per avere accesso alle vite in main
     
     init_canvas((wc, hc), 3)
     
-    main_loop(t)
+    main_loop(main_menu)

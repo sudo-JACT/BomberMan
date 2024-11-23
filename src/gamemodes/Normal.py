@@ -20,6 +20,7 @@ from tools.PowerUps import *
 from libs.datahandler import *
 
 global aaaa, c, b
+global music
 aaaa = False
 c = 256
 
@@ -51,14 +52,20 @@ def start(w: int, h: int, wc: int, hc: int, arena: Arena, bomber: BomberMan, lol
 def tick():
     
     global c
-    
+
+    global music
+    music=True
     clear_canvas()
     change_canvas_color(60, 123, 1)
     
     set_color((189, 190, 189))
     draw_rect((0, 0), (496, 32))
     
-    
+    if music:
+
+        play_audio("./sounds/3 - Track 3.mp3", True)
+        music = False
+
     
     if b.getLives() >= 0:
         
