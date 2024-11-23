@@ -27,7 +27,7 @@ c = 256
 
 def start(w: int, h: int, wc: int, hc: int, arena: Arena, bomber: BomberMan, lol: bool):
     
-    global aaaa, aa, b
+    global aaaa, aa, b,music
     
     b = bomber
     
@@ -43,7 +43,8 @@ def start(w: int, h: int, wc: int, hc: int, arena: Arena, bomber: BomberMan, lol
         aa = arena
     
         Normal(w, h, aa, img, wc, hc, bomber)
-        
+        music=True
+
         aaaa = True
     
     tick()
@@ -51,10 +52,9 @@ def start(w: int, h: int, wc: int, hc: int, arena: Arena, bomber: BomberMan, lol
 
 def tick():
     
-    global c
+    global c,music
 
-    global music
-    music=True
+
     clear_canvas()
     change_canvas_color(60, 123, 1)
     
