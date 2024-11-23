@@ -6,15 +6,21 @@ from libs.actor import *
 from gamemodes.Normal import start
 from player.BomberMan import BomberMan
 
-global n, w, h, wc, hc, select, c, lol
+global n, w, h, wc, hc, select, c, lol, aud
 n = False
 select = 0
 c = 0
 lol = True
+aud = True
 
 def t() -> None:
     
-    global n, select, c, lol, b
+    global n, select, c, lol, b, aud
+    
+    if aud:
+        
+        play_audio("./sounds/American-Psycho-Why-is-not-it-possible.mp3", True)
+        aud = False
     
     print(n)
     
@@ -59,6 +65,9 @@ def t() -> None:
         if b.getLives() >= 0 and n:
         
             games[0]
+            
+            pause_audio("./sounds/American-Psycho-Why-is-not-it-possible.mp3")
+            aud = True
             
             lol = False
             
