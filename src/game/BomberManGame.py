@@ -1,26 +1,40 @@
-import os, sys
+
+
+#from libs.g2d import *
+#from libs.actor import *
+#from player.BomberMan import *
+#from background.Wall import *
+#from background.Brick import *
+#from tools.PowerUps import *
+#from npc.Balloon import *
+#from npc.Face import *
+#from libs.datahandler import *
+
+
+import os
+import sys
+
+#if os.name != "nt":
     
-if os.name != "nt":
-
-    sys.path.append('../')
-
-else:
-
-    sys.path.append('..\\')
+#    sys.path.append('../')
+    
+#else:
+    
+#    sys.path.append('..\\')
 
 from libs.g2d import *
 from libs.actor import *
+from npc.Balloon import *
+from npc.Face import *
 from player.BomberMan import *
 from background.Wall import *
 from background.Brick import *
 from tools.PowerUps import *
-from npc.Balloon import *
-from npc.Face import *
 from libs.datahandler import *
 
 class BomberManGame(Arena):
     
-    def __init__(self, stageN: int, size: Point=(496, 224), time: float=(1*30), img_src: str="./imgs/bomberman.png", canvas_size: Point=(256, 224)) -> None:
+    def __init__(self, stageN: int, size: Point=(496, 224), time: int=(300*30), img_src: str="./imgs/bomberman.png", canvas_size: Point=(256, 224)) -> None:
         
         super().__init__(size)
         
@@ -41,12 +55,12 @@ class BomberManGame(Arena):
         self.spawn(BombPass((16, 104), img_src, 5, self, self._b))
         self.spawn(SpeedUp((16, 120), img_src, 2, self, self._b))
 
-        self.spawn(Balloon(128, 168, img_src, self, self.b))
-        self.spawn(Face(144, 184, img_src, self, self.b))
+        self.spawn(Balloon(128, 168, img_src, self, self._b))
+        self.spawn(Face(144, 184, img_src, self, self._b))
         
         
         
-        for i in range(int(self.size()[1] / 16)):
+        for i in range(int((self.size()[1]-16) / 16)):
             
             self.spawn(Wall((0, (i*16+24)), img_src, self._b))
             self.spawn(Wall(((self.size()[0] - 16), (i*16)+24), img_src, self._b))
@@ -55,13 +69,13 @@ class BomberManGame(Arena):
         for i in range(int(self.size()[0] / 16)):    
             
             self.spawn(Wall((i*16, 24), img_src, self._b))
-            self.spawn(Wall((i*16, (self.size()[1]-16)+24), img_src, self._b))
+            self.spawn(Wall((i*16, (self.size()[1]-16-16)+24), img_src, self._b))
         
         for x in range(int(self.size()[0] / 16)):
             
             if x % 2 == 0:
         
-                for y in range(int(self.size()[1] / 16)):
+                for y in range(int((self.size()[1]-16) / 16)):
                     
                     if y % 2 == 0:
                         
@@ -76,9 +90,9 @@ class BomberManGame(Arena):
                             self.spawn(Brick(((x*16), (y * 16)+24), img_src, self._b))
                             
                             
-    def time(self) -> int:
+    def getTime(self) -> int:
         
-        self._time - self.count()
+        return self._time - self.count()
         
         
     def killemall(self) -> None:
@@ -104,3 +118,4 @@ class BomberManGame(Arena):
     def getBomber(self) -> BomberMan:
         
         return self._b
+    

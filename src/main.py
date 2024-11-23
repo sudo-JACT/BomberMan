@@ -5,8 +5,9 @@ from gamemodes import *"""
 from libs.actor import *
 from gamemodes.Normal import start
 from player.BomberMan import BomberMan
+from game.BomberManGui import *
 
-global n, w, h, wc, hc, select, c, lol, aud
+global n, select, c, lol, aud
 n = False
 select = 0
 c = 0
@@ -113,17 +114,19 @@ def main_menu() -> None:
 
 if __name__ == "__main__":
     
-    img = "./imgs/bomberman.png"
+    #img = "./imgs/bomberman.png"
+    #
+    #w, h = 496, 224
+    #wc, hc = 256, 224
+    ##global arena, b
+    #global arena
+#
+    #arena = Arena((w, h))
+#
+    #b = BomberMan((16, 40), img, ["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight", "b"], (wc, hc), arena, 3)  # to do passare bomberman a normal per avere accesso alle vite in main
+    #
+    #init_canvas((wc, hc), 3)
+    #
+    #main_loop(main_menu)
     
-    w, h = 496, 224
-    wc, hc = 256, 224
-    #global arena, b
-    global arena
-
-    arena = Arena((w, h))
-
-    b = BomberMan((16, 40), img, ["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight", "b"], (wc, hc), arena, 3)  # to do passare bomberman a normal per avere accesso alle vite in main
-    
-    init_canvas((wc, hc), 3)
-    
-    main_loop(main_menu)
+    gui = BomberManGui()
