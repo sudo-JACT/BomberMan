@@ -31,6 +31,8 @@ class BomberManGui():
         
         self._game = BomberManGame(self._stage)
         
+        self._actual_lives = self._game.getBomber().getLives()
+        
         init_canvas(self._game.getCanvasSize(), scale)
         
         main_loop(self.tick)
@@ -135,6 +137,12 @@ class BomberManGui():
                 play_audio("./sounds/3 - Track 3.mp3", True)
                 self._music = False
                 self._mmMusic = True
+                
+            if self._actual_lives > self._game.getBomber().getLives():
+                    
+                self._actual_lives = self._game.getBomber().getLives()
+                    
+                self._game.regenerate()
 
             
             if self._game.getBomber().getLives() >= 0:
@@ -160,6 +168,8 @@ class BomberManGui():
                 if a != None:
                 
                     a.draw()
+                    
+            
                 
 
         self._game.tick(current_keys())  # Game logic

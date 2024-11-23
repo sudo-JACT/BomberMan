@@ -54,11 +54,12 @@ class BomberMan(Actor):
         
         self._speed -=2
         
-        for x in powerups:
+        for x in range(len(powerups)):
             
             if powerups[x] != 0:
                 
                 self._p[x]
+                self._powerups[x] = powerups[x]
         
         
         
@@ -408,4 +409,8 @@ class BomberMan(Actor):
     def getSpeed(self) -> int:
         
         return self._speed
+    
+    def getKeys(self) -> list[str]:
+        
+        return self._keys
         
