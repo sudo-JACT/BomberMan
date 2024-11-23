@@ -19,14 +19,16 @@ from background.Brick import *
 from tools.PowerUps import *
 from libs.datahandler import *
 
-global aaaa, c
+global aaaa, c, b
 aaaa = False
 c = 256
 
 
-def start(w: int, h: int, wc: int, hc: int, arena: Arena):
+def start(w: int, h: int, wc: int, hc: int, arena: Arena, bomber: BomberMan, lol: bool):
     
-    global aaaa, aa
+    global aaaa, aa, b
+    
+    b = bomber
     
     img = "./imgs/bomberman.png"
     
@@ -35,11 +37,11 @@ def start(w: int, h: int, wc: int, hc: int, arena: Arena):
     wc, hc = wc, hc
 
     
-    if not(aaaa):
+    if lol:
         
         aa = arena
     
-        Normal(w, h, aa, img, wc, hc)
+        Normal(w, h, aa, img, wc, hc, bomber)
         
         aaaa = True
     
@@ -56,10 +58,23 @@ def tick():
     set_color((189, 190, 189))
     draw_rect((0, 0), (496, 32))
     
-    set_color((0, 0, 0))
-    draw_text(f"Time {c}      {b.getPoints()}       Left {b.getLives()}", (121, 17), 8, "./fonts/nintendo-nes-font/nintendo-nes-font.ttf")
-    set_color((255, 255, 255))
-    draw_text(f"Time {c}      {b.getPoints()}       Left {b.getLives()}", (120, 16), 8, "./fonts/nintendo-nes-font/nintendo-nes-font.ttf")
+    
+    
+    if b.getLives() >= 0:
+        
+        set_color((0, 0, 0))
+        draw_text(f"Time {c}      {b.getPoints()}       Left {b.getLives()}", (121, 17), 8, "./fonts/nintendo-nes-font/nintendo-nes-font.ttf")
+        
+        set_color((255, 255, 255))
+        draw_text(f"Time {c}      {b.getPoints()}       Left {b.getLives()}", (120, 16), 8, "./fonts/nintendo-nes-font/nintendo-nes-font.ttf")
+        
+    else:
+        
+        set_color((0, 0, 0))
+        draw_text(f"Time {c}      {b.getPoints()}       Left {0}", (121, 17), 8, "./fonts/nintendo-nes-font/nintendo-nes-font.ttf")
+        
+        set_color((255, 255, 255))
+        draw_text(f"Time {c}      {b.getPoints()}       Left {0}", (120, 16), 8, "./fonts/nintendo-nes-font/nintendo-nes-font.ttf")
     
     for a in aa.actors():
         if a != None:
@@ -73,7 +88,7 @@ def tick():
 
 
 
-def Normal(w: int, h: int, arena: Arena, imgsrc: str, wc: int, hc: int):
+def Normal(w: int, h: int, arena: Arena, imgsrc: str, wc: int, hc: int, bomber: BomberMan):
     
     img_src = imgsrc
     
@@ -81,7 +96,7 @@ def Normal(w: int, h: int, arena: Arena, imgsrc: str, wc: int, hc: int):
     
     global b
     
-    b = BomberMan((16, 40), img_src, ["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight", "b"], (wc, hc), arena, 3)
+
     
     saveState(b)
     

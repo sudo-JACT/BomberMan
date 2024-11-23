@@ -54,6 +54,8 @@ class BomberMan(Actor):
             
         }
         
+        self._speed -=2
+        
         for x in powerups:
             
             if powerups[x] != 0:
@@ -369,7 +371,7 @@ class BomberMan(Actor):
         
         self._lives += 1
         
-    def setLives(self, l) -> None:
+    def setLives(self, l: int=3) -> None:
         
         self._lives = l
         
@@ -395,4 +397,8 @@ class BomberMan(Actor):
     def getPowerUp(self) -> list[int]:
         
         return self._powerups
+    
+    def getSpeed(self) -> int:
+        
+        return self._speed
         

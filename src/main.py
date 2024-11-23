@@ -6,14 +6,15 @@ from libs.actor import *
 from gamemodes.Normal import start
 from player.BomberMan import BomberMan
 
-global n, w, h, wc, hc, select, c
+global n, w, h, wc, hc, select, c, lol
 n = False
 select = 0
 c = 0
+lol = True
 
 def t() -> None:
     
-    global n, select, c
+    global n, select, c, lol, b
     
     print(n)
     
@@ -21,6 +22,8 @@ def t() -> None:
     
     print(l)
     print(select)
+    print(b.getSpeed())
+    print(b.getPowerUp())
     
     if "a" in l:
         
@@ -48,12 +51,27 @@ def t() -> None:
         
         games = {
     
-            0: start(w, h, wc, hc, arena),
+            0: start(w, h, wc, hc, arena, b, lol),
             #1: continue(),
     
         }
         
-        games[0]
+        if b.getLives() >= 0 and n:
+        
+            games[0]
+            
+            lol = False
+            
+        else:
+            
+            n = False
+            lol = True
+            
+            for x in arena.actors():
+                    
+                arena.kill(x)
+            
+            b = BomberMan((16, 40), img, ["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight", "b"], (wc, hc), arena, 3)
     
     else:
         
@@ -95,9 +113,9 @@ if __name__ == "__main__":
     #global arena, b
     global arena
     
-    #b = BomberMan((16, 40), img_src, ["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight", "b"], (wc, hc), arena, 3)  # to do passare bomberman a normal per avere accesso alle vite in main
-    
     arena = Arena((w, h))
+    
+    b = BomberMan((16, 40), img, ["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight", "b"], (wc, hc), arena, 3)  # to do passare bomberman a normal per avere accesso alle vite in main
     
     init_canvas((wc, hc), 3)
     
