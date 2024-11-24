@@ -212,12 +212,20 @@ class BomberManGame(Arena):
         
         
     def killemall(self) -> None:
+
+        tmp = self._b
+
+        self._actors.clear()
         
-        for x in self._actors:
+        self._b = tmp
+        
+        self._actors.append(self._b)
+        
+        #for x in self._actors:
             
-            if not(isinstance(x, BomberMan)):
+        #    if not(isinstance(x, BomberMan)):
                 
-                self.kill(x)
+        #        self.kill(x)
 
     def GameOver(self) -> bool:
 
