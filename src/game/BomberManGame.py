@@ -33,7 +33,7 @@ from background.Brick import *
 from tools.PowerUps import *
 from libs.datahandler import *
 from background.Door import Door
-from random import randrange
+from random import choice
 
 class BomberManGame(Arena):
     
@@ -55,12 +55,7 @@ class BomberManGame(Arena):
         
         self._stage = stageN
         
-        self._time = time
-        
-        self._pointerx = [128]
-        self._pointery = [168]
-        
-        
+        self._time = time        
         
         
         
@@ -94,8 +89,8 @@ class BomberManGame(Arena):
                 
                 for enemy in range(int(enemys[x])):
                     
-                    self._pointerx = [randrange(128, 256)]
-                    self._pointery = [randrange(168, 256)]
+                    self._pointerx = [choice([128, 144])]
+                    self._pointery = [choice([168, 184])]
                     
                     self._enemys = {
             
@@ -135,8 +130,8 @@ class BomberManGame(Arena):
                 
                 for powerup in range(int(powerups[x])):
                     
-                    self._pointerx = [randrange(128, 256)]
-                    self._pointery = [randrange(168, 256)]
+                    self._pointerx = [choice([128, 144])]
+                    self._pointery = [choice([168, 184])]
                     
                     self._powerups = {
             
