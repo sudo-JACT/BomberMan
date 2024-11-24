@@ -16,8 +16,9 @@ from background.Brick import *
 from random import choice
 from tools.Bomb import *
 import player
+from npc.Enemy import Enemy
 
-class Balloon(Actor):
+class Beaker(Actor,Enemy):
     
     def __init__(self, x0: int, y0: int, sprite_src: str, arena: Arena, bomber: player.BomberMan.BomberMan) -> None:
         self._x = x0 
@@ -26,7 +27,7 @@ class Balloon(Actor):
         self._dx = self._dy = 0
         self._w, self._h = 16, 16
         self._sprite = sprite_src
-        self._current_sprite = (48, 240)
+        self._current_sprite = (48, 256)
         d = choice([1, 2, 3, 4])
         self._isdead = False
         
@@ -51,23 +52,23 @@ class Balloon(Actor):
         
         self._left_animations = {
             
-            0: (48, 240),
-            1: (64, 240),
-            2: (80, 240),
+            0: (48, 256),
+            1: (64, 256),
+            2: (80, 256),
             
         }
         
         self._right_animations = {
             
-            0: (0, 240),
-            1: (16, 240),
-            2: (32, 240),
+            0: (0, 256),
+            1: (16, 256),
+            2: (32, 256),
             
         }
         
         self._death_animations = {
             
-            0: (96, 240),
+            0: (96, 256),
             1: (112, 240),
             2: (128, 240),
             3: (144, 240),
@@ -158,102 +159,98 @@ class Balloon(Actor):
                         else:
                             path_d = False
                             
-                
-            
             aw, ah = arena.size()
-            
-
+        
             # Calcola la posizione del giocatore
             bomber_x, bomber_y = self._b.pos()
         
             # Direzione verso Bomberman
             dx = bomber_x - self._x
             dy = bomber_y - self._y
+            raggio= ((dx)**2 + (dy)**2)**(0.5)
 
-            if abs(dx) > abs(dy):  # Movimento orizzontale prioritario
-                if dx > 0 : 
-                    self._dx = self._speed 
-                else:
-                    self._dx =-self._speed
-                    self._dy = 0
-            else:  # Movimento verticale prioritario
+            if (raggio<40):
+
+                if  ( abs(dx) > abs(dy) ):  # Movimento orizzontale prioritario
+                    if dx > 0 : 
+                        self._dx = self._speed 
+                    else:
+                        self._dx =-self._speed
+                        self._dy = 0
+                else:  # Movimento verticale prioritario
+                    
+                    if dy > 0:
+                        self._dx = 0
+                        self._dy = self._speed 
+                    else :
+                        self._dy =-self._speed
+
+            else:
+                if 1: #"""self._x % 16 == 0 and (self._y - 24) % 16 == 0""" 
                 
-                if dy > 0:
-                    self._dx = 0
-                    self._dy = self._speed 
-                else :
-                    self._dy =-self._speed
+                    d = choice([1, 2, 3, 4])
 
-
-
+                    match d:
+                        
+                        case 1:
+                            
+                            self._current_sprite = self._right_animations[(self._right % 3)]
+                            self._right += 1
+                            
+                            if path_u:
+            
+                                self._dx = 0
+                                self._dy = self._speed
+                        
+                        case 2:
+                            
+                            self._current_sprite = self._left_animations[(self._left % 3)]
+                            self._left += 1
+                            
+                            if path_d:
+                                
+                                self._dx = 0
+                                self._dy = -self._speed
+                        
+                        
+                        case 3:
+                            
+                            self._current_sprite = self._right_animations[(self._right % 3)]
+                            self._right += 1
+                            
+                            if path_r:
+                                
+                                self._dx = self._speed
+                                self._dy = 0
+                            
+                        case 4:
+                            
+                            self._current_sprite = self._left_animations[(self._left % 3)]
+                            self._left += 1
+                            
+                            if path_l:
+                                
+                                self._dx = -self._speed
+                                self._dy = 0
+                        
 
             if not 0 <= self._x + self._dx <= aw - self._w:
                 self._dx = -self._dx
             if not 0 <= self._y + self._dy <= ah - self._h:
                 self._dy = -self._dy
                 
-            if self._x % 16 == 0 and (self._y - 24) % 16 == 0:
                 
-                d = choice([1, 2, 3, 4])
-                
-                
-                for other in arena.collisions():
+            for other in arena.collisions():
                     
-                    if isinstance(other, tools.Fire.Fire):
+                if isinstance(other, tools.Fire.Fire):
                             
-                        if (self._x + 16) != other.pos()[0] and (self._y + 16) != other.pos()[1]:
+                    if (self._x + 16) != other.pos()[0] and (self._y + 16) != other.pos()[1]:
                                 
-                                self.hit(arena)
-                            
+                            self.hit(arena)    
                 
-                
-                match d:
-                    
-                    case 1:
-                        
-                        self._current_sprite = self._right_animations[(self._right % 3)]
-                        self._right += 1
-                        
-                        if path_u:
-        
-                            self._dx = 0
-                            self._dy = self._speed
-                    
-                    case 2:
-                        
-                        self._current_sprite = self._left_animations[(self._left % 3)]
-                        self._left += 1
-                        
-                        if path_d:
-                            
-                            self._dx = 0
-                            self._dy = -self._speed
-                    
-                    
-                    case 3:
-                        
-                        self._current_sprite = self._right_animations[(self._right % 3)]
-                        self._right += 1
-                        
-                        if path_r:
-                            
-                            self._dx = self._speed
-                            self._dy = 0
-                        
-                    case 4:
-                        
-                        self._current_sprite = self._left_animations[(self._left % 3)]
-                        self._left += 1
-                        
-                        if path_l:
-                            
-                            self._dx = -self._speed
-                            self._dy = 0
-                        
             if (self._dx < 0 and not path_l or self._dx > 0 and not path_r or self._dy < 0 and not path_u or self._dy > 0 and not path_d):
                 
                 self._dx, self._dy = 0, 0
-            
             
             self._x += self._dx
             self._y += self._dy

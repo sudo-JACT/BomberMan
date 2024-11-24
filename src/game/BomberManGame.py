@@ -26,6 +26,7 @@ from libs.g2d import *
 from libs.actor import *
 from npc.Balloon import *
 from npc.Face import *
+from npc.Beaker import *
 from player.BomberMan import *
 from background.Wall import *
 from background.Brick import *
@@ -65,8 +66,9 @@ class BomberManGame(Arena):
         self.spawn(SpeedUp((16, 120), self._img_src, 2, self, self._b))
 
         self.spawn(Balloon(128, 168, self._img_src, self, self._b))
-        self.spawn(Face(144, 184, self._img_src, self, self._b))
-        
+        #self.spawn(Face(144, 184, self._img_src, self, self._b))
+        #self.spawn(Beaker(144, 184, self._img_src, self, self._b))
+
         
         
         for i in range(int((self.size()[1]-16) / 16)):
