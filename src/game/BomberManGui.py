@@ -230,8 +230,6 @@ class BomberManGui():
                     self._load_counter = 0
                     
                     
-                    
-                    
                         
                         
                     print(self._game.GameOver())

@@ -138,7 +138,8 @@ class BomberMan(Actor):
         if not(self._isdead):
         
             path_l = path_r = path_u = path_d = True
-            
+            margin=4
+
             for other in arena.collisions():
                 
                 if isinstance(other, npc.Enemy.Enemy) or isinstance(other, tools.Fire.Fire):
@@ -164,28 +165,27 @@ class BomberMan(Actor):
                         ox, oy, ow, oh = other.pos() + other.size()
                         
                         if oy < self._y + self._h and self._y < oy + oh:
-
-                            if (oy+3 >= self._y + self._h)and self._y < oy + oh:
-                                self._y -= oy
-                            
+                            # ↕ overlap, ↔ movimento bloccato
+                            if self._x + self._w > ox and self._x + self._w <= ox + margin:  # Vicino al bordo sinistro
+                                self._x = ox - self._w
+                            elif self._x < ox + ow and self._x >= ox + ow - margin:  # Vicino al bordo destro
+                                self._x = ox + ow
+                            elif self._x > ox:
+                                path_l = False
                             else:
-                                # ↕ overlap, ↔ movement is obstacled
-                                if self._x > ox:
-                                    path_l = False
-                                else:
-                                    path_r = False
-                        
+                                path_r = False
+
                         if ox < self._x + self._w and self._x < ox + ow:
-
-                            if (ox+3 >= self._x + self._w) and self._x < ox + ow:
-                                self._x -= ox
-
+                            # ↔ overlap, ↕ movimento bloccato
+                            if self._y + self._h > oy and self._y + self._h <= oy + margin:  # Vicino al bordo superiore
+                                self._y = oy - self._h
+                            elif self._y < oy + oh and self._y >= oy + oh - margin:  # Vicino al bordo inferiore
+                                self._y = oy + oh
+                            elif self._y > oy:
+                                path_u = False
                             else:
-                                # ↔ overlap, ↕ movement is obstacled
-                                if self._y > oy:
-                                    path_u = False
-                                else:
-                                    path_d = False
+                                path_d = False
+
                     
                         
             

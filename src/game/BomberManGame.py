@@ -32,6 +32,7 @@ from background.Wall import *
 from background.Brick import *
 from tools.PowerUps import *
 from libs.datahandler import *
+from background.Door import Door
 
 class BomberManGame(Arena):
     
@@ -100,6 +101,8 @@ class BomberManGame(Arena):
                             
                             self.spawn(Brick(((x*16), (y * 16)+24), self._img_src, self._b))
                             
+        self.spawn(Door((16, 56), 1, self._img_src, (176, 48), self._b))
+                            
                             
     def getTime(self) -> int:
         
@@ -120,7 +123,15 @@ class BomberManGame(Arena):
     
     def GameWin(self) -> bool:
         
-        pass
+        for x in self.actors():
+            
+            if isinstance(x, Door):
+                
+                if x.getNextLevel():
+                    
+                    return True
+                
+        return False
     
     def getCanvasSize(self) -> Point:
         
@@ -161,3 +172,11 @@ class BomberManGame(Arena):
     def getBomberAnimation(self) -> bool:
         
         return self._b.getAnimation()
+    
+    def decEnemy(self) -> None:
+        
+        for x in self.actors():
+            
+            if isinstance(x, Door):
+                
+                x.dEnemy()

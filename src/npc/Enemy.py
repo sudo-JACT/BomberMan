@@ -16,10 +16,12 @@ from background.Brick import *
 from random import choice
 from tools.Bomb import *
 import player
+#from game.BomberManGame import *
 
 
 class Enemy():
     
-    def __init__(self) -> None:
+    def sub(self, arena: Arena) -> None:
         
-        pass
+        arena.decEnemy()
+    

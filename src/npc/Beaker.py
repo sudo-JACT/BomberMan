@@ -277,6 +277,8 @@ class Beaker(Actor,Enemy):
                 
             if self._dead_clock >= self._end_clock:
                 
+                self.sub(arena)
+                
                 arena.kill(self)
         
 

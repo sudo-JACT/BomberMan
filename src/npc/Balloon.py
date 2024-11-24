@@ -258,6 +258,8 @@ class Balloon(Actor, Enemy):
                 
                 self._b.addPoints(self.getPoints())
                 
+                self.sub(arena)
+                
                 arena.kill(self)
         
 
