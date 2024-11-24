@@ -58,20 +58,11 @@ class BomberManGui():
         change_canvas_color(0, 0, 0)  
 
         if not(self._game.GameOver()):
-                      
-            if self._stage < 10:
                 
-                set_color((99, 99, 99))
-                draw_text(f"STAGE 0{self._stage}", (129, 113), 8, "./fonts/nintendo-nes-font/nintendo-nes-font.ttf")
-                set_color((255, 255, 255))
-                draw_text(f"STAGE 0{self._stage}", (128, 112), 8, "./fonts/nintendo-nes-font/nintendo-nes-font.ttf")
-                
-            else:
-                
-                set_color((99, 99, 99))
-                draw_text(f"STAGE {self._stage}", (129, 113), 8, "./fonts/nintendo-nes-font/nintendo-nes-font.ttf")
-                set_color((255, 255, 255))
-                draw_text(f"STAGE .{self._stage}", (128, 112), 8, "./fonts/nintendo-nes-font/nintendo-nes-font.ttf")
+            set_color((99, 99, 99))
+            draw_text(f"STAGE {self._stage}", (129, 113), 8, "./fonts/nintendo-nes-font/nintendo-nes-font.ttf")
+            set_color((255, 255, 255))
+            draw_text(f"STAGE {self._stage}", (128, 112), 8, "./fonts/nintendo-nes-font/nintendo-nes-font.ttf")
 
         else:
             

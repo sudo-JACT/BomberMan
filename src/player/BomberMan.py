@@ -134,125 +134,174 @@ class BomberMan(Actor):
         self._current_sprite = self._front_animations[1]
 
     def move(self, arena: Arena):
-        
+
         if not(self._isdead):
-        
+
             path_l = path_r = path_u = path_d = True
-            margin=4
 
             for other in arena.collisions():
-                
+
                 if isinstance(other, npc.Enemy.Enemy) or isinstance(other, tools.Fire.Fire):
-                    
+
                     if isinstance(other, Fire):
-                        
+
                         if (self._x + 16) != other.pos()[0] and (self._y + 16) != other.pos()[1]:
-                            
+
                             self.hit(arena)
-                        
+
                     else:
-                    
+
                         self.hit(arena)
 
             keys = arena.current_keys()
-            
+
             for other in arena.collisions():
-                
+
                 if isinstance(other, background.Wall.Wall) or (isinstance(other, background.Brick.Brick) and not(self._wallpass)) or (isinstance(other, tools.Bomb.Bomb) and not(self._bombpass)):
-                    
+
                     if not(isinstance(other, tools.Bomb.Bomb) and other.get_current_clock() <= (other.get_end_clock() - 85)):    
-                            
+
                         ox, oy, ow, oh = other.pos() + other.size()
-                        
+
                         if oy < self._y + self._h and self._y < oy + oh:
-                            # ↕ overlap, ↔ movimento bloccato
-                            if self._x + self._w > ox and self._x + self._w <= ox + margin:  # Vicino al bordo sinistro
-                                self._x = ox - self._w
-                            elif self._x < ox + ow and self._x >= ox + ow - margin:  # Vicino al bordo destro
-                                self._x = ox + ow
-                            elif self._x > ox:
+                            # ↕ overlap, ↔ movement is obstacled
+                            if self._x > ox:
                                 path_l = False
                             else:
                                 path_r = False
-
                         if ox < self._x + self._w and self._x < ox + ow:
-                            # ↔ overlap, ↕ movimento bloccato
-                            if self._y + self._h > oy and self._y + self._h <= oy + margin:  # Vicino al bordo superiore
-                                self._y = oy - self._h
-                            elif self._y < oy + oh and self._y >= oy + oh - margin:  # Vicino al bordo inferiore
-                                self._y = oy + oh
-                            elif self._y > oy:
+                            # ↔ overlap, ↕ movement is obstacled
+                            if self._y > oy:
                                 path_u = False
                             else:
                                 path_d = False
 
-                    
-                        
-            
-            if self._keys[0] in keys and not(self._isdead) and not(self._a.getF()):
-                
+
+
+            if self._keys[0] in keys and not(self._isdead) and not(arena.getF()):
+
                 self._current_sprite = self._back_animations[int(self._up % 3)]
                 self._up += 0.2
-                if (self._up>3):
-                    self._up =0
+                if (self._up > 3):
+                    self._up = 0
                     play_audio("./sounds/Bomberman SFX (step1).wav")
                 
+                if not path_u:
+
+                    for other in arena.collisions():
+
+                        if isinstance(other, background.Wall.Wall) or (isinstance(other, background.Brick.Brick) and not(self._wallpass)) or (isinstance(other, tools.Bomb.Bomb) and not(self._bombpass)):
+
+                            if not(isinstance(other, tools.Bomb.Bomb) and other.get_current_clock() <= (other.get_end_clock() - 85)):    
+
+                                ox, oy, ow, oh = other.pos() + other.size()
+                                
+                                if self._x >= ox + ow -5 and self._x <= ox + ow :
+                                    self._x= ox + ow
+                                elif self._x + self._w >= ox and self._x +self._w <= ox + 5:
+                                    self._x= ox - ow
+
                 if path_u:
-                    
+
                     self._y -= self._speed 
-                    
-                
-                
-            elif self._keys[1] in keys  and not(self._isdead) and not(self._a.getF()):
-                
+
+
+
+            elif self._keys[1] in keys  and not(self._isdead) and not(arena.getF()):
+
                 self._current_sprite = self._front_animations[int(self._down % 3)]
-                self._down +=0.2
-                if (self._down>3):
-                    self._down =0
+                self._down += 0.2
+                if (self._down > 3):
+                    self._down = 0
                     play_audio("./sounds/Bomberman SFX (step1).wav")
-                
+
+                if not path_d:
+
+                    for other in arena.collisions():
+
+                        if isinstance(other, background.Wall.Wall) or (isinstance(other, background.Brick.Brick) and not(self._wallpass)) or (isinstance(other, tools.Bomb.Bomb) and not(self._bombpass)):
+
+                            if not(isinstance(other, tools.Bomb.Bomb) and other.get_current_clock() <= (other.get_end_clock() - 85)):    
+
+                                ox, oy, ow, oh = other.pos() + other.size()
+                                
+                                if self._x >= ox + ow -6 and self._x <= ox + ow :
+                                    self._x= ox + ow
+                                elif self._x + self._w >= ox and self._x +self._w <= ox + 6:
+                                    self._x= ox - ow
+
                 if path_d:
-                    
+
                     self._y += self._speed
-                
-                
-            elif self._keys[2] in keys and not(self._isdead) and not(self._a.getF()):
-        
+
+
+            elif self._keys[2] in keys and not(self._isdead) and not(arena.getF()):
+
                 self._current_sprite = self._left_animations[int(self._left % 3)]
                 self._left += 0.3
-                if (self._left>3):
-                    self._left =0
+                if (self._left > 3):
+                    self._left = 0
                     play_audio("./sounds/Bomberman SFX (step2).wav")
                 
+                if not path_l:
+
+                    for other in arena.collisions():
+
+                        if isinstance(other, background.Wall.Wall) or (isinstance(other, background.Brick.Brick) and not(self._wallpass)) or (isinstance(other, tools.Bomb.Bomb) and not(self._bombpass)):
+
+                            if not(isinstance(other, tools.Bomb.Bomb) and other.get_current_clock() <= (other.get_end_clock() - 85)):    
+
+                                ox, oy, ow, oh = other.pos() + other.size()
+                                
+                                if self._y >= oy + oh -6 and self._y <= oy + oh :
+                                    self._y= oy + oh
+                                elif self._y + self._h >= ox and self._y +self._h <= oy + 6:
+                                    self._y= oy - oh
                 if path_l:
-                    
+
                     self._x -= self._speed
-                
-            elif self._keys[3] in keys and not(self._isdead) and not(self._a.getF()):
-                
+
+            elif self._keys[3] in keys and not(self._isdead) and not(arena.getF()):
+
                 self._current_sprite = self._right_animations[int(self._right % 3)]
                 self._right += 0.3
-                if (self._right>3):
-                    self._right =0
+                if (self._right > 3):
+                    self._right = 0
                     play_audio("./sounds/Bomberman SFX (step2).wav")
+                
+                if not path_r:
+
+                    for other in arena.collisions():
+
+                        if isinstance(other, background.Wall.Wall) or (isinstance(other, background.Brick.Brick) and not(self._wallpass)) or (isinstance(other, tools.Bomb.Bomb) and not(self._bombpass)):
+
+                            if not(isinstance(other, tools.Bomb.Bomb) and other.get_current_clock() <= (other.get_end_clock() - 85)):    
+
+                                ox, oy, ow, oh = other.pos() + other.size()
+                                
+                                if self._y >= oy + oh - 6 and self._y <= oy + oh :
+                                    self._y= oy + oh
+                                elif self._y + self._h >= ox and self._y +self._h <= oy + 6:
+                                    self._y= oy - oh
+
                 if path_r:
-                    
+
                     self._x += self._speed
-                
-            elif self._keys[4] in keys and (self._x % 16 == 0 and (self._y + 24) % 16 == 0) and not(self._a.getF()):
-                
+
+            elif self._keys[4] in keys and (self._x % 16 == 0 and (self._y + 24) % 16 == 0) and not(arena.getF()):
+
                 if self._bomb_at_the_moment <= self._max_bomb_spawnrate:
-                
+
                     arena.spawn(tools.Bomb.Bomb((self._x, self._y), self._sprite, arena, self))
-                    
+
                     self._bomb_at_the_moment += 1
-            
+
             aw, ah = arena.size()
             self._x = min(max(self._x, 0), aw - self._w) 
             self._y = min(max(self._y, 0), ah - self._h) 
-            
+
             if (self._dx < 0 and not path_l or self._dx > 0 and not path_r or self._dy < 0 and not path_u or self._dy > 0 and not path_d):
-                
+
                 self._dx, self._dy = 0, 0
                 
         else:

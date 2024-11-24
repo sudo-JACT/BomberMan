@@ -34,6 +34,16 @@ def loadState() -> BomberMan:
     
     pass
 
-def loadLevel() -> None:
+def loadLevel(stage: int) -> str:
     
-    pass
+    with open("./conf/stages.txt", "r") as file:
+        
+        levels = file.readlines()
+        
+        for level in levels:
+            
+            if level.startswith(str(stage)):
+                
+                return level
+            
+    return ""

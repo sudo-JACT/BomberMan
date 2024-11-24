@@ -33,6 +33,7 @@ from background.Brick import *
 from tools.PowerUps import *
 from libs.datahandler import *
 from background.Door import Door
+from random import randrange
 
 class BomberManGame(Arena):
     
@@ -52,21 +53,127 @@ class BomberManGame(Arena):
         self._b = BomberMan((16, 40), img_src, ["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight", "b"], canvas_size, self, 3)
         self._b_animation = self._b.getAnimation()
         
+        self._stage = stageN
+        
         self._time = time
+        
+        self._pointerx = [128]
+        self._pointery = [168]
+        
+        
+        
+        
         
         self.generate()
 
 
     def generate(self) -> None:
         
+        
+        
         self.spawn(self._b)
         
-        self.spawn(WallPass((16, 72), self._img_src, 3, self, self._b))
-        self.spawn(BombUp((16, 88), self._img_src, 0, self, self._b))
-        self.spawn(BombPass((16, 104), self._img_src, 5, self, self._b))
-        self.spawn(SpeedUp((16, 120), self._img_src, 2, self, self._b))
+        
+        level = loadLevel(self._stage)
+        
+        level = level.split(" ")
+        
+        print(level)
+        
+        enemys = level[1].split("-")
+        powerups = level[2].split("-")
+        
+        print(enemys)
+        
+        for x in range(len(enemys)):
+            
+            print(x)
+            print(enemys[x])
+            
+            if int(enemys[x]) > 0:
+                
+                for enemy in range(int(enemys[x])):
+                    
+                    self._pointerx = [randrange(128, 256)]
+                    self._pointery = [randrange(168, 256)]
+                    
+                    self._enemys = {
+            
+                        0: Balloon(self._pointerx[0], self._pointery[0], self._img_src, self, self._b),
+                        1: Beaker(self._pointerx[0], self._pointery[0], self._img_src, self, self._b),
+                        2: Face(self._pointerx[0], self._pointery[0], self._img_src, self, self._b),
+                        3: Face(self._pointerx[0], self._pointery[0], self._img_src, self, self._b),
+                        4: Face(self._pointerx[0], self._pointery[0], self._img_src, self, self._b),
+                        5: Face(self._pointerx[0], self._pointery[0], self._img_src, self, self._b),
+                        6: Face(self._pointerx[0], self._pointery[0], self._img_src, self, self._b),
+                        7: Face(self._pointerx[0], self._pointery[0], self._img_src, self, self._b),
+            
+                    }
+                    
+                    #e = self._enemys[x]
+                    
+                    print(enemy)
+                    
+                    #print(e)
+                    
+                    print(self._pointerx)
+                    print(self._pointery)
+                    
+                    print(self._enemys[x])
+                    
+                    #e.setPos((self._pointerx[0], self._pointery[0]))
+                    
+                    self._actors.append(self._enemys[x])
+                    
+                    
+        for x in range(len(powerups)):
+            
+            print(x)
+            print(powerups[x])
+            
+            if int(powerups[x]) > 0:
+                
+                for powerup in range(int(powerups[x])):
+                    
+                    self._pointerx = [randrange(128, 256)]
+                    self._pointery = [randrange(168, 256)]
+                    
+                    self._powerups = {
+            
+                        0: BombUp((self._pointerx[0], self._pointery[0]), self._img_src, 0, self, self._b),
+                        1: BombUp((self._pointerx[0], self._pointery[0]), self._img_src, 0, self, self._b),
+                        2: SpeedUp((self._pointerx[0], self._pointery[0]), self._img_src, 2, self, self._b),
+                        3: SpeedUp((self._pointerx[0], self._pointery[0]), self._img_src, 2, self, self._b),
+                        4: WallPass((self._pointerx[0], self._pointery[0]), self._img_src, 3, self, self._b),
+                        5: BombPass((self._pointerx[0], self._pointery[0]), self._img_src, 5, self, self._b),
+                        6: BombPass((self._pointerx[0], self._pointery[0]), self._img_src, 5, self, self._b),
+                        7: BombPass((self._pointerx[0], self._pointery[0]), self._img_src, 5, self, self._b),
+            
+                    }
+                    
+                    #e = self._enemys[x]
+                    
+                    print(powerups)
+                    
+                    #print(e)
+                    
+                    print(self._pointerx)
+                    print(self._pointery)
+                    
+                    print(self._enemys[x])
+                    
+                    #e.setPos((self._pointerx[0], self._pointery[0]))
+                    
+                    self._actors.append(self._powerups[x])
+        
+        
+        
+        #self.spawn(WallPass((16, 72), self._img_src, 3, self, self._b))
+        #self.spawn(BombUp((16, 88), self._img_src, 0, self, self._b))
+        #self.spawn(BombPass((16, 104), self._img_src, 5, self, self._b))
+        #self.spawn(SpeedUp((16, 120), self._img_src, 2, self, self._b))
 
-        self.spawn(Balloon(128, 168, self._img_src, self, self._b))
+        #self.spawn(Balloon(128, 168, self._img_src, self, self._b))
         #self.spawn(Face(144, 184, self._img_src, self, self._b))
         #self.spawn(Beaker(144, 184, self._img_src, self, self._b))
 
@@ -128,6 +235,8 @@ class BomberManGame(Arena):
             if isinstance(x, Door):
                 
                 if x.getNextLevel():
+                    
+                    self.kill(self._b)
                     
                     return True
                 

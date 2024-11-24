@@ -24,4 +24,8 @@ class Enemy():
     def sub(self, arena: Arena) -> None:
         
         arena.decEnemy()
+        
+    def addP(self) -> None:
+        
+        self._b.addPoints(self._points)
     

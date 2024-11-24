@@ -35,7 +35,7 @@ class Beaker(Actor,Enemy):
         self._end_clock = 0
         self._co = 0
         
-        self._points = 100
+        self._points = 200
         
         self._left = self._right = 0
         
@@ -73,7 +73,7 @@ class Beaker(Actor,Enemy):
             2: (128, 240),
             3: (144, 240),
             4: (160, 240),
-            5: (113, 329),
+            5: (113, 345),
                
         }
         
@@ -173,6 +173,7 @@ class Beaker(Actor,Enemy):
 
                 if  ( abs(dx) > abs(dy) ):  # Movimento orizzontale prioritario
                     if dx > 0 : 
+                        
                         self._dx = self._speed 
                     else:
                         self._dx =-self._speed
@@ -186,7 +187,7 @@ class Beaker(Actor,Enemy):
                         self._dy =-self._speed
 
             else:
-                if 1: #"""self._x % 16 == 0 and (self._y - 24) % 16 == 0""" 
+                if self._x % 16 == 0 and (self._y - 24) % 16 == 0: 
                 
                     d = choice([1, 2, 3, 4])
 
@@ -279,14 +280,16 @@ class Beaker(Actor,Enemy):
                 
                 self.sub(arena)
                 
+                self.addP()
+                
                 arena.kill(self)
         
 
-    def pos(self) -> tuple[int, int]:
+    def pos(self) -> Point:
         
         return self._x, self._y
     
-    def size(self) -> tuple[int, int]:
+    def size(self) -> Point:
         
         return (self._w, self._h)
 
@@ -300,6 +303,13 @@ class Beaker(Actor,Enemy):
         self._end_clock = self._dead_clock + 48
         self._isdead = True
         
-    def getPoints(self):
+        
+        
+    def getPoints(self) -> int:
         
         return self._points
+    
+    
+    def setPos(self, pos: Point) -> None:
+        
+        self._x, self._y = pos

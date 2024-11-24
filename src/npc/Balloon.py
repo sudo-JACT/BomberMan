@@ -256,9 +256,11 @@ class Balloon(Actor, Enemy):
                 
             if self._dead_clock >= self._end_clock:
                 
-                self._b.addPoints(self.getPoints())
+                
                 
                 self.sub(arena)
+                
+                self.addP()
                 
                 arena.kill(self)
         
@@ -284,3 +286,7 @@ class Balloon(Actor, Enemy):
     def getPoints(self):
         
         return self._points
+    
+    def setPos(self, pos: Point) -> None:
+        
+        self._x, self._y = pos

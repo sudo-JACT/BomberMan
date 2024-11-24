@@ -27,7 +27,7 @@ class Face(Actor, Enemy):
         self._dx = self._dy = 0
         self._w, self._h = 16, 16
         self._sprite = sprite_src
-        self._current_sprite = (48, 240)
+        self._current_sprite = (48, 288)
         d = choice([1, 2, 3, 4])
         self._isdead = False
         
@@ -35,7 +35,7 @@ class Face(Actor, Enemy):
         self._end_clock = 0
         self._co = 0
         
-        self._points = 100
+        self._points = 800
         
         self._left = self._right = 0
         
@@ -258,6 +258,8 @@ class Face(Actor, Enemy):
                 
                 self.sub(arena)
                 
+                self.addP()
+                
                 arena.kill(self)
         
 
@@ -279,6 +281,12 @@ class Face(Actor, Enemy):
         self._end_clock = self._dead_clock + 48
         self._isdead = True
         
+        
+        
     def getPoints(self):
         
         return self._points
+    
+    def setPos(self, pos: Point) -> None:
+        
+        self._x, self._y = pos

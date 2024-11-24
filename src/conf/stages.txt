@@ -1,22 +1,22 @@
-01 [6 Valcoms / Fire]
+1 8-2-4-0-0-0-0-0 0-1-0-0-0-0-0-0
 
-02 [3 Valcoms, 3 O'Neals / Bomb]
+2 [3 Valcoms, 3 O'Neals / Bomb]
 
-03 [2 Valcoms, 2 O'Neals, 2 Dahls / Detonator]
+3 [2 Valcoms, 2 O'Neals, 2 Dahls / Detonator]
 
-04 [1 Valcom, 1 O'Neal, 2 Dahls, 2 Minvos / Speedup]
+4 [1 Valcom, 1 O'Neal, 2 Dahls, 2 Minvos / Speedup]
 
-05 [4 O'Neals, 3 Dahls / Bomb]
+5 [4 O'Neals, 3 Dahls / Bomb]
 
 BONUS STAGE [Valcoms]
 
-06 [2 O'Neals, 3 Dahls, 2 Minvos / Bomb]
+6 [2 O'Neals, 3 Dahls, 2 Minvos / Bomb]
 
-07 [2 O'Neals, 3 Dahls, 2 Ovapes / Fire]
+7 [2 O'Neals, 3 Dahls, 2 Ovapes / Fire]
 
-08 [1 O'Neal, 2 Dahls, 4 Minvos / Detonator]
+8 [1 O'Neal, 2 Dahls, 4 Minvos / Detonator]
 
-09 [1 O'Neal, 1 Dahl, 4 Minvos, 1 Doria / Bomb-Walk]
+9 [1 O'Neal, 1 Dahl, 4 Minvos, 1 Doria / Bomb-Walk]
 
 10 [1 O'Neal, 1 Dahl, 1 Minvo, 1 Ovape, 3 Dorias / Wall-Walker]
 
