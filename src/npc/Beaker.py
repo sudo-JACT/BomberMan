@@ -169,25 +169,51 @@ class Beaker(Actor,Enemy):
             dy = bomber_y - self._y
             raggio= ((dx)**2 + (dy)**2)**(0.5)
 
-            if (raggio<40):
+            if raggio < 40:
 
-                if  ( abs(dx) > abs(dy) ):  # Movimento orizzontale prioritario
-                    if dx > 0 : 
-                        
-                        self._dx = self._speed 
-                    else:
-                        self._dx =-self._speed
+                if abs(dx) > abs(dy):  # Movimento orizzontale prioritario
+                    if dx > 0 and path_r:
+                        self._dx = self._speed
+                        self._dy = 0
+                    elif dx < 0 and path_l:
+                        self._dx = -self._speed
                         self._dy = 0
                 else:  # Movimento verticale prioritario
-                    
-                    if dy > 0:
+                    if dy > 0 and path_d:
                         self._dx = 0
-                        self._dy = self._speed 
-                    else :
-                        self._dy =-self._speed
-
+                        self._dy = self._speed
+                    elif dy < 0 and path_u:
+                        self._dx = 0
+                        self._dy = -self._speed
             else:
-                if self._x % 16 == 0 and (self._y - 24) % 16 == 0: 
+                # Riallinea gradualmente sulla griglia
+                if self._x % 16 != 0 and not(self._y % 16 == 0):
+
+                    if self._x % 16 < 8 and path_l:
+                        
+                        #self._x -= (self._x % 16)
+                        self._dx = -self._speed
+                        
+                    elif path_r:
+                        
+                        #self._x += (self._x % 16)
+                        self._dx = self._speed
+                    
+                elif self._y % 16 != 0 and not(self._x % 16 == 0):
+                    
+                    if self._y % 16 < 8 and path_u:
+                        
+                        #self._y -= (self._y % 16)
+                        self._dy = -self._speed
+                        
+                    elif path_d:
+                        
+                        #self._y += (self._y % 16)
+                        self._dy = self._speed
+                    
+                    
+
+                else : 
                 
                     d = choice([1, 2, 3, 4])
 
@@ -283,6 +309,7 @@ class Beaker(Actor,Enemy):
                 self.addP()
                 
                 arena.kill(self)
+        
         
 
     def pos(self) -> Point:
