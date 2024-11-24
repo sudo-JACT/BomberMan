@@ -163,16 +163,19 @@ class BomberManGui():
             
             
             if self._load_counter < 85 and not(self._game.getBomber().getDead()):
-                
+                    
                 self.loadingScreen()
                 self._game.freeze()
                 
                 if self._actual_lives > self._game.getBomber().getLives():
                         
                     self._actual_lives = self._game.getBomber().getLives()
-                        
-                    self._game.regenerate()
-                
+                    
+                    
+                    if not(self._game.GameOver()) and self._game.getBomber().getLives() >= 0:
+                            
+                        self._game.regenerate()
+                    
                 self._load_counter += 1
                 
                 
@@ -226,7 +229,10 @@ class BomberManGui():
                         
                     self._load_counter = 0
                     
-                    self._game.killemall()
+                    
+                    
+                    
+                        
                         
                     print(self._game.GameOver())
                         
@@ -236,12 +242,14 @@ class BomberManGui():
                         
                         print(self._game.getBomber())
                         
+                        self._game.killemall()
+                        
                         self.loadingScreen()
                         self._game.freeze()
                         
                         self._load_counter += 1
                         
-                    else:
+                    if self._load_counter >= 85 and self._game.GameOver() and (self._game.getBomberAnimation()):
                         
                         self._start = False
                         self.createGame()

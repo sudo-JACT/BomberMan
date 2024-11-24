@@ -156,8 +156,8 @@ class BomberManGame(Arena):
     
     def setBomberAnimation(self, a) -> None:
         
-        self._b_animation = a
+        self._b.setAnimation(a)
         
     def getBomberAnimation(self) -> bool:
         
-        return self._b_animation
+        return self._b.getAnimation()

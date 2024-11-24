@@ -164,17 +164,28 @@ class BomberMan(Actor):
                         ox, oy, ow, oh = other.pos() + other.size()
                         
                         if oy < self._y + self._h and self._y < oy + oh:
-                            # ↕ overlap, ↔ movement is obstacled
-                            if self._x > ox:
-                                path_l = False
+
+                            if (oy+3 >= self._y + self._h)and self._y < oy + oh:
+                                self._y -= oy
+                            
                             else:
-                                path_r = False
+                                # ↕ overlap, ↔ movement is obstacled
+                                if self._x > ox:
+                                    path_l = False
+                                else:
+                                    path_r = False
+                        
                         if ox < self._x + self._w and self._x < ox + ow:
-                            # ↔ overlap, ↕ movement is obstacled
-                            if self._y > oy:
-                                path_u = False
+
+                            if (ox+3 >= self._x + self._w) and self._x < ox + ow:
+                                self._x -= ox
+
                             else:
-                                path_d = False
+                                # ↔ overlap, ↕ movement is obstacled
+                                if self._y > oy:
+                                    path_u = False
+                                else:
+                                    path_d = False
                     
                         
             
@@ -425,4 +436,8 @@ class BomberMan(Actor):
     def getAnimation(self) -> bool:
         
         return self._animation
+    
+    def setAnimation(self, a: bool) -> None:
+        
+        self._animation = a
         
