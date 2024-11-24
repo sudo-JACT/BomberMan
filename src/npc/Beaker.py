@@ -186,8 +186,66 @@ class Beaker(Actor,Enemy):
                         self._dx = 0
                         self._dy = -self._speed
             else:
+
+                if self._x % 16 == 0 and (self._y + 24) % 16 == 0:
+                
+                    d = choice([1, 2, 3, 4])
+                    
+                    
+                    for other in arena.collisions():
+                        
+                        if isinstance(other, tools.Fire.Fire):
+                                
+                            if (self._x + 16) != other.pos()[0] and (self._y + 16) != other.pos()[1]:
+                                    
+                                    self.hit(arena)
+                                
+                    
+                    match d:
+                        
+                        case 1:
+                            
+                            self._current_sprite = self._right_animations[(self._right % 3)]
+                            self._right += 1
+                            
+                            if path_u:
+            
+                                self._dx = 0
+                                self._dy = self._speed
+                        
+                        case 2:
+                            
+                            self._current_sprite = self._left_animations[(self._left % 3)]
+                            self._left += 1
+                            
+                            if path_d:
+                                
+                                self._dx = 0
+                                self._dy = -self._speed
+                        
+                        
+                        case 3:
+                            
+                            self._current_sprite = self._right_animations[(self._right % 3)]
+                            self._right += 1
+                            
+                            if path_r:
+                                
+                                self._dx = self._speed
+                                self._dy = 0
+                            
+                        case 4:
+                            
+                            self._current_sprite = self._left_animations[(self._left % 3)]
+                            self._left += 1
+                            
+                            if path_l:
+                                
+                                self._dx = -self._speed
+                                self._dy = 0
+                                
                 # Riallinea gradualmente sulla griglia
-                if self._x % 16 != 0 and not(self._y % 16 == 0):
+                elif self._x % 16 != 0 and (self._y + 24) % 16 == 0:
 
                     if self._x % 16 < 8 and path_l:
                         
@@ -199,9 +257,9 @@ class Beaker(Actor,Enemy):
                         #self._x += (self._x % 16)
                         self._dx = self._speed
                     
-                elif self._y % 16 != 0 and not(self._x % 16 == 0):
+                elif (self._y +24)% 16 != 0 and self._x % 16 == 0 :
                     
-                    if self._y % 16 < 8 and path_u:
+                    if (self._y +24)% 16 < 8 and path_u:
                         
                         #self._y -= (self._y % 16)
                         self._dy = -self._speed
@@ -213,7 +271,7 @@ class Beaker(Actor,Enemy):
                     
                     
 
-                else : 
+                if self._x % 16 == 0 and (self._y + 24) % 16 == 0: 
                 
                     d = choice([1, 2, 3, 4])
 

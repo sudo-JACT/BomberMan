@@ -55,6 +55,7 @@ class Arena():
         self._actors = []
         self._curr_keys = self._prev_keys = tuple()
         self._collisions = []
+    
 
     def spawn(self, a: Actor):
         """Register an actor into this arena.

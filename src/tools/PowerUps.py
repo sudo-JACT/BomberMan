@@ -112,3 +112,9 @@ class BombPass(PowerUp):
     def giveBonus(self) -> None:
         
         self._b.setBombPass()
+
+class firePass(PowerUp):
+    
+    def giveBonus(self) -> None:
+        
+        self._b.setfirePass()

@@ -77,6 +77,8 @@ class BomberMan(Actor):
         
         self._wallpass = False
         self._bombpass = False
+        self._firepass = False
+
         
         self._c = canvas_size
         self._a = arena
@@ -288,14 +290,51 @@ class BomberMan(Actor):
 
                     self._x += self._speed
 
-            elif self._keys[4] in keys and (self._x % 16 == 0 and (self._y + 24) % 16 == 0) and not(arena.getF()):
+            elif self._keys[4] in keys:
+            
+                if (self._x % 16 == 0 and (self._y + 24) % 16 == 0) and not(arena.getF()):
 
-                if self._bomb_at_the_moment <= self._max_bomb_spawnrate:
+                    if self._bomb_at_the_moment <= self._max_bomb_spawnrate:
 
-                    arena.spawn(tools.Bomb.Bomb((self._x, self._y), self._sprite, arena, self))
+                        arena.spawn(tools.Bomb.Bomb((self._x, self._y), self._sprite, arena, self))
 
-                    self._bomb_at_the_moment += 1
+                        self._bomb_at_the_moment += 1
 
+                else:
+
+                    if self._x % 16 != 0 :
+
+                        if self._bomb_at_the_moment <= self._max_bomb_spawnrate:
+
+                            if self._x % 16 < 8:
+                        
+                                arena.spawn(tools.Bomb.Bomb((self._x-(self._x %16), self._y), self._sprite, arena, self))
+                                self._bomb_at_the_moment += 1
+                        
+                        else:
+                            
+                            if self._bomb_at_the_moment <= self._max_bomb_spawnrate:
+
+                                arena.spawn(tools.Bomb.Bomb((self._x-(self._x %16)+16, self._y), self._sprite, arena, self))
+                                self._bomb_at_the_moment += 1
+                    
+                    else:
+
+                        if (self._y+24) % 16 != 0 :
+
+                            if self._y % 16 < 8:
+                                if self._bomb_at_the_moment <= self._max_bomb_spawnrate:
+
+                                    arena.spawn(tools.Bomb.Bomb((self._x, self._y-(self._y% 16)+8), self._sprite, arena, self))
+                                    self._bomb_at_the_moment += 1
+                            
+                            else:
+
+                                if self._bomb_at_the_moment <= self._max_bomb_spawnrate:
+
+                                    arena.spawn(tools.Bomb.Bomb((self._x, self._y-(self._y % 16)+16+8), self._sprite, arena, self))
+                                    self._bomb_at_the_moment += 1
+                        
             aw, ah = arena.size()
             self._x = min(max(self._x, 0), aw - self._w) 
             self._y = min(max(self._y, 0), ah - self._h) 
@@ -381,11 +420,10 @@ class BomberMan(Actor):
         
     def setfirePass(self) -> None:
         
-        pass
+        self._powerups[5] = 1
         
-    def setBombPass(self) -> None:
+        self._firepass = True
         
-        pass
         
     def remoteDetonator(self) -> None:
         

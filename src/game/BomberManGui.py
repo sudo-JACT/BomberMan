@@ -20,6 +20,8 @@ class BomberManGui():
         self._music = True
         
         self._mmMusic = True
+
+        self._ldmusic = True
         
         self._select = 0
         
@@ -57,7 +59,23 @@ class BomberManGui():
             
         change_canvas_color(0, 0, 0)  
 
+
+
         if not(self._game.GameOver()):
+
+
+            pause_audio("./sounds/1 - Track 1.mp3")
+            if self._ldmusic:
+
+                pause_audio("./sounds/3 - Track 3.mp3")
+
+                play_audio("./sounds/2 - Track 2.mp3" )
+
+                self._music = False
+
+                self._ldmusic = False
+
+                    
                 
             set_color((99, 99, 99))
             draw_text(f"STAGE {self._stage}", (129, 113), 8, "./fonts/nintendo-nes-font/nintendo-nes-font.ttf")
@@ -192,6 +210,7 @@ class BomberManGui():
 
                     pause_audio("./sounds/1 - Track 1.mp3")
                     play_audio("./sounds/3 - Track 3.mp3", True)
+                    self._ldmusic = True
                     self._music = False
                     self._mmMusic = True
                     
