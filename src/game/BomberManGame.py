@@ -42,10 +42,13 @@ class BomberManGame(Arena):
         
         self._img_src = img_src
         
+        self._is_freeze = True
+        
         self._win = False
         self._game_over = False
         
         self._b = BomberMan((16, 40), img_src, ["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight", "b"], canvas_size, self, 3)
+        self._b_animation = self._b.getAnimation()
         
         self._time = time
         
@@ -110,8 +113,8 @@ class BomberManGame(Arena):
                 self.kill(x)
 
     def GameOver(self) -> bool:
-    
-        pass
+
+        return self._b.getLives() < 0 
     
     def GameWin(self) -> bool:
         
@@ -129,11 +132,30 @@ class BomberManGame(Arena):
         
         self.killemall()
         
-        tmp = BomberMan((16, 40), self._img_src, self._b.getKeys(), self._canvas_size, self, self._b.getLives(), self._b.getPowerUp())
+        #tmp = BomberMan((16, 40), self._img_src, self._b.getKeys(), self._canvas_size, self, self._b.getLives(), self._b.getPowerUp())
         
-        self.kill(self._b)
+        #self.kill(self._b)
         
-        self._b = tmp
+        #self._b = tmp   
         
         self.generate()
+        
+    def freeze(self) -> None:
+        
+        self._is_freeze = True
+
+    def stopfreeze(self) -> None:
+        
+        self._is_freeze = False
+        
+    def getF(self) -> bool:    
+        
+        return self._is_freeze
     
+    def setBomberAnimation(self, a) -> None:
+        
+        self._b_animation = a
+        
+    def getBomberAnimation(self) -> bool:
+        
+        return self._b_animation

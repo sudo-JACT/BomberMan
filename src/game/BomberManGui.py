@@ -23,6 +23,8 @@ class BomberManGui():
         
         self._select = 0
         
+        self._load_counter = 0
+        
         self._start = False
         
         self._50_shade_of_gray = (189, 190, 189)
@@ -49,6 +51,36 @@ class BomberManGui():
             self._stage += 1
             
             self._game = BomberManGame(self._stage)
+            
+            
+    def loadingScreen(self) -> None:
+            
+        change_canvas_color(0, 0, 0)  
+
+        if not(self._game.GameOver()):
+                      
+            if self._stage < 10:
+                
+                set_color((99, 99, 99))
+                draw_text(f"STAGE 0{self._stage}", (129, 113), 8, "./fonts/nintendo-nes-font/nintendo-nes-font.ttf")
+                set_color((255, 255, 255))
+                draw_text(f"STAGE 0{self._stage}", (128, 112), 8, "./fonts/nintendo-nes-font/nintendo-nes-font.ttf")
+                
+            else:
+                
+                set_color((99, 99, 99))
+                draw_text(f"STAGE {self._stage}", (129, 113), 8, "./fonts/nintendo-nes-font/nintendo-nes-font.ttf")
+                set_color((255, 255, 255))
+                draw_text(f"STAGE .{self._stage}", (128, 112), 8, "./fonts/nintendo-nes-font/nintendo-nes-font.ttf")
+
+        else:
+            
+            set_color((99, 99, 99))
+            draw_text("GAME OVER", (129, 113), 8, "./fonts/nintendo-nes-font/nintendo-nes-font.ttf")
+            set_color((255, 255, 255))
+            draw_text("GAME OVER", (129, 113), 8, "./fonts/nintendo-nes-font/nintendo-nes-font.ttf")
+            
+            
             
         
 
@@ -106,68 +138,122 @@ class BomberManGui():
                 1: (128, 152),
                 
             }
+            
+            
+            if not(self._start):
         
-            change_canvas_color(0, 0, 0)   
+                change_canvas_color(0, 0, 0)   
 
-            draw_image("./imgs/NES_-_Bomberman_-_Title_Screen__Text.png", (0, 0))
-            
-            draw_image("./imgs/NES_-_Bomberman_-_Title_Screen__Text.png", positions[0], (64, 163), (8, 8))
-            draw_image("./imgs/NES_-_Bomberman_-_Title_Screen__Text.png", positions[1], (64, 163), (8, 8))
-            
-            draw_image("./imgs/NES_-_Bomberman_-_Title_Screen__Text.png", positions[ self._select], (80, 248), (8, 8))
+                draw_image("./imgs/NES_-_Bomberman_-_Title_Screen__Text.png", (0, 0))
 
-            set_color((99, 99, 99))
-            draw_text("2024  SHIBA & JKT", (161, 189), 8, "./fonts/nintendo-nes-font/nintendo-nes-font.ttf")
-            set_color((255, 255, 255))
-            draw_text("2024  SHIBA & JKT", (160, 188), 8, "./fonts/nintendo-nes-font/nintendo-nes-font.ttf")
+                draw_image("./imgs/NES_-_Bomberman_-_Title_Screen__Text.png", positions[0], (64, 163), (8, 8))
+                draw_image("./imgs/NES_-_Bomberman_-_Title_Screen__Text.png", positions[1], (64, 163), (8, 8))
+
+                draw_image("./imgs/NES_-_Bomberman_-_Title_Screen__Text.png", positions[ self._select], (80, 248), (8, 8))
+
+                set_color((99, 99, 99))
+                draw_text("2024  SHIBA & JKT", (161, 189), 8, "./fonts/nintendo-nes-font/nintendo-nes-font.ttf")
+                set_color((255, 255, 255))
+                draw_text("2024  SHIBA & JKT", (160, 188), 8, "./fonts/nintendo-nes-font/nintendo-nes-font.ttf")
+                
+            
+        
         
         else:
-        
-            time = (self._game.getTime() // 30)
             
-            clear_canvas()
-            change_canvas_color(60, 123, 1)
             
-            set_color(self._50_shade_of_gray)
-            draw_rect(self._origin, (496, 32))
-            
-            if self._music:
-
-                pause_audio("./sounds/1 - Track 1.mp3")
-                play_audio("./sounds/3 - Track 3.mp3", True)
-                self._music = False
-                self._mmMusic = True
+            if self._load_counter < 85 and not(self._game.getBomber().getDead()):
                 
-            if self._actual_lives > self._game.getBomber().getLives():
-                    
-                self._actual_lives = self._game.getBomber().getLives()
-                    
-                self._game.regenerate()
-
-            
-            if self._game.getBomber().getLives() >= 0:
+                self.loadingScreen()
+                self._game.freeze()
                 
-                set_color((0, 0, 0))
-                draw_text(f"Time {time}      {self._game.getBomber().getPoints()}       Left {self._game.getBomber().getLives()}", (121, 17), 8, "./fonts/nintendo-nes-font/nintendo-nes-font.ttf")
+                if self._actual_lives > self._game.getBomber().getLives():
+                        
+                    self._actual_lives = self._game.getBomber().getLives()
+                        
+                    self._game.regenerate()
                 
-                set_color((255, 255, 255))
-                draw_text(f"Time {time}      {self._game.getBomber().getPoints()}       Left {self._game.getBomber().getLives()}", (120, 16), 8, "./fonts/nintendo-nes-font/nintendo-nes-font.ttf")
+                self._load_counter += 1
+                
+                
+                
                 
             else:
                 
-                set_color((0, 0, 0))
-                draw_text(f"Time {time}      {self._game.getBomber().getPoints()}       Left {0}", (121, 17), 8, "./fonts/nintendo-nes-font/nintendo-nes-font.ttf")
+                if self._game.getBomber().getDead() and self._game.getBomber().getLives() >= 0:
+                    
+                    self._load_counter = 0
+        
+                time = (self._game.getTime() // 30)
                 
-                set_color((255, 255, 255))
-                draw_text(f"Time {time}      {self._game.getBomber().getPoints()}       Left {0}", (120, 16), 8, "./fonts/nintendo-nes-font/nintendo-nes-font.ttf")
+                self._game.stopfreeze()
                 
-                self._start = False
-                self.createGame()
-            
-            for a in self._game.actors():
-                if a != None:
+                clear_canvas()
+                change_canvas_color(60, 123, 1)
                 
-                    a.draw()
+                set_color(self._50_shade_of_gray)
+                draw_rect(self._origin, (496, 32))
+                
+                if self._music:
+
+                    pause_audio("./sounds/1 - Track 1.mp3")
+                    play_audio("./sounds/3 - Track 3.mp3", True)
+                    self._music = False
+                    self._mmMusic = True
+                    
+                
+
+                
+                if self._game.getBomber().getLives() >= 0:
+                    
+                    set_color((0, 0, 0))
+                    draw_text(f"Time {time}      {self._game.getBomber().getPoints()}       Left {self._game.getBomber().getLives()}", (121, 17), 8, "./fonts/nintendo-nes-font/nintendo-nes-font.ttf")
+                    
+                    set_color((255, 255, 255))
+                    draw_text(f"Time {time}      {self._game.getBomber().getPoints()}       Left {self._game.getBomber().getLives()}", (120, 16), 8, "./fonts/nintendo-nes-font/nintendo-nes-font.ttf")
+                    
+                else:
+                    
+                    set_color((0, 0, 0))
+                    draw_text(f"Time {time}      {self._game.getBomber().getPoints()}       Left {0}", (121, 17), 8, "./fonts/nintendo-nes-font/nintendo-nes-font.ttf")
+                    
+                    set_color((255, 255, 255))
+                    draw_text(f"Time {time}      {self._game.getBomber().getPoints()}       Left {0}", (120, 16), 8, "./fonts/nintendo-nes-font/nintendo-nes-font.ttf")
+                    
+                    print(self._game.getBomber().getLives())
+                    print(self._actual_lives)
+                    
+                        
+                    self._load_counter = 0
+                    
+                    self._game.killemall()
+                        
+                    print(self._game.GameOver())
+                        
+                    #self.loadingScreen()
+                    
+                    if self._load_counter < 85 and self._game.GameOver() and not(self._game.getBomberAnimation()):
+                        
+                        print(self._game.getBomber())
+                        
+                        self.loadingScreen()
+                        self._game.freeze()
+                        
+                        self._load_counter += 1
+                        
+                    else:
+                        
+                        self._start = False
+                        self.createGame()
+                    
+                
+                    
+                
+                
+                for a in self._game.actors():
+                    if a != None:
+                    
+                        a.draw()
                     
             
                 

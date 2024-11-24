@@ -85,6 +85,8 @@ class BomberMan(Actor):
         
         self._up = self._down = self._left = self._right = 0
         
+        self._animation = True
+        
         self._front_animations = {
             
             0: (48, 0),
@@ -176,7 +178,7 @@ class BomberMan(Actor):
                     
                         
             
-            if self._keys[0] in keys and not(self._isdead):
+            if self._keys[0] in keys and not(self._isdead) and not(self._a.getF()):
                 
                 self._current_sprite = self._back_animations[int(self._up % 3)]
                 self._up += 0.2
@@ -190,7 +192,7 @@ class BomberMan(Actor):
                     
                 
                 
-            elif self._keys[1] in keys  and not(self._isdead):
+            elif self._keys[1] in keys  and not(self._isdead) and not(self._a.getF()):
                 
                 self._current_sprite = self._front_animations[int(self._down % 3)]
                 self._down +=0.2
@@ -203,7 +205,7 @@ class BomberMan(Actor):
                     self._y += self._speed
                 
                 
-            elif self._keys[2] in keys and not(self._isdead):
+            elif self._keys[2] in keys and not(self._isdead) and not(self._a.getF()):
         
                 self._current_sprite = self._left_animations[int(self._left % 3)]
                 self._left += 0.3
@@ -215,7 +217,7 @@ class BomberMan(Actor):
                     
                     self._x -= self._speed
                 
-            elif self._keys[3] in keys and not(self._isdead):
+            elif self._keys[3] in keys and not(self._isdead) and not(self._a.getF()):
                 
                 self._current_sprite = self._right_animations[int(self._right % 3)]
                 self._right += 0.3
@@ -226,7 +228,7 @@ class BomberMan(Actor):
                     
                     self._x += self._speed
                 
-            elif self._keys[4] in keys and (self._x % 16 == 0 and (self._y + 24) % 16 == 0):
+            elif self._keys[4] in keys and (self._x % 16 == 0 and (self._y + 24) % 16 == 0) and not(self._a.getF()):
                 
                 if self._bomb_at_the_moment <= self._max_bomb_spawnrate:
                 
@@ -263,6 +265,10 @@ class BomberMan(Actor):
                 
                 arena.kill(self)
                 
+                self._animation = False
+                
+                arena.setBomberAnimation(self._animation)
+                
                 if self._lives >= 0:
                     
                     self.reSpwan()
@@ -272,18 +278,14 @@ class BomberMan(Actor):
         
         if not(self._immortal):
                 
-            self._lives -= 1
-        
             self._dead_clock = arena.count()
             self._end_clock = self._dead_clock + 49
             self._isdead = True
+            self._lives -= 1
+
             
+    
             
-            
-            
-        
-        
-        
     def pos(self) -> Point:
 
         return self._x, self._y
@@ -392,6 +394,8 @@ class BomberMan(Actor):
         self._end_clock = 0
         self._co = 0
         
+        self._animation = True
+        
         self._a.spawn(self)
         
     def addPoints(self, p: int) -> None:
@@ -413,4 +417,12 @@ class BomberMan(Actor):
     def getKeys(self) -> list[str]:
         
         return self._keys
+    
+    def getDead(self) -> bool:
+        
+        return self._isdead
+    
+    def getAnimation(self) -> bool:
+        
+        return self._animation
         

@@ -162,6 +162,31 @@ class Balloon(Actor):
             
             aw, ah = arena.size()
             
+
+            # Calcola la posizione del giocatore
+            bomber_x, bomber_y = self._b.pos()
+        
+            # Direzione verso Bomberman
+            dx = bomber_x - self._x
+            dy = bomber_y - self._y
+
+            if abs(dx) > abs(dy):  # Movimento orizzontale prioritario
+                if dx > 0 : 
+                    self._dx = self._speed 
+                else:
+                    self._dx =-self._speed
+                    self._dy = 0
+            else:  # Movimento verticale prioritario
+                
+                if dy > 0:
+                    self._dx = 0
+                    self._dy = self._speed 
+                else :
+                    self._dy =-self._speed
+
+
+
+
             if not 0 <= self._x + self._dx <= aw - self._w:
                 self._dx = -self._dx
             if not 0 <= self._y + self._dy <= ah - self._h:

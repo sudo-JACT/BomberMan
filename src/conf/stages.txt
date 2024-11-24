@@ -1,0 +1,120 @@
+01 [6 Valcoms / Fire]
+
+02 [3 Valcoms, 3 O'Neals / Bomb]
+
+03 [2 Valcoms, 2 O'Neals, 2 Dahls / Detonator]
+
+04 [1 Valcom, 1 O'Neal, 2 Dahls, 2 Minvos / Speedup]
+
+05 [4 O'Neals, 3 Dahls / Bomb]
+
+BONUS STAGE [Valcoms]
+
+06 [2 O'Neals, 3 Dahls, 2 Minvos / Bomb]
+
+07 [2 O'Neals, 3 Dahls, 2 Ovapes / Fire]
+
+08 [1 O'Neal, 2 Dahls, 4 Minvos / Detonator]
+
+09 [1 O'Neal, 1 Dahl, 4 Minvos, 1 Doria / Bomb-Walk]
+
+10 [1 O'Neal, 1 Dahl, 1 Minvo, 1 Ovape, 3 Dorias / Wall-Walker]
+
+BONUS STAGE [O'Neals]
+
+11 [1 O'Neal, 2 Dahls, 3 Minvos, 1 Ovape, 1 Doria / Bomb]
+
+12 [1 O'Neal, 1 Dahl, 1 Minvo, 1 Ovape, 4 Dorias / Bomb]
+
+13 [3 Dahls, 3 Minvos, 2 Dorias / Detonator]
+
+14 [7 Ovapes, 1 Pass / Bomb-Walk]
+
+15 [1 Dahl, 3 Minvos, 3 Dorias, 1 Pass / Fire]
+
+BONUS STAGE [Dahls]
+
+16 [3 Minvos, 4 Dorias, 1 Pass / Wall-Walk]
+
+17 [5 Dahls, 2 Dorias, 1 Pass / Bomb]
+
+18 [3 Valcoms, 3 O'Neals, 2 Passes / Bomb-Walk]
+
+19 [1 Valcom, 1 Ovape, 1 O'Neal, 3 Dahls, 2 Passes / Bomb]
+
+20 [1 O'Neal, 1 Dahl, 1 Minvo, 1 Ovape, 2 Dorias, 2 Passes / Detonator]
+
+BONUS STAGE [Minvos]
+
+21 [3 Ovapes, 4 Dorias, 2 Passes / Bomb-Walk]
+
+22 [4 Dahls, 3 Minvos, 1 Doria, 1 Pass / Detonator]
+
+23 [2 Dahls, 2 Minvos, 2 Ovapes, 2 Dorias, 1 Pass / Bomb]
+
+24 [1 Dahl, 1 Minvo, 2 Ovapes, 4 Dorias, 1 Pass / Detonator]
+
+25 [2 O'Neals, 1 Dahl, 1 Minvo, 2 Ovapes, 2 Dorias, 1 Pass / Bomb-Walk]
+
+BONUS STAGE [Ovapes]
+
+26 [1 Valcom, 1 O'Neal, 1 Dahl, 1 Minvo, 1 Ovape, 2 Dorias, 1 Pass / 
+Mystery]
+
+27 [1 Valcom, 1 O'Neal, 1 Ovape, 5 Dorias, 1 Pass / Fire]
+
+28 [1 O'Neal, 3 Dahls, 3 Minvos, 1 Doria, 1 Pass / Bomb]
+
+29 [5 Ovapes, 2 Dorias, 2 Passes / Detonator]
+
+30 [3 Dahls, 2 Minvos, 2 Ovapes, 1 Doria, 1 Pass / Flame-Proof]
+
+BONUS STAGE [Dorias]
+
+31 [2 O'Neals, 2 Dahls, 2 Minvos, 2 Ovapes, 2 Dorias / Wall-Walker]
+
+32 [1 O'Neal, 1 Dahl, 3 Minvos, 4 Dorias, 1 Pass / Bomb]
+
+33 [2 Dahls, 2 Minvos, 1 Ovape, 3 Dorias, 2 Passes / Detonator]
+
+34 [2 Dahls, 3 Minvos, 3 Dorias, 2 Passes / Mystery]
+
+35 [2 Dahls, 1 Minvo, 1 Ovape, 3 Dorias, 2 Passes / Bomb-Walk]
+
+BONUS STAGE [Passes]
+
+36 [2 Dahls, 2 Minvos, 3 Dorias, 3 Passes / Flame-Proof]
+
+37 [2 Dahls, 1 Minvo, 1 Ovape, 3 Dorias, 3 Passes / Detonator]
+
+38 [2 Dahls, 2 Minvos, 3 Dorias, 3 Passes / Fire]
+
+39 [1 Dahl, 1 Minvo, 2 Ovapes, 2 Dorias, 4 Passes / Wall-Walker]
+
+BONUS STAGE [Pontans]
+
+40 [1 Dahl, 2 Minvos, 3 Dorias, 4 Passes / Mystery]
+
+41 [1 Dahl, 1 Minvo, 1 Ovape, 3 Dorias, 4 Passes / Detonator]
+
+42 [1 Minvo, 1 Ovape, 3 Dorias, 5 Passes / Wall-Walker]
+
+43 [1 Minvo, 1 Ovape, 2 Dorias, 6 Passes / Bomb-Walk]
+
+44 [1 Minvo, 1 Ovape, 2 Dorias, 6 Passes / Detonator]
+
+BONUS STAGE [Pontans]
+
+45 [2 Ovapes, 2 Dorias, 6 Passes / Mystery]
+
+46 [2 Ovapes, 2 Dorias, 6 Passes / Wall-Walker]
+
+47 [2 Ovapes, 2 Dorias, 6 Passes / Bomb-Walk]
+
+48 [1 Ovape, 2 Dorias, 6 Passes, 1 Pontan / Detonator]
+
+49 [2 Ovapes, 1 Doria, 6 Passes, 1 Pontan / Fire-Proof]
+
+BONUS STAGE [Pontans]
+
+50 [2 Ovapes, 1 Doria, 5 Passes, 2 Pontans / Mystery]
