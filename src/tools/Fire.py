@@ -22,7 +22,7 @@ class Fire(Actor):
         
         self._b = bomber
         
-        self._ty = t
+        self._type = t
         
         self._ls = []
         
@@ -109,7 +109,7 @@ class Fire(Actor):
             
         }
         
-        if self._ty == 0:
+        if self._type == 0:
             
             up = down = left = right = True
             
@@ -253,7 +253,7 @@ class Fire(Actor):
         
             self._currentsprite = self._ls[0]
             
-        elif self._ty == 1:
+        elif self._type == 1:
             
             for x in self._sprites_my_2:
                 
@@ -261,7 +261,7 @@ class Fire(Actor):
         
             self._currentsprite = self._ls[0]
             
-        elif self._ty == 2:
+        elif self._type == 2:
             
             for x in self._sprites_y_2:
                 
@@ -269,7 +269,7 @@ class Fire(Actor):
         
             self._currentsprite = self._ls[0]
             
-        elif self._ty == 3:
+        elif self._type == 3:
             
             for x in self._sprites_mx_2:
                 
@@ -277,7 +277,7 @@ class Fire(Actor):
         
             self._currentsprite = self._ls[0]
             
-        elif self._ty == 4:
+        elif self._type == 4:
             
             for x in self._sprites_x_2:
                 
@@ -285,7 +285,7 @@ class Fire(Actor):
         
             self._currentsprite = self._ls[0]
             
-        elif self._ty == 5:
+        elif self._type == 5:
             
             for x in self._sprites_my_1:
                 
@@ -293,7 +293,7 @@ class Fire(Actor):
         
             self._currentsprite = self._ls[0]
             
-        elif self._ty == 6:
+        elif self._type == 6:
             
             for x in self._sprites_y_1:
                 
@@ -301,7 +301,7 @@ class Fire(Actor):
         
             self._currentsprite = self._ls[0]
             
-        elif self._ty == 7:
+        elif self._type == 7:
             
             for x in self._sprites_mx_1:
                 
@@ -309,7 +309,7 @@ class Fire(Actor):
         
             self._currentsprite = self._ls[0]
             
-        elif self._ty == 8:
+        elif self._type == 8:
             
             for x in self._sprites_x_1:
                 

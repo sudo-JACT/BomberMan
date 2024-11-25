@@ -15,7 +15,7 @@ class BomberManGui():
     
     def __init__(self, scale: int=3) -> None:
         
-        self._stage = 2
+        self._stage = 1
         
         self._music = True
         
@@ -25,6 +25,8 @@ class BomberManGui():
 
         self._gomusic = True
         
+        self._points = 0
+                
         self._select = 0
         
         self._load_counter = 0
@@ -163,6 +165,8 @@ class BomberManGui():
             
             
             if not(self._start):
+                
+                self._points = self._game.getBomber().getPoints()
         
                 change_canvas_color(0, 0, 0)   
 
@@ -173,9 +177,25 @@ class BomberManGui():
 
                 draw_image("./imgs/NES_-_Bomberman_-_Title_Screen__Text.png", positions[self._select], (80, 248), (8, 8))
                 
-                for x in range(9):
+                set_color((0, 0, 0))
+                draw_rect((112, 168), (72, 8))
+                
+                #for x in range(9):
                     
-                    draw_image("./imgs/NES_-_Bomberman_-_Title_Screen__Text.png", ((112+(8*x)), 168), (0, 248), (8, 8))
+                #    draw_image("./imgs/NES_-_Bomberman_-_Title_Screen__Text.png", ((112+(8*x)), 168), (0, 248), (8, 8))
+                
+                x = str(self._points)
+                
+                if len(x) < 9:
+                    
+                    while len(x) < 9:
+                        
+                        x = "0" + x
+                
+                set_color((99, 99, 99))
+                draw_text(x, (148, 173,), 8, "./fonts/nintendo-nes-font/nintendo-nes-font.ttf")
+                set_color((255, 255, 255))
+                draw_text(x, (147, 172,), 8, "./fonts/nintendo-nes-font/nintendo-nes-font.ttf")
 
                 set_color((99, 99, 99))
                 draw_text("2024  SHIBA & JKT", (161, 189), 8, "./fonts/nintendo-nes-font/nintendo-nes-font.ttf")
@@ -237,10 +257,10 @@ class BomberManGui():
                 if self._game.getBomber().getLives() >= 0:
                     
                     set_color((0, 0, 0))
-                    draw_text(f"Time {time}      {self._game.getBomber().getPoints()}       Left {self._game.getBomber().getLives()}", (121, 17), 8, "./fonts/nintendo-nes-font/nintendo-nes-font.ttf")
+                    draw_text(f"TIME {time}     {self._game.getBomber().getPoints()}    LEFT {self._game.getBomber().getLives()}", (121, 17), 8, "./fonts/nintendo-nes-font/nintendo-nes-font.ttf")
                     
                     set_color((255, 255, 255))
-                    draw_text(f"Time {time}      {self._game.getBomber().getPoints()}       Left {self._game.getBomber().getLives()}", (120, 16), 8, "./fonts/nintendo-nes-font/nintendo-nes-font.ttf")
+                    draw_text(f"TIME {time}     {self._game.getBomber().getPoints()}    LEFT {self._game.getBomber().getLives()}", (120, 16), 8, "./fonts/nintendo-nes-font/nintendo-nes-font.ttf")
                     
                     if self._game.GameWin():
                         
@@ -255,10 +275,10 @@ class BomberManGui():
                 else:
                     
                     set_color((0, 0, 0))
-                    draw_text(f"Time {time}      {self._game.getBomber().getPoints()}       Left {0}", (121, 17), 8, "./fonts/nintendo-nes-font/nintendo-nes-font.ttf")
+                    draw_text(f"TIME {time}     {self._game.getBomber().getPoints()}     LEFT {0}", (121, 17), 8, "./fonts/nintendo-nes-font/nintendo-nes-font.ttf")
                     
                     set_color((255, 255, 255))
-                    draw_text(f"Time {time}      {self._game.getBomber().getPoints()}       Left {0}", (120, 16), 8, "./fonts/nintendo-nes-font/nintendo-nes-font.ttf")
+                    draw_text(f"TIME {time}     {self._game.getBomber().getPoints()}     LEFT {0}", (120, 16), 8, "./fonts/nintendo-nes-font/nintendo-nes-font.ttf")
                     
                     print(self._game.getBomber().getLives())
                     print(self._actual_lives)

@@ -206,7 +206,7 @@ class BomberMan(Actor):
                 if not path_u:
 
                     for other in arena.collisions():
-
+    
                         if isinstance(other, background.Wall.Wall):
 
                             if not(isinstance(other, tools.Bomb.Bomb) and other.get_current_clock() <= (other.get_end_clock() - 85)):    
@@ -306,7 +306,7 @@ class BomberMan(Actor):
                                 
                                 if self._y >= oy + oh - 12 and self._y <= oy + oh :
                                     self._y= oy + oh
-                                elif self._y + self._h >= ox and self._y +self._h <= oy + 12:
+                                elif self._y + self._h >= ox and self._y + self._h <= oy + 12:
                                     self._y= oy - oh
 
                 if path_r:
