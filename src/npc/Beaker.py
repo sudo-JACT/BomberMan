@@ -271,19 +271,16 @@ class Beaker(Actor,Enemy):
 
                     if self._x % 16 < 8 and path_l:
                         
-                        #self._x -= (self._x % 16)
                         self._dx = -self._speed
                         
                     elif path_r:
                         
-                        #self._x += (self._x % 16)
                         self._dx = self._speed
                     
                 elif (self._y +24)% 16 != 0 and not(self._walking) :
                     
                     if (self._y +24)% 16 < 8 and path_u:
                         
-                        #self._y -= (self._y % 16)
                         self._dy = -self._speed
                         
                     elif path_d:
@@ -372,10 +369,6 @@ class Beaker(Actor,Enemy):
                 
             if ((self._end_clock - self._dead_clock) % 6 == 0):
                     
-                #print(self._death_animations)
-                #print(self._co)
-                #print(self._dead_clock)
-                #print(self._end_clock)
             
                 self._current_sprite = self._death_animations[self._co]
                 
