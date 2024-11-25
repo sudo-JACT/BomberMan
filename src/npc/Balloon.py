@@ -179,7 +179,7 @@ class Balloon(Actor, Enemy):
                             
                         if (self._x + 16) != other.pos()[0] and (self._y + 16) != other.pos()[1]:
                                 
-                                self.hit(arena)
+                            self.hit(arena)
                             
                 
                 

@@ -20,16 +20,18 @@ from npc.Enemy import Enemy
 
 class Beaker(Actor,Enemy):
     
-    def __init__(self, x0: int, y0: int, sprite_src: str, arena: Arena, bomber: player.BomberMan.BomberMan) -> None:
+    def __init__(self, x0: int, y0: int, sprite_src: str, arena: Arena, bomber: player.BomberMan.BomberMan) -> None: # inizializa
+        
         self._x = x0 
         self._y = y0
-        self._speed = 2
+        self._speed = 1
         self._dx = self._dy = 0
         self._w, self._h = 16, 16
         self._sprite = sprite_src
         self._current_sprite = (48, 256)
         d = choice([1, 2, 3, 4])
         self._isdead = False
+        self._walking= False
         
         self._dead_clock = 0
         self._end_clock = 0
@@ -169,22 +171,42 @@ class Beaker(Actor,Enemy):
             dy = bomber_y - self._y
             raggio= ((dx)**2 + (dy)**2)**(0.5)
 
-            if raggio < 40:
+            if raggio < 30:
 
                 if abs(dx) > abs(dy):  # Movimento orizzontale prioritario
+                    
                     if dx > 0 and path_r:
+                        
                         self._dx = self._speed
                         self._dy = 0
+                        
+                        self._current_sprite = self._right_animations[(self._right % 3)]
+                        self._right += 1
+                        
                     elif dx < 0 and path_l:
+                         
                         self._dx = -self._speed
                         self._dy = 0
+                        
+                        self._current_sprite = self._left_animations[(self._left % 3)]
+                        self._left += 1
+                
                 else:  # Movimento verticale prioritario
                     if dy > 0 and path_d:
+                        
                         self._dx = 0
                         self._dy = self._speed
+                        
+                        self._current_sprite = self._left_animations[(self._left % 3)]
+                        self._left += 1
+                        
                     elif dy < 0 and path_u:
                         self._dx = 0
                         self._dy = -self._speed
+                        
+                        self._current_sprite = self._right_animations[(self._right % 3)]
+                        self._right += 1
+            
             else:
 
                 if self._x % 16 == 0 and (self._y + 24) % 16 == 0:
@@ -245,7 +267,7 @@ class Beaker(Actor,Enemy):
                                 self._dy = 0
                                 
                 # Riallinea gradualmente sulla griglia
-                elif self._x % 16 != 0 and (self._y + 24) % 16 == 0:
+                elif self._x % 16 != 0 and not(self._walking):
 
                     if self._x % 16 < 8 and path_l:
                         
@@ -257,7 +279,7 @@ class Beaker(Actor,Enemy):
                         #self._x += (self._x % 16)
                         self._dx = self._speed
                     
-                elif (self._y +24)% 16 != 0 and self._x % 16 == 0 :
+                elif (self._y +24)% 16 != 0 and not(self._walking) :
                     
                     if (self._y +24)% 16 < 8 and path_u:
                         
@@ -266,7 +288,6 @@ class Beaker(Actor,Enemy):
                         
                     elif path_d:
                         
-                        #self._y += (self._y % 16)
                         self._dy = self._speed
                     
                     
@@ -274,6 +295,10 @@ class Beaker(Actor,Enemy):
                 if self._x % 16 == 0 and (self._y + 24) % 16 == 0: 
                 
                     d = choice([1, 2, 3, 4])
+                    
+                    if not(self._walking):
+                        
+                        self._walking = not(self._walking)
 
                     match d:
                         

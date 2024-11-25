@@ -31,6 +31,8 @@ class Door(Actor):
                 
                 self._nextLevel = True
                 
+        print(self.getEnemys())
+                
                 
     def pos(self) -> Point:
         
@@ -53,3 +55,7 @@ class Door(Actor):
     def dEnemy(self) -> None:
         
         self._enemys -= 1
+        
+    def getEnemys(self) -> int:
+        
+        return self._enemys

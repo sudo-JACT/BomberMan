@@ -1,120 +1,119 @@
-1 1-4-0-0-0-0-0-0 0-1-0-0-0-0-0-0
+1 6-0-0-0-0-0-0-0 0-1-0-0-0-0-0-0
 
-2 [3 Valcoms, 3 O'Neals / Bomb]
+2 3-3-0-0-0-0-0-0 1-0-0-0-0-0-0-0
 
-3 [2 Valcoms, 2 O'Neals, 2 Dahls / Detonator]
+3 2-2-2-0-0-0-0-0 0-0-1-0-0-0-0-0
 
-4 [1 Valcom, 1 O'Neal, 2 Dahls, 2 Minvos / Speedup]
+4 1-1-2-2-0-0-0-0 0-0-0-1-0-0-0-0
 
-5 [4 O'Neals, 3 Dahls / Bomb]
+5 0-4-3-0-0-0-0-0 1-0-0-0-0-0-0-0-0
 
 BONUS STAGE [Valcoms]
 
-6 [2 O'Neals, 3 Dahls, 2 Minvos / Bomb]
+6 0-2-3-2-0-0-0-0 1-0-0-0-0-0-0-0
 
-7 [2 O'Neals, 3 Dahls, 2 Ovapes / Fire]
+7 0-2-3-0-2-0-0-0 0-1-0-0-0-0-0-0
 
-8 [1 O'Neal, 2 Dahls, 4 Minvos / Detonator]
+8 0-1-2-4-0-0-0-0 0-0-1-0-0-0-0-0
 
-9 [1 O'Neal, 1 Dahl, 4 Minvos, 1 Doria / Bomb-Walk]
+9 1-1-4-0-1-0-0-0 0-0-0-0-1-0-0-0
 
-10 [1 O'Neal, 1 Dahl, 1 Minvo, 1 Ovape, 3 Dorias / Wall-Walker]
+10 1-1-1-1-3-0-0-0 0-0-0-0-0-1-0-0
 
 BONUS STAGE [O'Neals]
 
-11 [1 O'Neal, 2 Dahls, 3 Minvos, 1 Ovape, 1 Doria / Bomb]
+11 1-2-3-1-1-0-0-0 1-0-0-0-0-0-0-0
 
-12 [1 O'Neal, 1 Dahl, 1 Minvo, 1 Ovape, 4 Dorias / Bomb]
+12 1-1-1-1-4-0-0-0 1-0-0-0-0-0-0-0
 
-13 [3 Dahls, 3 Minvos, 2 Dorias / Detonator]
+13 3-3-2-0-0-0-0-0 0-0-1-0-0-0-0-0
 
-14 [7 Ovapes, 1 Pass / Bomb-Walk]
+14 0-1-7-0-0-0-1-0 0-0-0-0-1-0-0-0
 
-15 [1 Dahl, 3 Minvos, 3 Dorias, 1 Pass / Fire]
+15 1-3-3-0-0-0-0-1 0-1-0-0-0-0-0-0
 
 BONUS STAGE [Dahls]
 
-16 [3 Minvos, 4 Dorias, 1 Pass / Wall-Walk]
+16 0-0-3-0-0-4-1-0 0-0-0-0-0-1-0-0
 
-17 [5 Dahls, 2 Dorias, 1 Pass / Bomb]
+17 0-0-5-2-0-0-1-0 1-0-0-0-0-0-0-0
 
-18 [3 Valcoms, 3 O'Neals, 2 Passes / Bomb-Walk]
+18 3-3-0-0-0-0-2-0 0-0-0-0-1-0-0-0
 
-19 [1 Valcom, 1 Ovape, 1 O'Neal, 3 Dahls, 2 Passes / Bomb]
+19 1-1-1-0-3-0-2-0 1-0-0-0-0-0-0-0
 
-20 [1 O'Neal, 1 Dahl, 1 Minvo, 1 Ovape, 2 Dorias, 2 Passes / Detonator]
+20 0-1-1-1-1-2-2-0 0-0-1-0-0-0-0-0
 
 BONUS STAGE [Minvos]
 
-21 [3 Ovapes, 4 Dorias, 2 Passes / Bomb-Walk]
+21 0-0-0-0-3-4-2-0 0-0-0-0-1-0-0-0
 
-22 [4 Dahls, 3 Minvos, 1 Doria, 1 Pass / Detonator]
+22 4-3-10-0-0-0-1-0 0-0-0-0-1-0-0-0
 
-23 [2 Dahls, 2 Minvos, 2 Ovapes, 2 Dorias, 1 Pass / Bomb]
+23 0-0-2-2-2-2-1-0 1-0-0-0-0-0-0-0
 
-24 [1 Dahl, 1 Minvo, 2 Ovapes, 4 Dorias, 1 Pass / Detonator]
+24 0-0-1-1-2-4-1-0 0-0-0-0-1-0-0-0
 
-25 [2 O'Neals, 1 Dahl, 1 Minvo, 2 Ovapes, 2 Dorias, 1 Pass / Bomb-Walk]
+25 0-0-2-1-2-2-1-0 0-0-0-0-1-0-0-0
 
 BONUS STAGE [Ovapes]
 
-26 [1 Valcom, 1 O'Neal, 1 Dahl, 1 Minvo, 1 Ovape, 2 Dorias, 1 Pass / 
-Mystery]
+26 1-1-1-1-1-2-2-0 0-0-0-0-0-0-1-0
 
-27 [1 Valcom, 1 O'Neal, 1 Ovape, 5 Dorias, 1 Pass / Fire]
+27 0-1-1-1-5-0-1-0 0-1-0-0-0-0-0-0
 
-28 [1 O'Neal, 3 Dahls, 3 Minvos, 1 Doria, 1 Pass / Bomb]
+28 0-0-1-3-3-1-1-0 1-0-0-0-0-0-0-0
 
-29 [5 Ovapes, 2 Dorias, 2 Passes / Detonator]
+29 0-0-0-0-5-2-2-0 0-0-0-0-1-0-0-0
 
-30 [3 Dahls, 2 Minvos, 2 Ovapes, 1 Doria, 1 Pass / Flame-Proof]
+30 0-0-3-2-2-1-1-0 0-0-0-0-0-0-0-1
 
 BONUS STAGE [Dorias]
 
-31 [2 O'Neals, 2 Dahls, 2 Minvos, 2 Ovapes, 2 Dorias / Wall-Walker]
+31 0-2-2-2-2-2-0-0 0-0-0-0-0-1-0-0
 
-32 [1 O'Neal, 1 Dahl, 3 Minvos, 4 Dorias, 1 Pass / Bomb]
+32 0-0-1-1-3-4-1-0 1-0-0-0-0-0-0-0
 
-33 [2 Dahls, 2 Minvos, 1 Ovape, 3 Dorias, 2 Passes / Detonator]
+33 0-0-2-2-1-3-2-0 0-0-0-0-1-0-0-0
 
-34 [2 Dahls, 3 Minvos, 3 Dorias, 2 Passes / Mystery]
+34 0-0-0-2-3-3-2-0 0-0-0-0-0-0-1-0 
 
-35 [2 Dahls, 1 Minvo, 1 Ovape, 3 Dorias, 2 Passes / Bomb-Walk]
+35 0-0-2-1-1-3-2-0 0-0-0-0-1-0-0-0
 
 BONUS STAGE [Passes]
 
-36 [2 Dahls, 2 Minvos, 3 Dorias, 3 Passes / Flame-Proof]
+36 0-0-0-2-2-3-3-0 0-0-0-0-0-0-0-1
 
-37 [2 Dahls, 1 Minvo, 1 Ovape, 3 Dorias, 3 Passes / Detonator]
+37 0-0-2-1-1-3-3-0 0-0-0-0-1-0-0-0
 
-38 [2 Dahls, 2 Minvos, 3 Dorias, 3 Passes / Fire]
+38 0-0-2-2-3-3-0-0 0-1-0-0-0-0-0-0
 
-39 [1 Dahl, 1 Minvo, 2 Ovapes, 2 Dorias, 4 Passes / Wall-Walker]
-
-BONUS STAGE [Pontans]
-
-40 [1 Dahl, 2 Minvos, 3 Dorias, 4 Passes / Mystery]
-
-41 [1 Dahl, 1 Minvo, 1 Ovape, 3 Dorias, 4 Passes / Detonator]
-
-42 [1 Minvo, 1 Ovape, 3 Dorias, 5 Passes / Wall-Walker]
-
-43 [1 Minvo, 1 Ovape, 2 Dorias, 6 Passes / Bomb-Walk]
-
-44 [1 Minvo, 1 Ovape, 2 Dorias, 6 Passes / Detonator]
+39 0-0-1-1-2-2-4-0 0-0-0-0-0-0-0-1
 
 BONUS STAGE [Pontans]
 
-45 [2 Ovapes, 2 Dorias, 6 Passes / Mystery]
+40 0-0-0-1-2-3-4-0 0-0-0-0-0-0-1-0
 
-46 [2 Ovapes, 2 Dorias, 6 Passes / Wall-Walker]
+41 0-0-1-1-1-3-4-0 0-0-0-0-1-0-0-0
 
-47 [2 Ovapes, 2 Dorias, 6 Passes / Bomb-Walk]
+42 0-0-0-1-1-3-5-0 0-0-0-0-0-1-0-0
 
-48 [1 Ovape, 2 Dorias, 6 Passes, 1 Pontan / Detonator]
+43 0-0-0-1-1-2-6-0 0-0-0-0-1-0-0-0
 
-49 [2 Ovapes, 1 Doria, 6 Passes, 1 Pontan / Fire-Proof]
+44 0-0-0-1-1-2-6-0 0-0-0-0-1-0-0-0
 
 BONUS STAGE [Pontans]
 
-50 [2 Ovapes, 1 Doria, 5 Passes, 2 Pontans / Mystery]
+45 0-0-0-0-2-2-6-0 0-0-0-0-0-0-1-0
+
+46 0-0-0-0-2-2-6-0 0-0-0-0-0-1-0-0
+
+47 0-0-0-0-2-2-6-0 0-0-0-0-1-0-0-0
+
+48 0-0-0-0-1-2-6-1 0-0-0-0-1-0-0-0
+
+49 0-0-0-0-2-1-6-1 0-0-0-0-0-0-0-1
+
+BONUS STAGE [Pontans]
+
+50 0-0-0-0-2-1-5-2 0-0-0-0-0-0-1-0

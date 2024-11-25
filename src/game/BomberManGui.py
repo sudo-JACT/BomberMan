@@ -15,13 +15,15 @@ class BomberManGui():
     
     def __init__(self, scale: int=3) -> None:
         
-        self._stage = 1
+        self._stage = 2
         
         self._music = True
         
         self._mmMusic = True
 
         self._ldmusic = True
+
+        self._gomusic = True
         
         self._select = 0
         
@@ -65,13 +67,14 @@ class BomberManGui():
 
 
             pause_audio("./sounds/1 - Track 1.mp3")
+
             if self._ldmusic:
 
                 pause_audio("./sounds/3 - Track 3.mp3")
 
                 play_audio("./sounds/2 - Track 2.mp3" )
 
-                self._music = False
+                self._music = True
 
                 self._ldmusic = False
 
@@ -83,6 +86,16 @@ class BomberManGui():
             draw_text(f"STAGE {self._stage}", (128, 112), 8, "./fonts/nintendo-nes-font/nintendo-nes-font.ttf")
 
         else:
+
+            if self._gomusic:
+
+                pause_audio("./sounds/3 - Track 3.mp3")
+
+                play_audio("./sounds/10 - Track 10.mp3",True )
+
+                self._music = True
+
+                self._gomusic = False
             
             set_color((99, 99, 99))
             draw_text("GAME OVER", (129, 113), 8, "./fonts/nintendo-nes-font/nintendo-nes-font.ttf")
@@ -158,7 +171,11 @@ class BomberManGui():
                 draw_image("./imgs/NES_-_Bomberman_-_Title_Screen__Text.png", positions[0], (64, 163), (8, 8))
                 draw_image("./imgs/NES_-_Bomberman_-_Title_Screen__Text.png", positions[1], (64, 163), (8, 8))
 
-                draw_image("./imgs/NES_-_Bomberman_-_Title_Screen__Text.png", positions[ self._select], (80, 248), (8, 8))
+                draw_image("./imgs/NES_-_Bomberman_-_Title_Screen__Text.png", positions[self._select], (80, 248), (8, 8))
+                
+                for x in range(9):
+                    
+                    draw_image("./imgs/NES_-_Bomberman_-_Title_Screen__Text.png", ((112+(8*x)), 168), (0, 248), (8, 8))
 
                 set_color((99, 99, 99))
                 draw_text("2024  SHIBA & JKT", (161, 189), 8, "./fonts/nintendo-nes-font/nintendo-nes-font.ttf")
@@ -224,6 +241,16 @@ class BomberManGui():
                     
                     set_color((255, 255, 255))
                     draw_text(f"Time {time}      {self._game.getBomber().getPoints()}       Left {self._game.getBomber().getLives()}", (120, 16), 8, "./fonts/nintendo-nes-font/nintendo-nes-font.ttf")
+                    
+                    if self._game.GameWin():
+                        
+                        self._game.regenerate()
+                        
+                        self._stage += 1
+                        
+                        self._load_counter = 0
+
+                    
                     
                 else:
                     

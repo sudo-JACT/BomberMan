@@ -70,6 +70,11 @@ class PowerUp(Actor):
     def draw(self) -> None:
         
         draw_image(self._sprite, ((self._x + self._b.getOffset()), self._y), self._current_sprite, (self._w, self._h))
+        
+        
+    def setPos(self, pos: Point) -> None:
+        
+        self._x, self._y = pos
     
         
         
@@ -93,6 +98,12 @@ class FireUp(PowerUp):
         
         return super().giveBonus()
     
+class Detonator(PowerUp):
+    
+    def giveBonus(self) -> None:
+        
+        pass
+    
 class SpeedUp(PowerUp):
     
     def giveBonus(self) -> None:
@@ -112,8 +123,14 @@ class BombPass(PowerUp):
     def giveBonus(self) -> None:
         
         self._b.setBombPass()
+        
+class Invincible(PowerUp):
+    
+    def giveBonus(self) -> None:
+        
+        self._b.setInvincible()
 
-class firePass(PowerUp):
+class FirePass(PowerUp):
     
     def giveBonus(self) -> None:
         

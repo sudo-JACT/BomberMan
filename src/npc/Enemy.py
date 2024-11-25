@@ -28,4 +28,8 @@ class Enemy():
     def addP(self) -> None:
         
         self._b.addPoints(self._points)
+        
+    def setPos(self, pos: Point) -> None:
+        
+        self._x, self._y = pos
     

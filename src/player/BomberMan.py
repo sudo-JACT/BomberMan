@@ -35,6 +35,9 @@ class BomberMan(Actor):
         self._end_clock = 0
         self._co = 0
         
+        self._inv = False
+        self._inv_co = 0
+        
         self._max_fire = 3
         
         self._powerups = powerups
@@ -138,12 +141,21 @@ class BomberMan(Actor):
     def move(self, arena: Arena):
 
         if not(self._isdead):
+            
+            if self._inv:
+                
+                self._inv_co += 1
+                
+                if self._inv_co == 900:
+                    
+                    self._inv = False
+                    self._inv_co = 0
 
             path_l = path_r = path_u = path_d = True
 
             for other in arena.collisions():
 
-                if isinstance(other, npc.Enemy.Enemy) or isinstance(other, tools.Fire.Fire):
+                if (isinstance(other, npc.Enemy.Enemy) or isinstance(other, tools.Fire.Fire)) and not(self._inv):
 
                     if isinstance(other, Fire):
 
@@ -154,6 +166,9 @@ class BomberMan(Actor):
                     else:
 
                         self.hit(arena)
+                        
+            print(self._inv)
+            print(self._inv_co)
 
             keys = arena.current_keys()
 
@@ -416,7 +431,8 @@ class BomberMan(Actor):
         
     def setInvincible(self) -> None:
         
-        pass
+        self._inv = True
+        self._inv_co = 0
         
     def setfirePass(self) -> None:
         
@@ -527,4 +543,8 @@ class BomberMan(Actor):
     def setAnimation(self, a: bool) -> None:
         
         self._animation = a
+        
+    def setPos(self, pos: Point) -> None:
+        
+        self._x, self._y = pos
         
