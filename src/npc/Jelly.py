@@ -240,11 +240,6 @@ class Jelly(Actor, Enemy):
                 
                 
             if ((self._end_clock - self._dead_clock) % 6 == 0):
-                    
-                #print(self._death_animations)
-                #print(self._co)
-                #print(self._dead_clock)
-                #print(self._end_clock)
             
                 self._current_sprite = self._death_animations[self._co]
                 

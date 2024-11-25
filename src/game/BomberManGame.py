@@ -39,13 +39,17 @@ from npc.Jelly import *
 from npc.Ghost import *
 from npc.Bear import *
 from npc.Coin import *
-
+global TALES
+TALES=16
 class BomberManGame(Arena):
     
     def __init__(self, stageN: int, size: Point=(496, 224), time: int=(300*30), img_src: str="./imgs/bomberman.png", canvas_size: Point=(256, 224)) -> None:
         
         super().__init__(size)
         
+        global TALES
+        TALES=16
+
         self._canvas_size = canvas_size
         
         self._img_src = img_src
@@ -55,7 +59,7 @@ class BomberManGame(Arena):
         self._win = False
         self._game_over = False
         
-        self._b = BomberMan((16, 40), img_src, ["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight", "b"], canvas_size, self, 3)
+        self._b = BomberMan((TALES, TALES+24), img_src, ["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight", "b"], canvas_size, self, 3)
         self._b_animation = self._b.getAnimation()
         
         self._stage = stageN
@@ -71,9 +75,11 @@ class BomberManGame(Arena):
         self.generate()
 
 
-    def generate(self) -> None:
+    def generate(self) -> None:   
         
         self._ne = 0
+        
+        door = False
         
         self.spawn(self._b)
         
@@ -82,17 +88,14 @@ class BomberManGame(Arena):
         
         level = level.split(" ")
         
-        print(level)
+        
         
         enemys = level[1].split("-")
         powerups = level[2].split("-")
         
-        print(enemys)
         
         for x in range(len(enemys)):
             
-            print(x)
-            print(enemys[x])
             
             self._ne += int(enemys[x])
             
@@ -116,29 +119,11 @@ class BomberManGame(Arena):
             
                     }
                     
-                    #e = self._enemys[x]
-                    
-                    print(enemy)
-                    
-                    #print(e)
-                    
-                    print(self._pointerx)
-                    print(self._pointery)
-                    
-                    print(self._enemys[x])
-                    
-                    #e.setPos((self._pointerx[0], self._pointery[0]))
                     
                     self._e.append(self._enemys[x])
                     
-                    print(self._e)
-                    print(len(self._e))
-                    
                     
         for x in range(len(powerups)):
-            
-            print(x)
-            print(powerups[x])
             
             if int(powerups[x]) > 0:
                 
@@ -160,85 +145,98 @@ class BomberManGame(Arena):
             
                     }
                     
-                    #e = self._enemys[x]
-                    
-                    print(powerups)
-                    
-                    #print(e)
-                    
-                    print(self._pointerx)
-                    print(self._pointery)
-                    
-                    #print(self._enemys[x])
-                    
-                    #e.setPos((self._pointerx[0], self._pointery[0]))
-                    
                     self._p.append(self._powerups[x])
-                    
-                    print(self._p)
-                    print(len(self._p))
         
         
-        
-        #self.spawn(WallPass((16, 72), self._img_src, 3, self, self._b))
-        #self.spawn(BombUp((16, 88), self._img_src, 0, self, self._b))
-        #self.spawn(BombPass((16, 104), self._img_src, 5, self, self._b))
-        #self.spawn(SpeedUp((16, 120), self._img_src, 2, self, self._b))
-
-        #self.spawn(Balloon(128, 168, self._img_src, self, self._b))
-        #self.spawn(Face(144, 184, self._img_src, self, self._b))
-        #self.spawn(Beaker(144, 184, self._img_src, self, self._b))
-
-        
-        
-        for i in range(int((self.size()[1]-16) / 16)):
+        for i in range(int((self.size()[1]-TALES) / TALES)):
             
-            self.spawn(Wall((0, (i*16+24)), self._img_src, self._b))
-            self.spawn(Wall(((self.size()[0] - 16), (i*16)+24), self._img_src, self._b))
+            self.spawn(Wall((0, (i*TALES+24)), self._img_src, self._b))
+            self.spawn(Wall(((self.size()[0] - TALES), (i*TALES)+24), self._img_src, self._b))
             
             
-        for i in range(int(self.size()[0] / 16)):    
+        for i in range(int(self.size()[0] / TALES)):    
             
-            self.spawn(Wall((i*16, 24), self._img_src, self._b))
-            self.spawn(Wall((i*16, (self.size()[1]-16-16)+24), self._img_src, self._b))
+            self.spawn(Wall((i*TALES, 24), self._img_src, self._b))
+            self.spawn(Wall((i*TALES, (self.size()[1]-TALES-TALES)+24), self._img_src, self._b))
         
-        for x in range(int(self.size()[0] / 16)):
+        for x in range(int(self.size()[0] / TALES)):
             
             if x % 2 == 0:
         
-                for y in range(int((self.size()[1]-16) / 16)):
+                for y in range(int((self.size()[1]-TALES) / TALES)):
                     
                     if y % 2 == 0:
                         
-                        self.spawn(Wall(((x*16), (y * 16)+24), self._img_src, self._b))
+                        self.spawn(Wall(((x*TALES), (y * TALES)+24), self._img_src, self._b))
                     
                     else:
                         
                         s = choice([-1, 0, 1])
                         
-                        if s == 1 and ((x*16)) != 0 and ((x*16)) != self.size()[0]-16:# and ((x != 1 and y != 1) or ((x != 1 and y != 2) or (x != 2 and y != 1))):
-                            
-                            print(len(self._p))
+                        if s == 1 and ((x*TALES)) != 0 and ((x*TALES)) != self.size()[0]-TALES:
                             
                             if len(self._p) > 0:
-                            
+                                
                                 tmp = self._p[randrange(len(self._p))]
                                 
                                 self._p.pop(self._p.index(tmp))
                                 
-                                tmp.setPos(((x*16), (y * 16)+24))
+                                tmp.setPos(((x*TALES), (y * TALES)+24))
                                 
-                                print(tmp.pos())
-                                
-                                #self._b.setPos(tmp.pos())
+
                                 
                                 self.spawn(tmp)
+                                
+                            if not(door):
+                                
+                                self.spawn(Door((x*TALES, ((y * TALES)+24)), self._ne, self._img_src, (176, 48), self._b))
+                                
+                                door = True
+                                
                             
-                            self.spawn(Brick(((x*16), (y * 16)+24), self._img_src, self._b))
+                            self.spawn(Brick(((x*TALES), (y * TALES)+24), self._img_src, self._b))
                             
-                        elif ((x*16)) != 0 and ((x*16)) != self.size()[0]-16 and (x != 16 and y != 40):
+                        
+                            
+                            
+                                
+            else:
+            
+                for y in range(int((self.size()[1]-TALES) / TALES)-1):
+                    
+                    if y % 2 == 0:
+                        
+                        s = choice([-1, 0, 1, 2])
+                        
+                        if (s == 1 or s == -1) and y*TALES != 0 and y*TALES != self.size()[1]-TALES and ((x*TALES != TALES) and ((y*TALES)+24) != 40):# and ((x != 1 and y != 1) or ((x != 1 and y != 2) or (x != 2 and y != 1))):
+                            
+                            self.spawn(Brick((x*TALES, (y * TALES)+24), self._img_src, self._b))
+                            
+                    else:
+                        
+                        s = choice([-1, 0, 1, 2])
+                        
+                        if (s == 1 or s == -1) and y*TALES != 0 and y*TALES != self.size()[1] and ((x*TALES != TALES) and ((y*TALES)+24) != 40):# and ((x != 1 and y != 1) or ((x != 1 and y != 2) or (x != 2 and y != 1))):
+                            
+                            self.spawn(Brick((x*TALES, (y * TALES)+24), self._img_src, self._b))
+                            
+                        else:
                             
                             lol = choice([-1, 0, 1])
+                            
+                            for other in self.actors():
+                                
+                                if (isinstance(other, Brick) or isinstance(other, Wall)) and (other.pos()[0] == (x*TALES) and (other.pos()[1] == (y * TALES)+24)):
+                                    
+                                    lol = 0
+                                    
+                            dx = self._b.pos()[0] - (x * TALES)
+                            dy = self._b.pos()[1] - ((y * TALES)+24)
+                            raggio = ((dx)**2 + (dy)**2)**(0.5)
+                                    
+                            if raggio < 55:
+                                
+                                lol = 0
                             
                             if len(self._e) > 0 and lol == 1:
                                 
@@ -246,11 +244,11 @@ class BomberManGame(Arena):
                                 
                                 self._e.pop(self._e.index(tmp))
                                 
-                                tmp.setPos(((x*16), (y * 16)+24))
+                                tmp.setPos(((x*TALES), (y * TALES)+24))
                                 
                                 self.spawn(tmp)
                             
-        self.spawn(Door((16, 56), self._ne, self._img_src, (176, 48), self._b))
+        
                             
                             
     def getTime(self) -> int:
@@ -260,19 +258,23 @@ class BomberManGame(Arena):
         
     def killemall(self) -> None:
 
-        #tmp = self._b
+        tmp = self._b
 
-        #self._actors.clear()
+        self._actors.clear()
         
-        #self._b = tmp
+        self._b = tmp
+
+        if self._b.getLives() >= 0:
         
-        #self.spawn(self._b)
+            self.spawn(self._b)
         
-        for x in self._actors:
+        self._e.clear()
+        
+        #for x in self._actors:
             
-            if not(isinstance(x, BomberMan)):
+            #if not(isinstance(x, BomberMan)):
                 
-                self._actors.pop(self._actors.index(x))
+                #self._actors.pop(self._actors.index(x))
 
     def GameOver(self) -> bool:
 
@@ -292,7 +294,7 @@ class BomberManGame(Arena):
                     
                         self._stage += 1
                         
-                        self._b.setPos((16, 40))
+                        self._b.setPos((TALES, 40))
                     
                     return True
                 
@@ -307,6 +309,12 @@ class BomberManGame(Arena):
         return self._b
     
     def regenerate(self) -> None:
+        
+        #self._e = []
+        
+        #self._p = []
+        
+        #self._ne = 0
         
         self.killemall()
         

@@ -1,5 +1,18 @@
 import os
 import sys
+
+import background.Wall
+import npc.Balloon
+import player.BomberMan
+
+if os.name != "nt":
+    
+    sys.path.append('../')
+    
+else:
+    
+    sys.path.append('..\\')
+
 import background.Brick
 from libs.actor import Arena
 from libs.g2d import *
@@ -22,7 +35,7 @@ class Fire(Actor):
         
         self._b = bomber
         
-        self._type = t
+        self._ty = t
         
         self._ls = []
         
@@ -109,11 +122,11 @@ class Fire(Actor):
             
         }
         
-        if self._type == 0:
+        if self._ty == 0:
             
             up = down = left = right = True
             
-            maxu = maxd = maxl = maxr = 0
+            maxu = maxd = maxl = maxr = (self._b.getMaxFire() - 1)
             
             r = True
             
@@ -158,92 +171,129 @@ class Fire(Actor):
                     
                     right = False
                         
-                else:
-                    
-                    print(maxr)
-                    print(r)
-                    print(self._b.getMaxFire())
-                    
-                    print(arena.collisions())
-                    
-                    while (maxr < self._b.getMaxFire()) and (r):
-                        print(self._x)
-                        print(self._y)
-                        print(other.pos()[0])
-                        print(other.pos()[1])
-                        if ((other.pos()[0]+(16*(maxr))) == (self._x+(16*(maxr+1))) and other.pos()[1] == (self._y)) and (isinstance(other, background.Brick.Brick) or isinstance(other, background.Wall.Wall)):
-                            
-                            r = False
-                                
-                            print(r)
-                            print(maxr)
-                                
-                        else:
-                                
-                            maxr += 1
                         
                     
             if up:
                 
                 iu = 0
                 
+                b = True
+                
                 if maxu:
                 
                     for x in range(self._b.getMaxFire()):
-                    
-                        arena.spawn(Fire((pos[0], pos[1]-(16*(iu+1))), sprt, arena, 5, self._b))
                         
-                        iu += 1
-                
-                arena.spawn(Fire((pos[0], pos[1]-(16*(iu+1))), sprt, arena, 1, self._b))
+                        for other in arena.actors():
+                            
+                            if (isinstance(other, background.Wall.Wall) or isinstance(other, background.Brick.Brick)) and (pos[0] == other.pos()[0] and pos[1]-(16*(iu+1)) == other.pos()[1]):
+                                
+                                if isinstance(other, background.Brick.Brick):
+                                    
+                                    other.hit(arena)
+                                
+                                b = False
+                                iu -= 1
+
+                        if b:
+                            
+                            arena.spawn(Fire((pos[0], pos[1]-(16*(iu+1))), sprt, arena, 5, self._b))
+                        
+                            iu += 1
+                if b:
+                    
+                    arena.spawn(Fire((pos[0], pos[1]-(16*(iu+1))), sprt, arena, 1, self._b))
                 
             if down:
                 
                 id = 0
                 
+                b = True
+                
                 if maxd:
                 
                     for x in range(self._b.getMaxFire()):
-                    
-                        arena.spawn(Fire((pos[0], pos[1]+(16*(id+1))), sprt, arena, 6, self._b))
                         
-                        id += 1
+                        for other in arena.actors():
+                            
+                            if (isinstance(other, background.Wall.Wall) or isinstance(other, background.Brick.Brick)) and (pos[0] == other.pos()[0] and pos[1]+(16*(id+1)) == other.pos()[1]):
+                                
+                                if isinstance(other, background.Brick.Brick):
+                                    
+                                    other.hit(arena)
+                                
+                                b = False
+                                id -= 1
+                                
+                        
+                        if b:    
+                    
+                            arena.spawn(Fire((pos[0], pos[1]+(16*(id+1))), sprt, arena, 6, self._b))
+                            
+                            id += 1
+                if b:
                 
-                arena.spawn(Fire((pos[0], pos[1]+(16*(id+1))), sprt, arena, 2, self._b))
+                    arena.spawn(Fire((pos[0], pos[1]+(16*(id+1))), sprt, arena, 2, self._b))
             
             if left:
                 
                 il = 0
                 
+                b = True
+                
                 if maxl:
                 
                     for x in range(self._b.getMaxFire()):
-                    
-                        arena.spawn(Fire((pos[0]-(16*(il+1)), pos[1]), sprt, arena, 7, self._b))
                         
-                        il += 1
+                        for other in arena.actors():
+                            
+                            if (isinstance(other, background.Wall.Wall) or isinstance(other, background.Brick.Brick)) and (pos[0]-(16*(il+1)) == other.pos()[0] and pos[1] == other.pos()[1]):
+                                
+                                if isinstance(other, background.Brick.Brick):
+                                    
+                                    other.hit(arena)
+                                
+                                b = False
+                                il -= 1
+
+                        if b:
+                            
+                            arena.spawn(Fire((pos[0]-(16*(il+1)), pos[1]), sprt, arena, 7, self._b))
+                        
+                            il += 1
                 
-                arena.spawn(Fire((pos[0]-(16*(il+1)), pos[1]), sprt, arena, 3, self._b))
+                if b:
+                
+                    arena.spawn(Fire((pos[0]-(16*(il+1)), pos[1]), sprt, arena, 3, self._b))
             
             if right:
                 
                 ir = 0
+                
+                b = True
 
-                if r:
+                if maxr:
                 
                     for x in range(self._b.getMaxFire()):
-                    
-                        arena.spawn(Fire((pos[0]+(16*(ir+1)), pos[1]), sprt, arena, 8, self._b))
-                        ir += 1
                         
-                else:
+                        for other in arena.actors():
+                            
+                            if (isinstance(other, background.Wall.Wall) or isinstance(other, background.Brick.Brick)) and (pos[0]+(16*(ir+1)) == other.pos()[0] and pos[1] == other.pos()[1]):
+                                
+                                if isinstance(other, background.Brick.Brick):
+                                    
+                                    other.hit(arena)
+                                
+                                b = False
+                                ir -= 1
                     
-                    for x in range(maxr):
+                        if b:
                         
-                        arena.spawn(Fire((pos[0]+(16*(ir+1)), pos[1]), sprt, arena, 8, self._b))
-                        ir += 1
+                            arena.spawn(Fire((pos[0]+(16*(ir+1)), pos[1]), sprt, arena, 8, self._b))
+                            ir += 1
                 
-                arena.spawn(Fire((pos[0]+(16*(ir+1)), pos[1]), sprt, arena, 4, self._b))
+                if b:
+                
+                    arena.spawn(Fire((pos[0]+(16*(ir+1)), pos[1]), sprt, arena, 4, self._b))
             
             
             
@@ -253,7 +303,7 @@ class Fire(Actor):
         
             self._currentsprite = self._ls[0]
             
-        elif self._type == 1:
+        elif self._ty == 1:
             
             for x in self._sprites_my_2:
                 
@@ -261,7 +311,7 @@ class Fire(Actor):
         
             self._currentsprite = self._ls[0]
             
-        elif self._type == 2:
+        elif self._ty == 2:
             
             for x in self._sprites_y_2:
                 
@@ -269,7 +319,7 @@ class Fire(Actor):
         
             self._currentsprite = self._ls[0]
             
-        elif self._type == 3:
+        elif self._ty == 3:
             
             for x in self._sprites_mx_2:
                 
@@ -277,7 +327,7 @@ class Fire(Actor):
         
             self._currentsprite = self._ls[0]
             
-        elif self._type == 4:
+        elif self._ty == 4:
             
             for x in self._sprites_x_2:
                 
@@ -285,7 +335,7 @@ class Fire(Actor):
         
             self._currentsprite = self._ls[0]
             
-        elif self._type == 5:
+        elif self._ty == 5:
             
             for x in self._sprites_my_1:
                 
@@ -293,7 +343,7 @@ class Fire(Actor):
         
             self._currentsprite = self._ls[0]
             
-        elif self._type == 6:
+        elif self._ty == 6:
             
             for x in self._sprites_y_1:
                 
@@ -301,7 +351,7 @@ class Fire(Actor):
         
             self._currentsprite = self._ls[0]
             
-        elif self._type == 7:
+        elif self._ty == 7:
             
             for x in self._sprites_mx_1:
                 
@@ -309,7 +359,7 @@ class Fire(Actor):
         
             self._currentsprite = self._ls[0]
             
-        elif self._type == 8:
+        elif self._ty == 8:
             
             for x in self._sprites_x_1:
                 
@@ -325,7 +375,7 @@ class Fire(Actor):
         
         for other in arena.collisions():
                 
-                if isinstance(other, background.Brick.Brick) and (other.pos()[0] == self._x and other.pos()[1] == (self._y)):
+                if (isinstance(other, background.Brick.Brick) or isinstance(other, background.Wall.Wall)) and (other.pos()[0] == self._x and other.pos()[1] == (self._y)):
                     
                     arena.kill(self)
         

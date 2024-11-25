@@ -22,7 +22,7 @@ from tools.Fire import *
 import background
 
 
-class BomberMan(Actor):
+class BomberMan(Actor):  #definizione della classe di bomberman
     
     def __init__(self, pos: Point, sprite_src: str, keys: list[str], canvas_size: Point, arena: Arena, lives: int, powerups: list[int]=[0, 0, 0, 0, 0, 0, 0, 0]) -> None:
         self._x, self._y = pos
@@ -38,13 +38,19 @@ class BomberMan(Actor):
         self._inv = False
         self._inv_co = 0
         
-        self._max_fire = 3
+        self._max_fire = 0
+        
+        self._flag = False
         
         self._powerups = powerups
         
+        self._max_bomb_spawnrate = 1
+        self._spawned_all_the_bombs = False
+        self._bomb_at_the_moment = 0
+        
         self._p = {
             
-            0: self.bombUp(powerups[0]),
+            0: self.setMaxBomb(powerups[0]),
             1: self.setMaxFire(powerups[1]),
             2: self.setSpeed(),
             3: self.remoteDetonator(),
@@ -72,9 +78,7 @@ class BomberMan(Actor):
         
         
         
-        self._max_bomb_spawnrate = 1
-        self._spawned_all_the_bombs = False
-        self._bomb_at_the_moment = 0
+        
         
         self._immortal = False
         
@@ -91,7 +95,7 @@ class BomberMan(Actor):
         self._up = self._down = self._left = self._right = 0
         
         self._animation = True
-        
+        #mappatura animazioni
         self._front_animations = {
             
             0: (48, 0),
@@ -166,9 +170,6 @@ class BomberMan(Actor):
                     else:
 
                         self.hit(arena)
-                        
-            print(self._inv)
-            print(self._inv_co)
 
             keys = arena.current_keys()
 
@@ -201,7 +202,7 @@ class BomberMan(Actor):
                 self._up += 0.2
                 if (self._up > 3):
                     self._up = 0
-                    play_audio("./sounds/Bomberman SFX (step1).wav")
+                    #play_audio("./sounds/Bomberman SFX (step1).wav")
                 
                 if not path_u:
 
@@ -238,7 +239,7 @@ class BomberMan(Actor):
                 self._down += 0.2
                 if (self._down > 3):
                     self._down = 0
-                    play_audio("./sounds/Bomberman SFX (step1).wav")
+                    #play_audio("./sounds/Bomberman SFX (step1).wav")
 
                 if not path_d:
 
@@ -266,7 +267,7 @@ class BomberMan(Actor):
                 self._left += 0.3
                 if (self._left > 3):
                     self._left = 0
-                    play_audio("./sounds/Bomberman SFX (step2).wav")
+                    #play_audio("./sounds/Bomberman SFX (step2).wav")
                 
                 if not path_l:
 
@@ -292,7 +293,7 @@ class BomberMan(Actor):
                 self._right += 0.3
                 if (self._right > 3):
                     self._right = 0
-                    play_audio("./sounds/Bomberman SFX (step2).wav")
+                    #play_audio("./sounds/Bomberman SFX (step2).wav")
                 
                 if not path_r:
 
@@ -372,14 +373,13 @@ class BomberMan(Actor):
                 
                 
             if ((self._end_clock - self._dead_clock) % 7 == 0):
-                    
-                #print(self._death_animations)
-                #print(self._co)
-                #print(self._dead_clock)
-                #print(self._end_clock)
             
                 self._current_sprite = self._death_animations[self._co]
                 self._co += 1
+                
+                if self._co > 6:
+                    
+                    self._co = 6
                     
                 
                 
@@ -439,8 +439,14 @@ class BomberMan(Actor):
         
     def setInvincible(self) -> None:
         
-        self._inv = True
-        self._inv_co = 0
+        if self._flag:
+        
+            self._inv = True
+            self._inv_co = 0
+            
+        else:
+            
+            self._flag = True
         
     def setfirePass(self) -> None:
         
@@ -450,10 +456,6 @@ class BomberMan(Actor):
         
         
     def remoteDetonator(self) -> None:
-        
-        pass
-        
-    def bombUp(self, bomb: int=1):
         
         pass
         

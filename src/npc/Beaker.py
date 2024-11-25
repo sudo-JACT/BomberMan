@@ -194,7 +194,7 @@ class Beaker(Actor,Enemy):
         
             dx = bomber_x - self._x
             dy = bomber_y - self._y
-            raggio= ((dx)**2 + (dy)**2)**(0.5)
+            raggio = ((dx)**2 + (dy)**2)**(0.5)
 
 
             # Controllo se bomberman entra nel raggio del nemico

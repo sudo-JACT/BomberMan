@@ -68,13 +68,13 @@ class BomberManGui():
         if not(self._game.GameOver()):
 
 
-            pause_audio("./sounds/1 - Track 1.mp3")
+            #pause_audio("./sounds/1 - Track 1.mp3")
 
             if self._ldmusic:
 
-                pause_audio("./sounds/3 - Track 3.mp3")
+                #pause_audio("./sounds/3 - Track 3.mp3")
 
-                play_audio("./sounds/2 - Track 2.mp3" )
+                #play_audio("./sounds/2 - Track 2.mp3" )
 
                 self._music = True
 
@@ -91,9 +91,9 @@ class BomberManGui():
 
             if self._gomusic:
 
-                pause_audio("./sounds/3 - Track 3.mp3")
+                #pause_audio("./sounds/3 - Track 3.mp3")
 
-                play_audio("./sounds/10 - Track 10.mp3",True )
+                #play_audio("./sounds/10 - Track 10.mp3",True )
 
                 self._music = True
 
@@ -116,25 +116,20 @@ class BomberManGui():
                 
                 try:
                     
-                    pause_audio("./sounds/3 - Track 3.mp3")
+                    #pause_audio("./sounds/3 - Track 3.mp3")
+                    pass
                     
                 except:
                     
                     pass
                     
     
-                play_audio("./sounds/1 - Track 1.mp3", True)
+                #play_audio("./sounds/1 - Track 1.mp3", True)
                 self._mmMusic = False
                 self._music = True
             
-            print(self._start)
             
             l = self._game.current_keys()
-            
-            print(l)
-            print(self._select)
-            print(self._game.getBomber().getSpeed())
-            print(self._game.getBomber().getPowerUp())
             
             if "a" in l:
                 
@@ -198,9 +193,9 @@ class BomberManGui():
                 draw_text(x, (147, 172,), 8, "./fonts/nintendo-nes-font/nintendo-nes-font.ttf")
 
                 set_color((99, 99, 99))
-                draw_text("2024  SHIBA & JKT", (161, 189), 8, "./fonts/nintendo-nes-font/nintendo-nes-font.ttf")
+                draw_text("2024  SHIBA & 1MD0NK3Y", (161, 189), 8, "./fonts/nintendo-nes-font/nintendo-nes-font.ttf")
                 set_color((255, 255, 255))
-                draw_text("2024  SHIBA & JKT", (160, 188), 8, "./fonts/nintendo-nes-font/nintendo-nes-font.ttf")
+                draw_text("2024  SHIBA & 1MD0NK3Y", (160, 188), 8, "./fonts/nintendo-nes-font/nintendo-nes-font.ttf")
                 
             
         
@@ -245,8 +240,8 @@ class BomberManGui():
                 
                 if self._music:
 
-                    pause_audio("./sounds/1 - Track 1.mp3")
-                    play_audio("./sounds/3 - Track 3.mp3", True)
+                    #pause_audio("./sounds/1 - Track 1.mp3")
+                    #play_audio("./sounds/3 - Track 3.mp3", True)
                     self._ldmusic = True
                     self._music = False
                     self._mmMusic = True
@@ -280,22 +275,17 @@ class BomberManGui():
                     set_color((255, 255, 255))
                     draw_text(f"TIME {time}     {self._game.getBomber().getPoints()}     LEFT {0}", (120, 16), 8, "./fonts/nintendo-nes-font/nintendo-nes-font.ttf")
                     
-                    print(self._game.getBomber().getLives())
-                    print(self._actual_lives)
-                    
                         
                     self._load_counter = 0
                     
                     
                         
                         
-                    print(self._game.GameOver())
                         
                     #self.loadingScreen()
                     
                     if self._load_counter < 85 and self._game.GameOver() and not(self._game.getBomberAnimation()):
                         
-                        print(self._game.getBomber())
                         
                         self._game.killemall()
                         

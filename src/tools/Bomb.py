@@ -42,7 +42,7 @@ class Bomb(Actor):
         
         self._currentsprite = self._sprites[1]
         
-    def move(self, arena: Arena) -> None:
+    def move(self, arena: Arena) -> None:   #animazione detonazione della bomba in base ai frame 
         
         self._current_clock += 1
         
@@ -60,7 +60,7 @@ class Bomb(Actor):
         
         
         
-        if self._current_clock == self._end_clock:
+        if self._current_clock == self._end_clock: # nel momento in cui esplode viene eliminata e rilascia le fiamme 
             
             self._b.detonated()
             
