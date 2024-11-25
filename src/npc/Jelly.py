@@ -23,7 +23,7 @@ class Jelly(Actor, Enemy):
     def __init__(self, x0: int, y0: int, sprite_src: str, arena: Arena, bomber: player.BomberMan.BomberMan) -> None:
         self._x = x0 
         self._y = y0
-        self._speed = 2
+        self._speed = 0.8
         self._dx = self._dy = 0
         self._w, self._h = 16, 16
         self._sprite = sprite_src
@@ -35,7 +35,7 @@ class Jelly(Actor, Enemy):
         self._end_clock = 0
         self._co = 0
         
-        self._points = 100
+        self._points = 1000
         
         self._left = self._right = 0
         
@@ -52,23 +52,23 @@ class Jelly(Actor, Enemy):
         
         self._left_animations = {
             
-            0: (48, 240),
-            1: (64, 240),
-            2: (80, 240),
+            0: (48, 304),
+            1: (64, 304),
+            2: (80, 304),
             
         }
         
         self._right_animations = {
             
-            0: (0, 240),
-            1: (16, 240),
-            2: (32, 240),
+            0: (0, 304),
+            1: (16, 304),
+            2: (32, 304),
             
         }
         
         self._death_animations = {
             
-            0: (96, 240),
+            0: (96, 304),
             1: (112, 240),
             2: (128, 240),
             3: (144, 240),
@@ -84,7 +84,7 @@ class Jelly(Actor, Enemy):
         
         for other in arena.collisions():
             
-            if isinstance(other, Wall) or isinstance(other, Brick) or isinstance(other, Bomb):
+            if isinstance(other, Wall) or isinstance(other, Bomb):
                 # wall can also be adjacent, w/o intersection
                 ox, oy, ow, oh = other.pos() + other.size()
                 
@@ -142,7 +142,7 @@ class Jelly(Actor, Enemy):
             
             for other in arena.collisions():
                 
-                if isinstance(other, Wall) or isinstance(other, Brick) or isinstance(other, Bomb):
+                if isinstance(other, Wall) or isinstance(other, Bomb):
                     # wall can also be adjacent, w/o intersection
                     ox, oy, ow, oh = other.pos() + other.size()
                     

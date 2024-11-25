@@ -20,7 +20,9 @@ from npc.Enemy import Enemy
 
 class Beaker(Actor,Enemy):
     
-    def __init__(self, x0: int, y0: int, sprite_src: str, arena: Arena, bomber: player.BomberMan.BomberMan) -> None: # inizializa
+    # Inizializza il nemico
+    
+    def __init__(self, x0: int, y0: int, sprite_src: str, arena: Arena, bomber: player.BomberMan.BomberMan) -> None: 
         
         self._x = x0 
         self._y = y0
@@ -40,7 +42,7 @@ class Beaker(Actor,Enemy):
         self._points = 200
         
         self._left = self._right = 0
-        
+        #mappatura sprite
         self._directions = {
     
             "up" : 1,
@@ -51,6 +53,7 @@ class Beaker(Actor,Enemy):
         }
 
 
+        # Mappatura degli sprite
         
         self._left_animations = {
             
@@ -80,29 +83,36 @@ class Beaker(Actor,Enemy):
         }
         
         
-        self._b = bomber
+        self._b = bomber 
         
-        path_l = path_r = path_u = path_d = True
+        # Flag di direzione
         
-        for other in arena.collisions():
+        path_l = path_r = path_u = path_d = True  
+        
+        
+        # Controllo intersezioni 
+        
+        for other in arena.collisions(): 
             
             if isinstance(other, Wall) or isinstance(other, Brick) or isinstance(other, Bomb):
-                # wall can also be adjacent, w/o intersection
+                
                 ox, oy, ow, oh = other.pos() + other.size()
                 
                 if oy < self._y + self._h and self._y < oy + oh:
-                    # ↕ overlap, ↔ movement is obstacled
+                    
                     if self._x > ox:
                         path_l = False
                     else:
                         path_r = False
                 if ox < self._x + self._w and self._x < ox + ow:
-                    # ↔ overlap, ↕ movement is obstacled
+                    
                     if self._y > oy:
                         path_u = False
                     else:
                         path_d = False
-            
+           
+        # Scelta di una direzione iniziale casuale 
+        
         match d:
                 
             case 1:
@@ -136,26 +146,37 @@ class Beaker(Actor,Enemy):
         
         
 
-    def move(self, arena: Arena) -> None:
+    def move(self, arena: Arena) -> None:           #metodo per gestire il movimento
         
-        if not(self._isdead):
+        # Controllo per vedere se il nemico è morto
+        
+        if not(self._isdead): 
         
             path_l = path_r = path_u = path_d = True
             
-            for other in arena.collisions():
+            
+            # Controllo delle collisioni con muri e bombe
+            
+            for other in arena.collisions(): 
                 
                 if isinstance(other, Wall) or isinstance(other, Brick) or isinstance(other, Bomb):
-                    # wall can also be adjacent, w/o intersection
-                    ox, oy, ow, oh = other.pos() + other.size()
+                    
+                    
+                    # Scomposizione dimensioni dell'actor con cui collide 
+                    
+                    ox, oy, ow, oh = other.pos() + other.size()    
+                    
+                    
+                    # Blocco il passaggio per quella direzione in caso di collisione
                     
                     if oy < self._y + self._h and self._y < oy + oh:
-                        # ↕ overlap, ↔ movement is obstacled
+                        
                         if self._x > ox:
                             path_l = False
                         else:
                             path_r = False
                     if ox < self._x + self._w and self._x < ox + ow:
-                        # ↔ overlap, ↕ movement is obstacled
+                        
                         if self._y > oy:
                             path_u = False
                         else:
@@ -163,22 +184,35 @@ class Beaker(Actor,Enemy):
                             
             aw, ah = arena.size()
         
-            # Calcola la posizione del giocatore
+        
+            # Scomposizione della posizione di bomberman
+            
             bomber_x, bomber_y = self._b.pos()
         
-            # Direzione verso Bomberman
+        
+            # Dimensione dalla distanza con il giocatore su x e y utilizando la dstanza tra due punti 
+        
             dx = bomber_x - self._x
             dy = bomber_y - self._y
             raggio= ((dx)**2 + (dy)**2)**(0.5)
 
-            if raggio < 30:
 
-                if abs(dx) > abs(dy):  # Movimento orizzontale prioritario
+            # Controllo se bomberman entra nel raggio del nemico
+
+            if raggio < 30:        
+
+                
+                # Movimento orizontale verso bomberman 
+
+                if abs(dx) > abs(dy):  
                     
                     if dx > 0 and path_r:
                         
                         self._dx = self._speed
                         self._dy = 0
+                        
+                        
+                        # Animazione movimento
                         
                         self._current_sprite = self._right_animations[(self._right % 3)]
                         self._right += 1
@@ -188,33 +222,57 @@ class Beaker(Actor,Enemy):
                         self._dx = -self._speed
                         self._dy = 0
                         
+                        
+                        # Animazione movimento
+                        
                         self._current_sprite = self._left_animations[(self._left % 3)]
                         self._left += 1
                 
-                else:  # Movimento verticale prioritario
+                
+                # Movimento verticale verso bomberman               
+                
+                else:   
                     if dy > 0 and path_d:
                         
                         self._dx = 0
                         self._dy = self._speed
                         
+                        
+                        # Animazione movimento
+
                         self._current_sprite = self._left_animations[(self._left % 3)]
                         self._left += 1
                         
                     elif dy < 0 and path_u:
                         self._dx = 0
-                        self._dy = -self._speed
+                        self._dy = -self._speed                                                 
+                        
+                        
+                        # Animazione movimento
                         
                         self._current_sprite = self._right_animations[(self._right % 3)]
                         self._right += 1
             
-            else:
+            
+            # Movimento casuale
+            
+            else: 
 
                 if self._x % 16 == 0 and (self._y + 24) % 16 == 0:
                 
                     d = choice([1, 2, 3, 4])
+
+                    
+                    # Setta una flag se si trova in movimeto
+                    
+                    if not(self._walking):  
+                        
+                        self._walking = not(self._walking)
                     
                     
-                    for other in arena.collisions():
+                    # Controllo collisione con il fuoco
+                    
+                    for other in arena.collisions(): 
                         
                         if isinstance(other, tools.Fire.Fire):
                                 
@@ -222,6 +280,9 @@ class Beaker(Actor,Enemy):
                                     
                                     self.hit(arena)
                                 
+                    
+                    
+                    # Movimento casuale
                     
                     match d:
                         
@@ -266,7 +327,9 @@ class Beaker(Actor,Enemy):
                                 self._dx = -self._speed
                                 self._dy = 0
                                 
-                # Riallinea gradualmente sulla griglia
+                
+                # Riallinea gradualmente il nemico alla griglia quando non si trova in multipli di 16 e non è in movimento
+                
                 elif self._x % 16 != 0 and not(self._walking):
 
                     if self._x % 16 < 8 and path_l:
@@ -287,59 +350,7 @@ class Beaker(Actor,Enemy):
                         
                         self._dy = self._speed
                     
-                    
-
-                if self._x % 16 == 0 and (self._y + 24) % 16 == 0: 
-                
-                    d = choice([1, 2, 3, 4])
-                    
-                    if not(self._walking):
-                        
-                        self._walking = not(self._walking)
-
-                    match d:
-                        
-                        case 1:
-                            
-                            self._current_sprite = self._right_animations[(self._right % 3)]
-                            self._right += 1
-                            
-                            if path_u:
-            
-                                self._dx = 0
-                                self._dy = self._speed
-                        
-                        case 2:
-                            
-                            self._current_sprite = self._left_animations[(self._left % 3)]
-                            self._left += 1
-                            
-                            if path_d:
-                                
-                                self._dx = 0
-                                self._dy = -self._speed
-                        
-                        
-                        case 3:
-                            
-                            self._current_sprite = self._right_animations[(self._right % 3)]
-                            self._right += 1
-                            
-                            if path_r:
-                                
-                                self._dx = self._speed
-                                self._dy = 0
-                            
-                        case 4:
-                            
-                            self._current_sprite = self._left_animations[(self._left % 3)]
-                            self._left += 1
-                            
-                            if path_l:
-                                
-                                self._dx = -self._speed
-                                self._dy = 0
-                        
+                                            
 
             if not 0 <= self._x + self._dx <= aw - self._w:
                 self._dx = -self._dx
@@ -362,7 +373,10 @@ class Beaker(Actor,Enemy):
             self._x += self._dx
             self._y += self._dy
             
-        else:
+        
+        # Animazione morte nemico   
+            
+        else: 
             
             self._dead_clock += 1
                 
@@ -400,7 +414,7 @@ class Beaker(Actor,Enemy):
         
         draw_image(self._sprite, ((self._x + self._b.getOffset()), self._y), self._current_sprite, (self._w, self._h))
         
-    def hit(self, arena: Arena) -> None:
+    def hit(self, arena: Arena) -> None: #se viene colpito incomincia timer animaione morte
 
         self._dead_clock = arena.count()
         self._end_clock = self._dead_clock + 48

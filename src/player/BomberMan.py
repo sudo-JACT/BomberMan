@@ -207,16 +207,24 @@ class BomberMan(Actor):
 
                     for other in arena.collisions():
 
-                        if isinstance(other, background.Wall.Wall) or (isinstance(other, background.Brick.Brick) and not(self._wallpass)) or (isinstance(other, tools.Bomb.Bomb) and not(self._bombpass)):
+                        if isinstance(other, background.Wall.Wall):
 
                             if not(isinstance(other, tools.Bomb.Bomb) and other.get_current_clock() <= (other.get_end_clock() - 85)):    
 
                                 ox, oy, ow, oh = other.pos() + other.size()
                                 
-                                if self._x >= ox + ow -5 and self._x <= ox + ow :
+                                if self._x >= ox + ow -12 and self._x <= ox + ow :
+                                    
                                     self._x= ox + ow
-                                elif self._x + self._w >= ox and self._x +self._w <= ox + 5:
+                                    #self._y -= self._speed 
+
+
+
+                                elif self._x + self._w >= ox and self._x +self._w <= ox + 12:
                                     self._x= ox - ow
+                                    #self._y -= self._speed 
+
+
 
                 if path_u:
 
@@ -242,9 +250,9 @@ class BomberMan(Actor):
 
                                 ox, oy, ow, oh = other.pos() + other.size()
                                 
-                                if self._x >= ox + ow -6 and self._x <= ox + ow :
+                                if self._x >= ox + ow -12 and self._x <= ox + ow :
                                     self._x= ox + ow
-                                elif self._x + self._w >= ox and self._x +self._w <= ox + 6:
+                                elif self._x + self._w >= ox and self._x +self._w <= ox + 12:
                                     self._x= ox - ow
 
                 if path_d:
@@ -270,9 +278,9 @@ class BomberMan(Actor):
 
                                 ox, oy, ow, oh = other.pos() + other.size()
                                 
-                                if self._y >= oy + oh -6 and self._y <= oy + oh :
+                                if self._y >= oy + oh -12 and self._y <= oy + oh :
                                     self._y= oy + oh
-                                elif self._y + self._h >= ox and self._y +self._h <= oy + 6:
+                                elif self._y + self._h >= ox and self._y +self._h <= oy + 12:
                                     self._y= oy - oh
                 if path_l:
 
@@ -296,9 +304,9 @@ class BomberMan(Actor):
 
                                 ox, oy, ow, oh = other.pos() + other.size()
                                 
-                                if self._y >= oy + oh - 6 and self._y <= oy + oh :
+                                if self._y >= oy + oh - 12 and self._y <= oy + oh :
                                     self._y= oy + oh
-                                elif self._y + self._h >= ox and self._y +self._h <= oy + 6:
+                                elif self._y + self._h >= ox and self._y +self._h <= oy + 12:
                                     self._y= oy - oh
 
                 if path_r:

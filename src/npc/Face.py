@@ -23,7 +23,7 @@ class Face(Actor, Enemy):
     def __init__(self, x0: int, y0: int, sprite_src: str, arena: Arena, bomber: player.BomberMan.BomberMan) -> None:
         self._x = x0 
         self._y = y0
-        self._speed = 2
+        self._speed = 1.8
         self._dx = self._dy = 0
         self._w, self._h = 16, 16
         self._sprite = sprite_src
